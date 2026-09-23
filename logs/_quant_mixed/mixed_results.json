@@ -1,6 +1,6 @@
 {
-  "fp32_source": "v11s640_best.onnx",
-  "fp32_mb": 36.14,
+  "fp32_source": "v11s640_best_v3.onnx",
+  "fp32_mb": 36.18,
   "calib_n": 32,
   "calib_stat": {
     "crack": 41,
@@ -26,22 +26,22 @@
     "decode_nodes": 24
   },
   "baseline_fp32": {
-    "maxconf": 0.9281,
-    "n_above_025": 117
+    "maxconf": 0.9168,
+    "n_above_025": 97
   },
   "variants": [
     {
       "tag": "A",
       "desc": "排除全部 Detect 头",
       "excluded_nodes": 84,
-      "elapsed_s": 138.5,
+      "elapsed_s": 181.0,
       "int8_mb": 11.96,
-      "int8_maxconf": 0.926,
-      "int8_n_above_025": 116,
+      "int8_maxconf": 0.9069,
+      "int8_n_above_025": 95,
       "tensor_diff": {
-        "max_abs": 79.0076,
-        "mean_abs": 0.515025,
-        "rel_max": 0.124417
+        "max_abs": 405.727,
+        "mean_abs": 11.1442,
+        "rel_max": 0.637428
       },
       "usable": true,
       "artifact": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_quant_mixed\\v11s640_int8_mixed_A.onnx"
@@ -50,14 +50,14 @@
       "tag": "B",
       "desc": "只排除解码算子（cv2/cv3 卷积仍量化）",
       "excluded_nodes": 24,
-      "elapsed_s": 143.7,
+      "elapsed_s": 202.8,
       "int8_mb": 9.72,
-      "int8_maxconf": 0.9236,
-      "int8_n_above_025": 117,
+      "int8_maxconf": 0.9075,
+      "int8_n_above_025": 94,
       "tensor_diff": {
-        "max_abs": 83.4025,
-        "mean_abs": 0.541591,
-        "rel_max": 0.131338
+        "max_abs": 336.27,
+        "mean_abs": 9.57872,
+        "rel_max": 0.528306
       },
       "usable": true,
       "artifact": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_quant_mixed\\v11s640_int8_mixed_B.onnx"
@@ -69,6 +69,6 @@
       "A",
       "B"
     ],
-    "fp32_maxconf": 0.9281
+    "fp32_maxconf": 0.9168
   }
 }

@@ -1,0 +1,93 @@
+{
+  "run": "v11s640_v3_int8A",
+  "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_quant_mixed\\v11s640_int8_mixed_A.onnx",
+  "weights_mb": 11.96,
+  "split": "test",
+  "imgsz": 640,
+  "overall": {
+    "metrics/precision(B)": 0.7383,
+    "metrics/recall(B)": 0.67143,
+    "metrics/mAP50(B)": 0.71083,
+    "metrics/mAP50-95(B)": 0.40054,
+    "fitness": 0.40054
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class": "crack",
+      "class_cn": "裂缝",
+      "precision": 0.7845,
+      "recall": 0.7069,
+      "ap50": 0.7327,
+      "ap50_95": 0.298,
+      "instances": 58,
+      "images": 22
+    },
+    {
+      "class_id": 1,
+      "class": "spalling",
+      "class_cn": "剥落缺失",
+      "precision": 0.7854,
+      "recall": 0.7659,
+      "ap50": 0.7727,
+      "ap50_95": 0.3758,
+      "instances": 43,
+      "images": 17
+    },
+    {
+      "class_id": 2,
+      "class": "efflorescence",
+      "class_cn": "泛碱渗水",
+      "precision": 0.7776,
+      "recall": 0.7538,
+      "ap50": 0.8145,
+      "ap50_95": 0.5638,
+      "instances": 116,
+      "images": 36
+    },
+    {
+      "class_id": 3,
+      "class": "exposed_rebar",
+      "class_cn": "露筋",
+      "precision": 0.6009,
+      "recall": 0.415,
+      "ap50": 0.4422,
+      "ap50_95": 0.2491,
+      "instances": 147,
+      "images": 46
+    },
+    {
+      "class_id": 4,
+      "class": "rust",
+      "class_cn": "锈迹",
+      "precision": 0.8421,
+      "recall": 0.6562,
+      "ap50": 0.733,
+      "ap50_95": 0.4999,
+      "instances": 1149,
+      "images": 120
+    },
+    {
+      "class_id": 5,
+      "class": "delamination",
+      "class_cn": "空鼓分层",
+      "precision": 0.6591,
+      "recall": 0.6176,
+      "ap50": 0.6524,
+      "ap50_95": 0.3491,
+      "instances": 68,
+      "images": 52
+    },
+    {
+      "class_id": 6,
+      "class": "moss",
+      "class_cn": "苔藓附着",
+      "precision": 0.7186,
+      "recall": 0.7846,
+      "ap50": 0.8283,
+      "ap50_95": 0.4681,
+      "instances": 65,
+      "images": 10
+    }
+  ]
+}

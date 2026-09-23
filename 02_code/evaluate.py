@@ -20,6 +20,30 @@ evaluate.py —— 在独立测试集上评估，并产出「每类 AP」明细�
 
 from __future__ import annotations
 
+import os
+
+# ---- ★ onnxruntime 三道防线（必须在**任何 ultralytics 导入之前**设置）----
+#
+# 背景：加载 .onnx 做 predict/val 时，ultralytics 的 AutoBackend 会在
+# device 未指定（或为 GPU）时判定 cuda=True，进而执行
+#   check_requirements(("onnx", "onnxruntime-gpu"))
+# 自动 `pip install onnxruntime-gpu`。而 onnxruntime-gpu 与 CPU 版
+# **共用同一个 onnxruntime/ 包目录**，pip 会直接覆盖其中的 .py/.dll，
+# 把环境弄成「Python 层是新版、dist-info 仍是旧版」的半损毁状态。
+# 这是本项目真实发生过的事故，详见 logs/环境事故报告_20260921.md。
+#
+# 三道防线：
+#   ① YOLO_AUTOINSTALL=false —— 总闸；但它在 ultralytics **import 时**
+#      就被读入模块常量，所以**必须**在任何 ultralytics 导入之前设置。
+#      本模块把 `from ultralytics import YOLO` 放在函数内延迟导入，
+#      因此在这里设置是有效的。
+#   ② ULTRALYTICS_SKIP_REQUIREMENTS_CHECKS=1 —— 每次调用时求值、且在
+#      包解析之前就 return，与导入顺序无关，**最可靠**。
+#   ③ device="cpu" —— 由调用方显式传（见 --device 参数）；
+#      另见 main() 里对 .onnx 权重的自动降级保护。
+os.environ.setdefault("YOLO_AUTOINSTALL", "false")
+os.environ.setdefault("ULTRALYTICS_SKIP_REQUIREMENTS_CHECKS", "1")
+
 import csv
 import json
 from pathlib import Path
@@ -227,6 +251,15 @@ def main() -> None:
         log(f"!! 没有可评估的权重（{WEIGHTS_DIR}/*_best.pt 为空）")
         log("   请先跑训练：python train.py --runs=v8s640,v11s640")
         return
+
+    # ---- ★ ONNX 权重的 device 自动降级（fail-safe）----
+    # 若权重是 .onnx 而 device 不是 cpu，AutoBackend 会判 cuda=True
+    # → 触发 onnxruntime-gpu 自动安装 → 弄坏环境（见文件头三道防线注释）。
+    # 这里兜底：只要有一个 ONNX 任务，就把 device 强制为 cpu。
+    if any(w.suffix.lower() == ".onnx" for w, _ in jobs) and device != "cpu":
+        log(f"⚠ 检测到 ONNX 权重，device 自动从 {device!r} 降级为 'cpu'"
+            f"（避免 ultralytics 自动安装 onnxruntime-gpu 损坏环境）")
+        device = "cpu"
 
     results = []
     for weights, run_name in jobs:
