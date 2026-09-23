@@ -1,36 +1,40 @@
-[21:33:23] ==============================================================================
-[21:33:23] 量化第②步：混合量化（排除 Detect 头）
-[21:33:23] ==============================================================================
-[21:33:23] FP32 源 : v11s640_best.onnx (36.14 MB)
-[21:33:23] TMP 工作: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed
-[21:33:23] 已复制到 ASCII 路径: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed\v11s640_fp32.onnx
-[21:33:23] opset 已就绪（缓存）: v11s640_fp32_opset13.onnx
-[21:33:23] 跑 quant_pre_process（坑 4：避免算子因形状不明被静默跳过）…
-[21:34:22] 量化输入: v11s640_fp32_opset13_pre.onnx (36.16 MB)
-[21:34:22] 
-[21:34:22] 图: 总节点 318 / Detect 头(/model.23/) 84 / 其中解码算子 24
-[21:34:23] 
-[21:34:23] 分层校准集: 32 张（请求 32）
-[21:34:23]   val 各类图数: {'crack': 41, 'efflorescence': 72, 'spalling': 32, 'moss': 25, 'exposed_rebar': 92, 'rust': 239, 'delamination': 104}
-[21:34:23] 
-[21:34:23] 【基线】FP32 推理 32 张
-[21:34:27]   FP32 maxconf=0.9281  n(>0.25)=117
-[21:34:27] 
-[21:34:27] ------------------------------------------------------------------------------
-[21:34:27] 【档 A】排除全部 Detect 头 —— 排除 84 节点
-[21:34:27] ------------------------------------------------------------------------------
-[21:34:27]   quantize_static: exclude=84 节点  method=Percentile  per_channel=True
-[21:36:55]     -> v11s640_int8_mixed_A.onnx (11.96 MB)
-[21:36:55]   INT8 体积 11.96 MB（FP32 36.14 MB，比值 0.331）
-[21:36:55]   端到端检出验证（32 张）…
-[21:37:04]   INT8 maxconf=0.9260  n(>0.25)=116   （FP32: 0.9281 / 117）
-[21:37:04]   张量差: 最大绝对 79.01  平均绝对 0.515  相对最大 0.1244
-[21:37:04]   判定：✅ 可用
-[21:37:04]   产物已保存: D:\pythonstudy 备份\创新题\外墙缺陷筛查\logs\_quant_mixed\v11s640_int8_mixed_A.onnx
-[21:37:04] 
-[21:37:04] ==============================================================================
-[21:37:04] 汇总
-[21:37:04] ==============================================================================
-[21:37:04]   FP32 基线 maxconf = 0.9281，n(>0.25) = 117
-[21:37:04]   档 A: 11.96 MB  maxconf=0.9260  n=116  ✅可用
-[21:37:04]   ⇒ 存在可用 INT8 产物
+[21:50:40] ==============================================================================
+[21:50:40] 量化第②步：混合量化（排除 Detect 头）
+[21:50:40] ==============================================================================
+[21:50:40] FP32 源 : v11s640_best.onnx (36.14 MB)
+[21:50:40] TMP 工作: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed
+[21:50:40] 已复制到 ASCII 路径: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed\v11s640_fp32.onnx
+[21:50:40] opset 已就绪（缓存）: v11s640_fp32_opset13.onnx
+[21:50:40] 量化输入: v11s640_fp32_opset13_pre.onnx (36.16 MB)
+[21:50:40] 
+[21:50:40] 图: 总节点 318 / Detect 头(/model.23/) 84 / 其中解码算子 24
+[21:50:41] 
+[21:50:41] 分层校准集: 96 张（请求 96）
+[21:50:41]   val 各类图数: {'crack': 41, 'efflorescence': 72, 'spalling': 32, 'moss': 25, 'exposed_rebar': 92, 'rust': 239, 'delamination': 104}
+[21:50:41] 
+[21:50:41] 【基线】FP32 推理 96 张
+[21:50:53]   FP32 maxconf=0.9281  n(>0.25)=117
+[21:50:53] 
+[21:50:53] ------------------------------------------------------------------------------
+[21:50:53] 【档 A】排除全部 Detect 头 —— 排除 84 节点
+[21:50:53] ------------------------------------------------------------------------------
+[21:50:53]   quantize_static: exclude=84 节点  method=Percentile  per_channel=True
+[21:51:40]     !! 失败 Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Conv node. Name:'/model.10/m/m.0/attn/pe/conv/Conv' Status Message: N:\_work\1\s\onnxruntime\core\framework\bfc_arena.cc:359
+[21:51:44]   判定：量化未产出 ⇒ 不可用。原因：Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Conv node. Name:'/model.10/m/m.0/attn/pe/conv/Conv' Status Message: N:\_work\1\s\onnxruntime\core\framework\bfc_arena.cc:359 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 6291456
+
+[21:51:44] 
+[21:51:44] ------------------------------------------------------------------------------
+[21:51:44] 【档 B】只排除解码算子（cv2/cv3 卷积仍量化） —— 排除 24 节点
+[21:51:44] ------------------------------------------------------------------------------
+[21:51:44]   quantize_static: exclude=24 节点  method=Percentile  per_channel=True
+[21:52:34]     !! 失败 Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Sigmoid node. Name:'/model.2/cv2/act/Sigmoid' Status Message: N:\_work\1\s\onnxruntime\core\framework\bfc_arena.cc:359 onnxr
+[21:52:36]   判定：量化未产出 ⇒ 不可用。原因：Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Sigmoid node. Name:'/model.2/cv2/act/Sigmoid' Status Message: N:\_work\1\s\onnxruntime\core\framework\bfc_arena.cc:359 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 13107200
+
+[21:52:37] 
+[21:52:37] ==============================================================================
+[21:52:37] 汇总
+[21:52:37] ==============================================================================
+[21:52:37]   FP32 基线 maxconf = 0.9281，n(>0.25) = 117
+[21:52:37]   档 A: 量化失败（Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while runnin）
+[21:52:37]   档 B: 量化失败（Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while runnin）
+[21:52:37]   ⇒ 两档均不可用，属可定位敏感层的负结果

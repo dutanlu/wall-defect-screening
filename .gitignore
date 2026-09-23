@@ -49,6 +49,10 @@ logs/*
 # 但量化产物（ONNX，12 MB 级）属权重类，不入库；结论 JSON 保留
 logs/_quant_mixed/*.onnx
 logs/_quant_mixed/_stale/
+logs/_quant_mixed/_run*.log
+
+# 内部交接文档（含未公开的进度与待办，不入开源仓库）
+logs/_HANDOVER_*.md
 
 # 训练进度日志：ultralytics 的 ANSI 逐帧进度条被原样落盘，
 # 单文件可达 7 MB（_TRAIN_V3.md / _TRAIN_V3_finished.md 合计 14.4 MB），

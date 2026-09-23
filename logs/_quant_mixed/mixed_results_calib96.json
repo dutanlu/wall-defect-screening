@@ -1,0 +1,57 @@
+{
+  "fp32_source": "v11s640_best.onnx",
+  "fp32_mb": 36.14,
+  "calib_n": 96,
+  "calib_stat": {
+    "crack": 41,
+    "efflorescence": 72,
+    "spalling": 32,
+    "moss": 25,
+    "exposed_rebar": 92,
+    "rust": 239,
+    "delamination": 104
+  },
+  "class_names": [
+    "crack",
+    "spalling",
+    "efflorescence",
+    "exposed_rebar",
+    "rust",
+    "delamination",
+    "moss"
+  ],
+  "graph": {
+    "total_nodes": 318,
+    "head_nodes": 84,
+    "decode_nodes": 24
+  },
+  "baseline_fp32": {
+    "maxconf": 0.9281,
+    "n_above_025": 117
+  },
+  "variants": [
+    {
+      "tag": "A",
+      "desc": "排除全部 Detect 头",
+      "excluded_nodes": 84,
+      "elapsed_s": 52.2,
+      "usable": false,
+      "reason": "Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Softmax node. Name:'/model.23/dfl/Softmax' Status Message: N:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:359 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 2150400\n",
+      "int8_mb": null
+    },
+    {
+      "tag": "B",
+      "desc": "只排除解码算子（cv2/cv3 卷积仍量化）",
+      "excluded_nodes": 24,
+      "elapsed_s": 54.4,
+      "usable": false,
+      "reason": "MemoryError: Unable to allocate 4.69 MiB for an array with shape (3, 640, 640) and data type float32",
+      "int8_mb": null
+    }
+  ],
+  "summary": {
+    "any_usable": false,
+    "usable_tags": [],
+    "fp32_maxconf": 0.9281
+  }
+}
