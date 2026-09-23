@@ -1,0 +1,39 @@
+# ============================================================================
+# 建筑外墙缺陷快速筛查系统 —— Python 依赖
+# ============================================================================
+# 实测环境：Python 3.13.15 / Windows 11 / RTX 5070 Ti Laptop (12 GB)
+#
+# 安装：
+#     pip install -r requirements.txt
+#
+# ⚠️ 关于 PyTorch（GPU）：
+#     若要走 CUDA，请先按 https://pytorch.org 的指引安装对应 CUDA 版本的
+#     wheel（本机实测 torch 2.11.0+cu128 / CUDA 12.8），再执行本文件。
+#     纯 CPU 推理可忽略此条。
+#
+# ⚠️ 关于 onnxruntime：
+#     本项目**只用 CPU 版**。切勿安装 onnxruntime-gpu —— 它与 CPU 版
+#     共用同一个 onnxruntime/ 包目录，会覆盖其中的 .py/.dll 把环境弄坏
+#     （ultralytics 首次对 .onnx 做 predict/val 时会自动尝试安装它，
+#      详见 README「环境注意事项」里的三道防线）。
+# ============================================================================
+
+# ---- 检测与训练（核心）----
+ultralytics>=8.4.138
+torch>=2.0
+torchvision>=0.15
+
+# ---- 图像处理与数值 ----
+opencv-python>=4.8
+numpy>=1.26
+Pillow>=10.0
+
+# ---- 数据集配置解析（ultralytics 用 .yaml 描述数据集）----
+PyYAML>=6.0
+
+# ---- 量化与轻量化（可选：仅「部署优化」相关章节需要）----
+onnx>=1.15
+onnxruntime>=1.17          # CPU 版！不要装 onnxruntime-gpu
+
+# ---- Web 演示（06_deploy/app.py）----
+gradio>=4.0

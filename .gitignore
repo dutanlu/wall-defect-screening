@@ -24,7 +24,6 @@
 weights/
 *.pt
 *.onnx
-!requirements.txt
 
 # ---------- 训练与实验大产物 ----------
 # 只保留 04_results/eval/（评估指标 JSON/CSV，体积小、是报告数字的唯一来源）
