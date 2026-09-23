@@ -1,0 +1,166 @@
+{
+  "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v8s640\\weights\\best.pt",
+  "split": "test",
+  "imgsz": 640,
+  "levels": [
+    0.25,
+    0.5,
+    1.0
+  ],
+  "note": "受控退化仿真：对同一批标注图像施加单一质量退化后重新评估。因果清晰但噪声模型与真实退化有偏差，结论应作趋势性证据引用。",
+  "rows": [
+    {
+      "deg": "baseline",
+      "deg_cn": "原始(基线)",
+      "level": 0.0,
+      "precision": 0.7301,
+      "recall": 0.7044,
+      "mAP50": 0.7356,
+      "mAP50_95": 0.4324
+    },
+    {
+      "deg": "lowlight",
+      "deg_cn": "低照度",
+      "level": 0.25,
+      "n_images": 285,
+      "precision": 0.7555,
+      "recall": 0.6432,
+      "mAP50": 0.7123,
+      "mAP50_95": 0.426,
+      "d_mAP50": -0.0233,
+      "d_mAP50_95": -0.0064
+    },
+    {
+      "deg": "lowlight",
+      "deg_cn": "低照度",
+      "level": 0.5,
+      "n_images": 285,
+      "precision": 0.7331,
+      "recall": 0.5676,
+      "mAP50": 0.6349,
+      "mAP50_95": 0.3688,
+      "d_mAP50": -0.1007,
+      "d_mAP50_95": -0.0636
+    },
+    {
+      "deg": "lowlight",
+      "deg_cn": "低照度",
+      "level": 1.0,
+      "n_images": 285,
+      "precision": 0.7415,
+      "recall": 0.0781,
+      "mAP50": 0.0949,
+      "mAP50_95": 0.0555,
+      "d_mAP50": -0.6407,
+      "d_mAP50_95": -0.3769
+    },
+    {
+      "deg": "blur",
+      "deg_cn": "失焦模糊",
+      "level": 0.25,
+      "n_images": 285,
+      "precision": 0.7494,
+      "recall": 0.6905,
+      "mAP50": 0.7378,
+      "mAP50_95": 0.4324,
+      "d_mAP50": 0.0022,
+      "d_mAP50_95": 0.0
+    },
+    {
+      "deg": "blur",
+      "deg_cn": "失焦模糊",
+      "level": 0.5,
+      "n_images": 285,
+      "precision": 0.7315,
+      "recall": 0.6228,
+      "mAP50": 0.6843,
+      "mAP50_95": 0.4051,
+      "d_mAP50": -0.0513,
+      "d_mAP50_95": -0.0273
+    },
+    {
+      "deg": "blur",
+      "deg_cn": "失焦模糊",
+      "level": 1.0,
+      "n_images": 285,
+      "precision": 0.6302,
+      "recall": 0.5539,
+      "mAP50": 0.568,
+      "mAP50_95": 0.3228,
+      "d_mAP50": -0.1676,
+      "d_mAP50_95": -0.1096
+    },
+    {
+      "deg": "overexpose",
+      "deg_cn": "过曝",
+      "level": 0.25,
+      "n_images": 285,
+      "precision": 0.7375,
+      "recall": 0.6856,
+      "mAP50": 0.7107,
+      "mAP50_95": 0.4204,
+      "d_mAP50": -0.0249,
+      "d_mAP50_95": -0.012
+    },
+    {
+      "deg": "overexpose",
+      "deg_cn": "过曝",
+      "level": 0.5,
+      "n_images": 285,
+      "precision": 0.6392,
+      "recall": 0.579,
+      "mAP50": 0.5994,
+      "mAP50_95": 0.3383,
+      "d_mAP50": -0.1362,
+      "d_mAP50_95": -0.0941
+    },
+    {
+      "deg": "overexpose",
+      "deg_cn": "过曝",
+      "level": 1.0,
+      "n_images": 285,
+      "precision": 0.579,
+      "recall": 0.281,
+      "mAP50": 0.2955,
+      "mAP50_95": 0.1589,
+      "d_mAP50": -0.4401,
+      "d_mAP50_95": -0.2735
+    },
+    {
+      "deg": "lowcontrast",
+      "deg_cn": "低对比(雨天)",
+      "level": 0.25,
+      "n_images": 285,
+      "precision": 0.7705,
+      "recall": 0.631,
+      "mAP50": 0.719,
+      "mAP50_95": 0.413,
+      "d_mAP50": -0.0166,
+      "d_mAP50_95": -0.0194
+    },
+    {
+      "deg": "lowcontrast",
+      "deg_cn": "低对比(雨天)",
+      "level": 0.5,
+      "n_images": 285,
+      "precision": 0.7471,
+      "recall": 0.5817,
+      "mAP50": 0.6557,
+      "mAP50_95": 0.3748,
+      "d_mAP50": -0.0799,
+      "d_mAP50_95": -0.0576
+    },
+    {
+      "deg": "lowcontrast",
+      "deg_cn": "低对比(雨天)",
+      "level": 1.0,
+      "n_images": 285,
+      "precision": 0.6623,
+      "recall": 0.4037,
+      "mAP50": 0.4436,
+      "mAP50_95": 0.2623,
+      "d_mAP50": -0.292,
+      "d_mAP50_95": -0.1701
+    }
+  ]
+}

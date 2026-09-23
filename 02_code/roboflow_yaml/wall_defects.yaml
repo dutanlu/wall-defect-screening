@@ -1,0 +1,15 @@
+# 外墙缺陷筛查数据集配置（由 common.write_dataset_yaml 生成）
+# 注意：path 为绝对路径，避免 Ultralytics 在中文/非标准目录下解析失败
+path: D:/pythonstudy 备份/创新题/外墙缺陷筛查/01_data/dataset
+train: images/train
+val: images/valid
+test: images/test
+
+names:
+  0: crack
+  1: spalling
+  2: efflorescence
+  3: exposed_rebar
+  4: rust
+  5: delamination
+  6: moss

@@ -1,0 +1,110 @@
+{
+  "input_root": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dedup\\images",
+  "output_root": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\unified",
+  "unified_classes": [
+    "crack",
+    "spalling",
+    "efflorescence",
+    "exposed_rebar",
+    "rust",
+    "delamination",
+    "moss"
+  ],
+  "per_source": [
+    {
+      "source": "greybrick-yolo",
+      "out_name": "greybrick-yolo",
+      "n_images": 677,
+      "n_labels": 677,
+      "n_images_without_label": 0,
+      "n_instances_in": 2415,
+      "n_instances_out": 2415,
+      "n_dropped": 0,
+      "n_images_all_dropped": 28,
+      "explicitly_dropped_classes": {},
+      "class_names_found": {
+        "0": "CRACK",
+        "1": "W_E",
+        "2": "ALKALI",
+        "3": "MISS",
+        "4": "MOSS"
+      },
+      "mapping_used": {
+        "crack": "crack",
+        "w_e": "efflorescence",
+        "w e": "efflorescence",
+        "alkali": "efflorescence",
+        "miss": "spalling",
+        "moss": "moss"
+      },
+      "raw_class_counts": {
+        "CRACK": 390,
+        "W_E": 584,
+        "ALKALI": 568,
+        "MISS": 313,
+        "MOSS": 560
+      },
+      "unified_class_counts": {
+        "crack": 390,
+        "efflorescence": 1152,
+        "spalling": 313,
+        "moss": 560
+      },
+      "unmapped_classes": {}
+    },
+    {
+      "source": "rebar_structural",
+      "out_name": "rebar_structural",
+      "n_images": 27,
+      "n_labels": 27,
+      "n_images_without_label": 0,
+      "n_instances_in": 90,
+      "n_instances_out": 79,
+      "n_dropped": 11,
+      "n_images_all_dropped": 2,
+      "explicitly_dropped_classes": {
+        "exposed_rebar": 9,
+        "spalling": 2
+      },
+      "class_names_found": {
+        "0": "crack",
+        "1": "spalling",
+        "2": "efflorescence",
+        "3": "exposed_rebar",
+        "4": "rust",
+        "5": "delamination",
+        "6": "moss"
+      },
+      "mapping_used": {
+        "crack": "crack",
+        "spalling": null,
+        "exposed_rebar": null,
+        "exposed rebar": null,
+        "efflorescence": "efflorescence",
+        "rust": "rust",
+        "delamination": "delamination",
+        "moss": "moss"
+      },
+      "raw_class_counts": {
+        "crack": 79,
+        "exposed_rebar": 9,
+        "spalling": 2
+      },
+      "unified_class_counts": {
+        "crack": 79
+      },
+      "unmapped_classes": {}
+    }
+  ],
+  "total_class_counts": {
+    "crack": 469,
+    "spalling": 313,
+    "efflorescence": 1152,
+    "exposed_rebar": 0,
+    "rust": 0,
+    "delamination": 0,
+    "moss": 560
+  },
+  "total_instances": 2494,
+  "sources_with_unmapped": []
+}

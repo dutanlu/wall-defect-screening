@@ -1,0 +1,107 @@
+# ============================================================================
+# 建筑外墙缺陷快速筛查系统 —— 开源仓库忽略规则
+# ============================================================================
+#
+# 设计原则：**代码与报告进仓库，数据与权重不进**。
+#
+# 原因有两层：
+#   ① 体积：数据集 7.7 GB、训练中间产物 900 MB+，不适合放进 git 历史；
+#   ② 许可：本项目数据来自 6 个第三方公开数据集（Apache-2.0 / CC BY 4.0 等），
+#      各自的许可**不允许我们代为再分发**。因此仓库只提供**数据构建脚本**
+#      （02_code/step0~step5）与来源清单（见 README 与报告 §6），
+#      使用者需自行从原始出处下载。
+#
+# 如果你只是想复现报告里的数字：按 README「复现步骤」跑 step0~step5 重建数据集，
+# 再跑 train.py / evaluate.py 即可。
+# ============================================================================
+
+# ---------- 数据集（自行按 step0~step5 重建）----------
+01_data/
+
+# ---------- 模型权重（体积大；可自行训练或另附 release 附件）----------
+03_weights/*.pt
+03_weights/*.onnx
+weights/
+*.pt
+*.onnx
+!requirements.txt
+
+# ---------- 训练与实验大产物 ----------
+# 只保留 04_results/eval/（评估指标 JSON/CSV，体积小、是报告数字的唯一来源）
+04_results/train/
+04_results/ablation/
+04_results/vis/
+04_results/gradcam/
+runs/
+02_code/runs/
+02_code/weights/
+
+# ---------- 归档与镜像 ----------
+_archive_20260920/
+_audit_tmp/
+*_备份_*/
+*_backup_*/
+
+# ---------- 运行日志与中间产物 ----------
+# logs/ 里绝大部分是训练日志（1.5 GB）；只保留记录「踩坑与结论」的 md
+logs/*
+!logs/*.md
+!logs/_quant_mixed/
+# 但量化产物（ONNX，12 MB 级）属权重类，不入库；结论 JSON 保留
+logs/_quant_mixed/*.onnx
+logs/_quant_mixed/_stale/
+
+# 训练进度日志：ultralytics 的 ANSI 逐帧进度条被原样落盘，
+# 单文件可达 7 MB（_TRAIN_V3.md / _TRAIN_V3_finished.md 合计 14.4 MB），
+# 信息量与体积完全不成比例 ⇒ 不入库
+logs/_TRAIN_*.md
+logs/_SMOKE_*.md
+logs/_STAGE_*.md
+# 备份与内部移交文件（对读者无意义）
+logs/_backup_*.md
+logs/_MEMORY_retired_sections.md
+
+# 验证输出图（中间产物，可用 02_code/_verify_rectify.py 重跑生成）
+02_code/_verify_out/
+
+# 临时文件
+_grun.txt
+
+# ---------- 演示视频（大文件，独立存放）----------
+07_report/*.mp4
+07_report/_not_submitted_演示视频/
+07_report/*.docx
+
+# ---------- Excel / 演示临时文件 ----------
+~$*
+*.tmp
+*.bak
+*.bak_*
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- 本工作流工具的本地状态（不含代码价值）----------
+.workbuddy/
+.genie

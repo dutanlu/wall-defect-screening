@@ -1,0 +1,137 @@
+{
+  "base": "v11s640",
+  "clsbal": "v11s640_clsbal",
+  "only_variable": "cls_pw 0.0 -> 0.5",
+  "class_weights": {
+    "crack": 1.349,
+    "spalling": 1.622,
+    "efflorescence": 0.804,
+    "exposed_rebar": 0.748,
+    "rust": 0.24,
+    "delamination": 1.058,
+    "moss": 1.178
+  },
+  "summary": {
+    "mAP50": {
+      "base": 0.72296,
+      "clsbal": 0.72812,
+      "diff": 0.0052
+    },
+    "mAP50-95": {
+      "base": 0.44105,
+      "clsbal": 0.44772,
+      "diff": 0.0067
+    },
+    "precision": {
+      "base": 0.77072,
+      "clsbal": 0.76518,
+      "diff": -0.0055
+    },
+    "recall": {
+      "base": 0.66926,
+      "clsbal": 0.65846,
+      "diff": -0.0108
+    }
+  },
+  "per_class": {
+    "crack": {
+      "base": 0.7283,
+      "clsbal": 0.7571,
+      "diff": 0.0288,
+      "ci_half": 0.11,
+      "weight": 1.349,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.7241,
+      "recall_clsbal": 0.7414,
+      "recall_diff": 0.0173,
+      "prec_base": 0.806,
+      "prec_clsbal": 0.8264,
+      "prec_diff": 0.0204
+    },
+    "spalling": {
+      "base": 0.7734,
+      "clsbal": 0.7581,
+      "diff": -0.0153,
+      "ci_half": 0.16,
+      "weight": 1.622,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.7431,
+      "recall_clsbal": 0.6977,
+      "recall_diff": -0.0454,
+      "prec_base": 0.7439,
+      "prec_clsbal": 0.7371,
+      "prec_diff": -0.0068
+    },
+    "efflorescence": {
+      "base": 0.8411,
+      "clsbal": 0.8595,
+      "diff": 0.0184,
+      "ci_half": 0.08,
+      "weight": 0.804,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.7155,
+      "recall_clsbal": 0.7354,
+      "recall_diff": 0.0199,
+      "prec_base": 0.8582,
+      "prec_clsbal": 0.8258,
+      "prec_diff": -0.0324
+    },
+    "exposed_rebar": {
+      "base": 0.4568,
+      "clsbal": 0.4092,
+      "diff": -0.0476,
+      "ci_half": 0.09,
+      "weight": 0.748,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.3946,
+      "recall_clsbal": 0.3741,
+      "recall_diff": -0.0205,
+      "prec_base": 0.6657,
+      "prec_clsbal": 0.6179,
+      "prec_diff": -0.0478
+    },
+    "rust": {
+      "base": 0.7392,
+      "clsbal": 0.7244,
+      "diff": -0.0148,
+      "ci_half": 0.03,
+      "weight": 0.24,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.6554,
+      "recall_clsbal": 0.6443,
+      "recall_diff": -0.0111,
+      "prec_base": 0.8693,
+      "prec_clsbal": 0.8306,
+      "prec_diff": -0.0387
+    },
+    "delamination": {
+      "base": 0.6996,
+      "clsbal": 0.7486,
+      "diff": 0.049,
+      "ci_half": 0.12,
+      "weight": 1.058,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.6521,
+      "recall_clsbal": 0.6471,
+      "recall_diff": -0.005,
+      "prec_base": 0.7113,
+      "prec_clsbal": 0.7573,
+      "prec_diff": 0.046
+    },
+    "moss": {
+      "base": 0.8223,
+      "clsbal": 0.8401,
+      "diff": 0.0178,
+      "ci_half": 0.12,
+      "weight": 1.178,
+      "verdict": "**差异在噪声内**",
+      "recall_base": 0.8,
+      "recall_clsbal": 0.7692,
+      "recall_diff": -0.0308,
+      "prec_base": 0.7407,
+      "prec_clsbal": 0.7613,
+      "prec_diff": 0.0206
+    }
+  },
+  "note": "|diff|<0.03 一律判为噪声内（§7.1.1 纪律）"
+}

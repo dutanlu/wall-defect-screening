@@ -1,0 +1,2942 @@
+{
+  "root": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920",
+  "n_files_scanned": 2427,
+  "L1_exact_groups": 677,
+  "L1_removed": 1723,
+  "L2_near_groups": 0,
+  "L2_removed": 0,
+  "n_unique_kept": 704,
+  "n_labels_copied": 704,
+  "n_keep_images_without_label": 0,
+  "keep_images_without_label": [],
+  "n_moved_to_quarantine": 1723,
+  "dedup_ratio": 0.7099,
+  "keep_root": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dedup\\images",
+  "quarantine_root": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dedup\\_removed_duplicates",
+  "L1_group_detail": [
+    {
+      "md5": "2142f9e796df8450ac8132913ee73dae",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1.jpg"
+      ]
+    },
+    {
+      "md5": "8a19313b9a364f1411e50b01ba2ff46f",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\10.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2483.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\10.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2483.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\10.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2483.jpg"
+      ]
+    },
+    {
+      "md5": "89bee75043ab667b06d6256b4e391aa3",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\100.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\100.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\100.jpg"
+      ]
+    },
+    {
+      "md5": "c892df212a3d89c8d41498456a221dac",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1003.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1003.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1003.jpg"
+      ]
+    },
+    {
+      "md5": "c912da102de127baa432b3d45baac4f4",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1006.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1006.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1006.jpg"
+      ]
+    },
+    {
+      "md5": "2d6e52d4c92a8d9696f76c3c2fdd3e41",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1007.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1007.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1007.jpg"
+      ]
+    },
+    {
+      "md5": "901f797c4946f415bec14b570b5847e8",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1009.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2526.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1009.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2526.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1009.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2526.jpg"
+      ]
+    },
+    {
+      "md5": "74164bf8e22a4fe7d48b0152eb642b81",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\102.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\102.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\102.jpg"
+      ]
+    },
+    {
+      "md5": "716733c86e752d8b447508f89406b0cb",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1033.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1033.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1033.jpg"
+      ]
+    },
+    {
+      "md5": "bb279bbf729a9785aa7ca6fa100a854a",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1034.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1034.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1034.jpg"
+      ]
+    },
+    {
+      "md5": "e4a48988819c1ff8b65bd04815dff93a",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1036.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1036.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1036.jpg"
+      ]
+    },
+    {
+      "md5": "4f04e9113ecf4d4b32c7413770732352",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1037.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1037.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1037.jpg"
+      ]
+    },
+    {
+      "md5": "ae2fe8dec94a62230c522ffcca216ada",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1038.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1038.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1038.jpg"
+      ]
+    },
+    {
+      "md5": "c1d93fd9baf798411d52a341e49ede38",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1039.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1039.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1039.jpg"
+      ]
+    },
+    {
+      "md5": "58fb8458ec8ce7e9efe55c183bf866db",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1040.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1040.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1040.jpg"
+      ]
+    },
+    {
+      "md5": "576810b4055f5d98d607d6b642aff3ea",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1041.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1041.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1041.jpg"
+      ]
+    },
+    {
+      "md5": "cdb12debbc1f06a5c9b497cbe8d5ba7b",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1042.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1042.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1042.jpg"
+      ]
+    },
+    {
+      "md5": "790ff0fcc3476923a8b7fbca145c7fda",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1043.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1043.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1043.jpg"
+      ]
+    },
+    {
+      "md5": "28cc52e3eae7d9920c81d0b7e0386de4",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\105.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\105.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\105.jpg"
+      ]
+    },
+    {
+      "md5": "0bc8ee7e8c145fa3e363422ed33cc236",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1055.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1055.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1055.jpg"
+      ]
+    },
+    {
+      "md5": "b2c5b3edbf4dd27c8c00ee74f09eb82d",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1057.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1057.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1057.jpg"
+      ]
+    },
+    {
+      "md5": "3763069d44b4e6f65cd5296eef2a3f67",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1058.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1058.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1058.jpg"
+      ]
+    },
+    {
+      "md5": "880f8db6001c6edc206dd18df8356119",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\106.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\106.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\106.jpg"
+      ]
+    },
+    {
+      "md5": "6ebc88a0c9dce4b0110460327b6ac673",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1073.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1073.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1073.jpg"
+      ]
+    },
+    {
+      "md5": "55a37dcb46b478287a0ee6f47047e8fd",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\108.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\108.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\108.jpg"
+      ]
+    },
+    {
+      "md5": "7a2744e2dd5d3516ce69dc88308f3e2e",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1099.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1099.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1099.jpg"
+      ]
+    },
+    {
+      "md5": "0de93370f2087e89ca646dcfe42d2f7d",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1100.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1100.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1100.jpg"
+      ]
+    },
+    {
+      "md5": "1076fba7a605a34142447881d693ea67",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\115.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\115.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\115.jpg"
+      ]
+    },
+    {
+      "md5": "5a32505cc25f30bfb1a03c1b92738442",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1166.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1166.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1166.jpg"
+      ]
+    },
+    {
+      "md5": "1761c4bec0c272b345ac248046a64eac",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1174.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2452.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1174.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2452.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1174.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2452.jpg"
+      ]
+    },
+    {
+      "md5": "566a6eb9cef7856293d9c5fe7f09c117",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1177.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2453.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1177.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2453.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1177.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2453.jpg"
+      ]
+    },
+    {
+      "md5": "ef89ddce379556fab6ba4f64ba8cefd2",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1180.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1180.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1180.jpg"
+      ]
+    },
+    {
+      "md5": "8e6fd4b2e0ad418a4e4871cc9e76011c",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1190.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1190.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1190.jpg"
+      ]
+    },
+    {
+      "md5": "9329e82d349fe7ad92476f0d35acd66d",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\12.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\12.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\12.jpg"
+      ]
+    },
+    {
+      "md5": "a14cc6f6163c4c83531a8af6c5dbebbe",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\120.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\120.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\120.jpg"
+      ]
+    },
+    {
+      "md5": "3982059c5a781db0d3cb5f4a5511db85",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1210.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1210.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1210.jpg"
+      ]
+    },
+    {
+      "md5": "1ee414b1c8021368bd05886f54828725",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1213.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1213.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1213.jpg"
+      ]
+    },
+    {
+      "md5": "374d7d830e131f483d51131cc36fea06",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1219.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1219.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1219.jpg"
+      ]
+    },
+    {
+      "md5": "34ca7225cf6274ca70de1d9345628fc1",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\122.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\122.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\122.jpg"
+      ]
+    },
+    {
+      "md5": "c47f55ec36c9628101ec5f0edf484613",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1222.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1222.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1222.jpg"
+      ]
+    },
+    {
+      "md5": "cc8784d1e270c413eb367f1e67a3b778",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1239.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2454.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1239.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2454.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1239.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2454.jpg"
+      ]
+    },
+    {
+      "md5": "6f78869ecb5fca289c66a2eb53bc085b",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\124.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\124.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\124.jpg"
+      ]
+    },
+    {
+      "md5": "e5b8c1c36c7e9c411fe690039b28f1fb",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\126.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\126.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\126.jpg"
+      ]
+    },
+    {
+      "md5": "ea433ff00d5abc3390eafeeaa054c452",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\13.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2455.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\13.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2455.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2455.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\13.jpg"
+      ]
+    },
+    {
+      "md5": "0315ce44c78a8f5f56c8ffb191040907",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1346.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2544.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1346.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2544.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1346.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2544.jpg"
+      ]
+    },
+    {
+      "md5": "a33824123de808853c6d19bb2c1403de",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1347.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1347.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1347.jpg"
+      ]
+    },
+    {
+      "md5": "ed25164b8c062d805814a07b78b68da2",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1348.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1348.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1348.jpg"
+      ]
+    },
+    {
+      "md5": "807895ec55a9700cfca9c8c48c426590",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1349.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1349.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1349.jpg"
+      ]
+    },
+    {
+      "md5": "f058ae377f901790441c0699e98c21e6",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1350.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1350.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1350.jpg"
+      ]
+    },
+    {
+      "md5": "2e59ef58e21aeb1e963dddc79af9cc5f",
+      "files": [
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1356.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1356.jpg",
+        "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1356.jpg"
+      ]
+    }
+  ],
+  "L2_group_detail": [],
+  "removed_detail": [
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2483.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\10.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\10.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\10.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2483.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\10.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\10.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\10.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2483.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\10.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\100.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\100.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\100.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\100.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1003.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1003.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1003.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1003.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1006.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1006.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1006.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1006.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1007.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1007.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1007.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1007.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2526.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1009.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2526.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1009.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2526.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\102.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\102.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\102.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\102.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1033.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1033.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1033.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1033.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1034.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1034.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1034.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1034.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1036.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1036.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1036.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1036.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1037.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1037.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1037.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1037.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1038.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1038.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1038.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1038.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1039.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1039.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1039.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1039.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1040.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1040.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1040.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1040.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1041.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1041.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1041.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1041.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1042.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1042.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1042.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1042.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1043.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1043.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1043.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1043.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\105.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\105.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\105.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\105.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1055.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1055.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1055.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1055.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1057.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1057.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1057.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1057.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1058.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1058.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1058.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1058.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\106.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\106.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\106.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\106.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1073.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1073.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1073.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1073.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\108.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\108.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\108.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\108.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1099.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1099.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1099.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1099.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1100.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1100.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1100.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1100.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\115.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\115.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\115.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\115.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1166.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1166.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1166.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1166.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2452.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1174.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1174.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1174.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2452.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1174.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1174.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1174.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2452.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1174.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2453.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1177.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1177.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1177.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2453.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1177.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1177.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1177.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2453.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1177.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1180.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1180.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1180.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1180.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1190.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1190.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1190.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1190.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\12.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\12.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\12.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\12.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\120.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\120.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\120.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\120.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1210.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1210.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1210.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1210.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1213.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1213.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1213.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1213.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1219.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1219.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1219.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1219.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\122.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\122.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\122.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\122.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1222.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1222.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1222.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1222.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2454.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1239.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1239.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1239.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2454.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1239.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1239.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1239.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2454.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1239.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\124.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\124.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\124.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\124.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\126.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\126.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\126.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\126.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2455.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\13.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\13.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\13.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2455.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\13.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2455.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\13.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\13.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\13.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2544.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1346.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1346.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1346.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2544.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1346.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1346.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1346.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2544.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1346.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1347.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1347.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1347.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1347.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1348.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1348.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1348.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1348.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1349.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1349.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1349.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1349.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1350.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1350.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1350.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1350.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1356.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1356.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1356.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1356.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1394.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1394.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1394.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1394.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1398.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1398.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1398.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1398.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1399.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1399.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1399.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1399.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2456.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\14.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\14.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\14.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2456.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\14.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\14.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\14.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2456.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\14.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1400.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1400.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1400.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1400.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1401.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1401.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1401.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1401.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1402.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1402.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1402.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1402.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1405.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1405.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1405.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1405.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1406.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1406.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1406.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1406.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\141.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\141.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\141.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\141.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1414.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1414.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1414.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1414.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1415.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1415.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1415.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1415.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\142.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\142.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\142.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\142.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1429.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1429.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1429.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1429.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2457.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\143.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\143.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\143.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2457.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\143.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\143.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\143.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2457.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\143.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1434.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1434.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1434.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1434.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1436.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1436.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1436.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1436.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2484.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1440.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1440.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1440.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2484.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1440.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1440.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1440.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2484.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1440.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1441.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1441.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1441.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1441.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1444.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1444.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1444.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1444.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2499.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1445.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1445.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1445.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2499.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1445.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1445.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1445.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2499.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1445.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1446.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1446.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1446.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1446.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1447.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1447.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1447.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1447.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1456.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1456.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1456.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1456.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1460.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1460.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1460.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1460.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1461.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1461.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1461.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1461.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1464.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1464.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1464.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1464.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1466.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1466.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1466.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1466.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1467.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1467.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1467.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1467.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1468.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1468.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1468.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1468.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1470.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1470.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1470.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1470.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1471.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1471.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1471.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1471.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1472.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1472.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1472.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1472.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1485.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1485.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1485.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1485.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\149.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\149.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\149.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\149.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2429.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2458.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1498.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2429.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2458.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1498.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2429.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2458.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1498.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2459.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\15.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\15.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\15.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2459.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\15.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\15.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\15.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2459.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\15.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2430.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1514.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1514.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1514.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2430.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1514.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1514.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1514.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2430.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1514.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\152.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\152.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\152.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\152.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1536.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1536.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1536.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1536.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1537.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1537.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1537.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1537.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2521.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1539.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1539.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1539.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2521.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1539.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1539.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1539.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2521.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1539.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2431.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1547.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1547.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1547.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2431.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1547.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1547.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1547.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2431.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1547.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1579.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1579.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1579.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1579.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\161.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\161.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\161.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\161.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2460.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\162.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\162.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\162.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2460.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\162.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\162.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\162.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2460.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\162.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2517.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\163.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\163.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\163.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2517.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\163.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\163.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\163.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2517.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\163.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2461.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\167.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\167.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\167.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2461.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\167.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\167.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\167.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2461.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\167.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2462.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2482.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\17.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2462.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2482.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\17.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2462.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2482.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\17.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2463.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2540.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\170.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2463.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2540.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\170.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2463.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2540.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\170.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2464.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2519.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1704.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2464.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2519.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1704.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2464.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2519.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1704.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2465.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2531.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1706.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2465.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2531.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1706.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2465.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2531.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1706.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2466.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1736.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1736.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1736.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2466.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1736.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1736.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1736.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2466.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1736.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2467.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1739.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1739.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1739.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2467.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1739.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1739.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1739.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2467.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1739.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2468.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1745.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1745.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1745.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2468.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1745.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2468.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1745.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1745.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1745.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2469.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1746.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1746.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1746.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2469.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1746.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1746.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1746.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2469.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1746.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2503.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1747.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1747.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1747.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2503.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1747.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2503.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1747.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1747.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1747.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1748.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1748.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1748.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1748.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2470.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2515.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1749.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2470.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2515.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1749.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2470.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2515.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1749.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2471.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1750.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1750.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1750.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2471.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1750.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1750.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1750.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2471.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1750.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1751.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1751.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1751.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1751.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1752.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1752.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1752.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1752.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1755.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1755.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1755.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1755.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1756.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1756.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1756.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1756.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1757.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1757.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1757.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1757.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1759.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1759.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1759.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1759.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1760.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1760.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1760.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1760.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1778.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1778.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1778.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1778.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1788.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1788.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1788.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1788.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1792.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1792.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1792.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1792.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1795.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1795.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1795.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1795.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\18.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\18.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\18.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\18.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1813.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1813.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1813.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1813.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1814.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1814.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1814.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1814.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1830.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1830.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1830.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1830.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1834.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1834.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1834.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1834.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\188.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\188.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\188.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\188.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2432.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1890.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1890.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1890.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2432.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1890.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1890.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1890.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2432.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1890.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\19.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\19.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\19.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\19.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1926.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1926.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1926.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1926.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1956.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1956.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1956.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1956.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2518.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1958.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1958.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1958.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2518.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1958.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1958.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1958.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2518.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1958.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1959.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1959.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1959.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1959.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\196.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\196.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\196.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\196.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1960.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1960.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1960.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1960.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1963.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1963.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1963.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1963.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1964.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1964.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1964.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1964.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2508.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1965.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1965.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1965.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2508.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1965.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2508.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1965.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\1965.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1965.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1967.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1967.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1967.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1967.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1971.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1971.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1971.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1971.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1972.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1972.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1972.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1972.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1973.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1973.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1973.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1973.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1975.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1975.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1975.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1975.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2487.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1976.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1976.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1976.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2487.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1976.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1976.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1976.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2487.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1976.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\198.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\198.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\198.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\198.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1982.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1982.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1982.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1982.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2480.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1990.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1990.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1990.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2480.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1990.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1990.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1990.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2480.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1990.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\1996.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1996.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\1996.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\1996.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\20.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\20.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\20.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\20.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2009.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2009.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2009.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2433.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2010.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2010.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2010.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2433.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2010.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2010.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2010.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2433.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2010.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2011.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2011.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2011.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2011.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2012.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2012.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2012.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2012.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2013.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2013.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2013.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2013.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2014.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2014.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2014.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2014.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2434.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2024.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2024.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2024.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2434.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2024.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2024.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2024.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2434.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2024.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2029.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2029.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2029.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2029.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2043.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2043.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2043.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2043.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2046.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2046.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2046.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2046.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2047.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2047.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2047.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2047.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\205.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\205.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\205.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\205.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2052.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2052.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2052.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2052.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2055.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2055.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2055.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2055.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2059.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2059.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2059.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2059.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2060.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2060.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2060.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2060.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2061.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2061.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2061.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2061.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2062.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2062.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2062.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2062.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2478.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2064.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2064.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2064.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2478.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2064.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2064.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2064.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2478.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2064.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2072.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2072.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2072.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2072.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2073.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2073.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2073.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2073.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2074.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2074.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2074.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2074.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2075.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2075.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2075.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2075.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2081.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2081.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2081.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2081.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2505.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2084.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2084.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2084.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2505.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2084.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2084.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2084.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2505.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2084.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2086.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2086.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2086.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2086.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2087.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2087.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2087.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2087.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2092.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2092.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2092.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2092.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2093.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2093.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2093.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2093.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2490.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2094.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2094.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2094.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2490.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2094.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2094.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2094.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\valid\\images\\2490.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2094.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2435.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2095.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2095.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2095.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\label\\images\\2435.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2095.jpg",
+      "reason": "L1_exact_md5"
+    },
+    {
+      "removed": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\train\\images\\2095.jpg",
+      "kept": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\merged_src_20260920\\greybrick-yolo\\images\\2095.jpg",
+      "reason": "L1_exact_md5"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+====================================================================================================
+项目内权重文件（按 mtime 倒序），共 37 个
+====================================================================================================
+  09-21 09:29:40     21.49 MB  04_results\train\v8s640\weights\best.pt
+  09-21 09:29:40     21.49 MB  03_weights\v8s640_best.pt
+  09-21 09:29:40     21.49 MB  04_results\train\v8s640\weights\last.pt
+  09-20 20:34:19     36.14 MB  03_weights\v11s640_best.onnx
+  09-20 20:07:15     21.58 MB  04_results\train\v8s1024\weights\best.pt
+  09-20 20:07:15     21.58 MB  03_weights\v8s1024_best.pt
+  09-20 20:07:15     21.58 MB  04_results\train\v8s1024\weights\last.pt
+  09-20 18:59:00      5.99 MB  04_results\train\v8n640\weights\best.pt
+  09-20 18:59:00      5.99 MB  03_weights\v8n640_best.pt
+  09-20 18:59:00      5.99 MB  04_results\train\v8n640\weights\last.pt
+  09-20 18:42:57     18.33 MB  04_results\train\v11s640\weights\best.pt
+  09-20 18:42:57     18.33 MB  03_weights\v11s640_best.pt
+  09-20 18:42:57     18.33 MB  04_results\train\v11s640\weights\last.pt
+  09-20 17:22:37     23.37 MB  _archive_20260920\dataset_v1_20260920\train_runs\v8n640\weights\last.pt
+  09-20 17:22:05     23.37 MB  _archive_20260920\dataset_v1_20260920\train_runs\v8n640\weights\best.pt
+  09-20 17:10:42     11.11 MB  _archive_20260920\dataset_v1_20260920\quant\v8s640_int8.onnx
+  09-20 17:05:47     42.68 MB  _archive_20260920\dataset_v1_20260920\quant\v8s640_fp32.onnx
+  09-20 17:05:27      3.29 MB  _archive_20260920\dataset_v1_20260920\quant\v8n640_int8.onnx
+  09-20 17:01:18     11.70 MB  _archive_20260920\dataset_v1_20260920\quant\v8n640_fp32.onnx
+  09-20 16:35:10     18.32 MB  _archive_20260920\dataset_v1_20260920\weights_v1\v11s640_best.pt
+  09-20 16:35:10     18.32 MB  _archive_20260920\dataset_v1_20260920\train_runs\v11s640\weights\best.pt
+  09-20 16:35:10     18.32 MB  _archive_20260920\dataset_v1_20260920\train_runs\v11s640\weights\last.pt
+  09-20 12:45:54     72.50 MB  _archive_20260920\weights_v11s640_ep71_20260920\v11s640_best_ep71.pt
+  09-20 12:21:40      5.29 MB  02_code\weights\yolo26n.pt
+  09-20 12:17:17     21.51 MB  _archive_20260920\dataset_v1_20260920\weights_v1\v8s640_best.pt
+  09-20 12:17:17     21.51 MB  _archive_20260920\dataset_v1_20260920\train_runs\v8s640\weights\best.pt
+  09-20 12:17:17     21.51 MB  _archive_20260920\dataset_v1_20260920\train_runs\v8s640\weights\last.pt
+  09-20 11:59:09     11.70 MB  _archive_20260920\export_residue\v8n640_best_export_residue.onnx
+  09-20 11:58:16     11.69 MB  _archive_20260920\export_residue\v8n640_fp32_preprocessed_stage.onnx
+  09-20 10:13:48      5.96 MB  _archive_20260920\train_v8n640_wrongdata_20260920\weights\best.pt
+  09-20 10:13:48      5.96 MB  _archive_20260920\train_v8n640_wrongdata_20260920\v8n640_best.pt
+  09-20 10:13:48      5.96 MB  _archive_20260920\dataset_v1_20260920\weights_v1\v8n640_best.pt
+  09-20 10:13:48      5.96 MB  _archive_20260920\train_v8n640_wrongdata_20260920\weights\last.pt
+  09-20 10:10:41      5.35 MB  03_weights\yolo11n.pt
+  09-20 10:10:35     18.42 MB  03_weights\yolo11s.pt
+  09-04 19:03:29     21.54 MB  03_weights\yolov8s.pt
+  09-02 12:07:40      6.25 MB  03_weights\yolov8n.pt

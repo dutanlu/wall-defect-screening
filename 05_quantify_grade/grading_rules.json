@@ -1,0 +1,94 @@
+{
+  "_source": {
+    "gsd_py": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\02_code\\gsd.py",
+    "grade_py": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\02_code\\grade.py",
+    "note": "本文件由 02_code/_extract_grading_rules.py 从代码直接导出，勿手工编辑。"
+  },
+  "national_standards": {
+    "GB50010-2010": {
+      "title": "《混凝土结构设计规范》表 3.4.4 —— 最大裂缝宽度限值",
+      "limits_mm": {
+        "一类环境（室内干燥）": 0.3,
+        "二类环境（露天/潮湿）": 0.2,
+        "三类环境（干湿交替/海风）": 0.2
+      },
+      "apply_basis": "裂缝宽度以构件混凝土表面实测最大值为准"
+    },
+    "JGJ125-2016": {
+      "title": "《危险房屋鉴定标准》—— 危险点判据",
+      "danger_mm": {
+        "梁板受力主筋处横向/斜裂缝": 0.5,
+        "板受拉裂缝": 1.0
+      }
+    }
+  },
+  "pixel_thresholds": {
+    "MIN_RELIABLE_PX": 3.0,
+    "COMFORTABLE_PX": 8.0,
+    "meaning": {
+      "MIN_RELIABLE_PX": "最小可判读像素数；低于此值测量误差 > 1 个国标分级步长",
+      "COMFORTABLE_PX": "毫米级测量的舒适门槛；至少 8px 才能稳定做骨架化/距离变换"
+    }
+  },
+  "risk_levels": {
+    "A": "结构承载力能满足正常使用要求，未发现危险点，房屋结构安全。",
+    "B": "结构承载力基本能满足正常使用要求，个别构件存在危险点，但不影响主体结构安全。",
+    "C": "部分承重结构承载力不能满足正常使用要求，局部出现险情，构成局部危房。",
+    "D": "承重结构承载力已不能满足正常使用要求，房屋整体出现险情，构成整幢危房。"
+  },
+  "env_classes": [
+    "一类环境（室内干燥）",
+    "二类环境（露天/潮湿）",
+    "三类环境（干湿交替/海风）"
+  ],
+  "per_class_rules": {
+    "crack": {
+      "module": "grade.grade_crack",
+      "metric": "width_max_mm",
+      "priority": "JGJ 125 危险点判据 > GB 50010 环境限值",
+      "rules": [
+        "板受拉裂缝 w > 1.00mm → danger（JGJ 125）",
+        "梁板受力主筋处 w > 0.50mm → danger（JGJ 125）",
+        "w > 限值 → exceeded；w > 2×限值 → danger，否则 attention",
+        "图像中最大宽度 < 8px → 追加低置信度提醒；若原为 ok 则升为 attention"
+      ]
+    },
+    "blob（spalling / efflorescence / exposed_rebar / delamination）": {
+      "module": "grade.grade_blob",
+      "metric": "area_ratio",
+      "rules": [
+        "面积占比 >= 15% → danger（经验阈值）",
+        "面积占比 >= 5%  → attention（经验阈值）",
+        "exposed_rebar：至少 danger，理由为钢筋失去保护层持续锈蚀",
+        "delamination：至少 attention"
+      ],
+      "caveat": "面积为工程经验阈值，非国标强制限值（代码内 confidence_note 已声明）"
+    },
+    "moss": {
+      "module": "grade.grade_moss",
+      "metric": "area_ratio",
+      "rules": [
+        "面积占比 >= 5% → attention（上限，不再升级）",
+        "面积占比 < 5%  → ok"
+      ],
+      "caveat": "苔藓非结构缺陷，仅作长期潮湿指示物，不计入承载能力判定"
+    }
+  },
+  "building_level_rule": {
+    "module": "grade.building_risk_level",
+    "steps": [
+      "存在 danger 且数量 >= 3，或 danger 中含 exposed_rebar → C",
+      "存在 ≥1 个 danger → B",
+      "仅存在 attention → B",
+      "否则 → A"
+    ],
+    "important": "只统计结构类缺陷；苔藓等非结构项单独计入 n_moisture_hints，不参与升级"
+  },
+  "unjudgeable_level_U": {
+    "defined_in": "06_deploy/app.py（界面层，拒答传染到输出层）",
+    "trigger": "当所有条目都不可判读时，风险等级输出 U 而非 A",
+    "rationale": "「判不了」不等于「没问题」；把前者报成后者是最危险的误报",
+    "field": "risk['n_unjudgeable'] 记录被作废条目数"
+  },
+  "disclaimer": "本等级为图像筛查层面的风险排序结果，依据 GB 50010-2010 与 JGJ 125-2016 的判据做粗略对齐，不构成法定鉴定结论。达到 B/C 级应转由具备资质的专业机构进场鉴定。"
+}

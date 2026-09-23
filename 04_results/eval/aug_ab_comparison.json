@@ -1,0 +1,79 @@
+{
+  "base": "v11s640",
+  "aug": "v11s640_aug",
+  "only_variable": "scale 0.5->0.9, mixup 0->0.15",
+  "summary": {
+    "mAP50": {
+      "base": 0.72296,
+      "aug": 0.72659,
+      "diff": 0.0036
+    },
+    "mAP50-95": {
+      "base": 0.44105,
+      "aug": 0.43806,
+      "diff": -0.003
+    },
+    "precision": {
+      "base": 0.77072,
+      "aug": 0.71739,
+      "diff": -0.0533
+    },
+    "recall": {
+      "base": 0.66926,
+      "aug": 0.65795,
+      "diff": -0.0113
+    }
+  },
+  "per_class": {
+    "crack": {
+      "base": 0.7283,
+      "aug": 0.7081,
+      "diff": -0.0202,
+      "ci_half": 0.11,
+      "verdict": "**差异在噪声内**"
+    },
+    "spalling": {
+      "base": 0.7734,
+      "aug": 0.7671,
+      "diff": -0.0063,
+      "ci_half": 0.16,
+      "verdict": "**差异在噪声内**"
+    },
+    "efflorescence": {
+      "base": 0.8411,
+      "aug": 0.8636,
+      "diff": 0.0225,
+      "ci_half": 0.08,
+      "verdict": "**差异在噪声内**"
+    },
+    "exposed_rebar": {
+      "base": 0.4568,
+      "aug": 0.5027,
+      "diff": 0.0459,
+      "ci_half": 0.09,
+      "verdict": "**差异在噪声内**"
+    },
+    "rust": {
+      "base": 0.7392,
+      "aug": 0.726,
+      "diff": -0.0132,
+      "ci_half": 0.03,
+      "verdict": "**差异在噪声内**"
+    },
+    "delamination": {
+      "base": 0.6996,
+      "aug": 0.6837,
+      "diff": -0.0159,
+      "ci_half": 0.12,
+      "verdict": "**差异在噪声内**"
+    },
+    "moss": {
+      "base": 0.8223,
+      "aug": 0.8349,
+      "diff": 0.0126,
+      "ci_half": 0.12,
+      "verdict": "**差异在噪声内**"
+    }
+  },
+  "note": "|diff|<0.03 一律判为噪声内（§7.1.1 纪律）"
+}

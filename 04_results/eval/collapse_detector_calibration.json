@@ -1,0 +1,13 @@
+{
+  "source": "logs/_assess_blindzone/per_instance.csv",
+  "n_instances": 111,
+  "instability": {
+    "min": 0.0,
+    "median": 0.499569073368734,
+    "mean": 0.5698659206212768,
+    "max": 2.1863079794255547
+  },
+  "suggested_threshold": 0.3,
+  "flagged_at_0.30": 84,
+  "note": "真值无关信号；运行时代价为测量耗时≈翻倍，未上线"
+}

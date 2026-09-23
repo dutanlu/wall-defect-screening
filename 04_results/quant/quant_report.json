@@ -1,0 +1,37 @@
+{
+  "note": "INT8 量化报告。latency_* 字段测的是不同硬件：latency_pt_fp32 是 GPU(CUDA)，latency_onnx_int8 是 CPU(ORT)。两者不可直接相减，报告引用时必须写明硬件。",
+  "imgsz": 640,
+  "calib_n_requested": 150,
+  "calib_n_note": "请求的校准图张数；各 run 的实际张数见 runs[].calib_used",
+  "calib_method": "Entropy",
+  "data_yaml": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dataset\\wall_defects.yaml",
+  "results": [
+    {
+      "name": "v11s640",
+      "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640\\weights\\best.pt",
+      "imgsz": 640,
+      "calib_method": "Entropy",
+      "calib_n_requested": 150,
+      "calib_n_note": "请求的校准图张数；实际张数见 calib_used（OOM 时逐级下调，下界 MIN_CALIB_N）",
+      "pt_fp32_mb": 18.33,
+      "latency_pt_fp32": {
+        "provider": "CUDA",
+        "n_run": 50,
+        "latency_ms_mean": 9.39,
+        "latency_ms_p50": 9.29,
+        "latency_ms_p95": 11.45,
+        "latency_ms_min": 7.47
+      },
+      "onnx_fp32_mb": 36.18,
+      "status": "quantize_failed",
+      "attempts": [
+        150,
+        128,
+        96,
+        64
+      ],
+      "min_calib_n": 64,
+      "error": "MemoryError: bad allocation"
+    }
+  ]
+}

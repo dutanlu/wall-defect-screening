@@ -1,0 +1,57 @@
+{
+  "fp32_source": "v11s640_best.onnx",
+  "fp32_mb": 36.14,
+  "calib_n": 32,
+  "calib_stat": {
+    "crack": 41,
+    "efflorescence": 72,
+    "spalling": 32,
+    "moss": 25,
+    "exposed_rebar": 92,
+    "rust": 239,
+    "delamination": 104
+  },
+  "class_names": [
+    "crack",
+    "spalling",
+    "efflorescence",
+    "exposed_rebar",
+    "rust",
+    "delamination",
+    "moss"
+  ],
+  "graph": {
+    "total_nodes": 318,
+    "head_nodes": 84,
+    "decode_nodes": 24
+  },
+  "baseline_fp32": {
+    "maxconf": 0.9281,
+    "n_above_025": 117
+  },
+  "variants": [
+    {
+      "tag": "A",
+      "desc": "排除全部 Detect 头",
+      "excluded_nodes": 84,
+      "elapsed_s": 147.7,
+      "int8_mb": 11.96,
+      "int8_maxconf": 0.926,
+      "int8_n_above_025": 116,
+      "tensor_diff": {
+        "max_abs": 79.0076,
+        "mean_abs": 0.515025,
+        "rel_max": 0.124417
+      },
+      "usable": true,
+      "artifact": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_quant_mixed\\v11s640_int8_mixed_A.onnx"
+    }
+  ],
+  "summary": {
+    "any_usable": true,
+    "usable_tags": [
+      "A"
+    ],
+    "fp32_maxconf": 0.9281
+  }
+}

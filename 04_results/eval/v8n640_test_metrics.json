@@ -1,0 +1,93 @@
+{
+  "run": "v8n640",
+  "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\v8n640_best.pt",
+  "weights_mb": 5.99,
+  "split": "test",
+  "imgsz": 640,
+  "overall": {
+    "metrics/precision(B)": 0.78115,
+    "metrics/recall(B)": 0.64488,
+    "metrics/mAP50(B)": 0.71723,
+    "metrics/mAP50-95(B)": 0.41092,
+    "fitness": 0.41092
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class": "crack",
+      "class_cn": "裂缝",
+      "precision": 0.8485,
+      "recall": 0.6724,
+      "ap50": 0.7415,
+      "ap50_95": 0.3435,
+      "instances": 58,
+      "images": 22
+    },
+    {
+      "class_id": 1,
+      "class": "spalling",
+      "class_cn": "剥落缺失",
+      "precision": 0.7542,
+      "recall": 0.6512,
+      "ap50": 0.7667,
+      "ap50_95": 0.3956,
+      "instances": 43,
+      "images": 17
+    },
+    {
+      "class_id": 2,
+      "class": "efflorescence",
+      "class_cn": "泛碱渗水",
+      "precision": 0.853,
+      "recall": 0.7759,
+      "ap50": 0.837,
+      "ap50_95": 0.6138,
+      "instances": 116,
+      "images": 36
+    },
+    {
+      "class_id": 3,
+      "class": "exposed_rebar",
+      "class_cn": "露筋",
+      "precision": 0.6511,
+      "recall": 0.3265,
+      "ap50": 0.4386,
+      "ap50_95": 0.2376,
+      "instances": 147,
+      "images": 46
+    },
+    {
+      "class_id": 4,
+      "class": "rust",
+      "class_cn": "锈迹",
+      "precision": 0.8821,
+      "recall": 0.6258,
+      "ap50": 0.7238,
+      "ap50_95": 0.5008,
+      "instances": 1149,
+      "images": 120
+    },
+    {
+      "class_id": 5,
+      "class": "delamination",
+      "class_cn": "空鼓分层",
+      "precision": 0.7753,
+      "recall": 0.6471,
+      "ap50": 0.7136,
+      "ap50_95": 0.3558,
+      "instances": 68,
+      "images": 52
+    },
+    {
+      "class_id": 6,
+      "class": "moss",
+      "class_cn": "苔藓附着",
+      "precision": 0.7037,
+      "recall": 0.8154,
+      "ap50": 0.7995,
+      "ap50_95": 0.4292,
+      "instances": 65,
+      "images": 10
+    }
+  ]
+}

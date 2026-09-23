@@ -1,0 +1,80 @@
+{
+  "data_yaml": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dataset\\wall_defects.yaml",
+  "recipes": {
+    "v8s640": {
+      "weight": "yolov8s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "note": "主力配置：精度/速度平衡，兼顾 <100ms 推理"
+    },
+    "v11s640": {
+      "weight": "yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）"
+    },
+    "v8n640": {
+      "weight": "yolov8n.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "note": "规格对照：极致轻量，服务赛道二 (<10MB)"
+    },
+    "v8s1024": {
+      "weight": "yolov8s.pt",
+      "imgsz": 1024,
+      "batch": 16,
+      "note": "小目标实验：裂缝/露筋为细长小目标，提高分辨率验证增益"
+    },
+    "v11s640_clsbal": {
+      "weight": "yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "note": "类平衡损失：cls_pw=0.5 按逆频率加权（对照 v11s640）",
+      "aug": {
+        "cls_pw": 0.5,
+        "workers": 0
+      }
+    },
+    "v11s640_aug": {
+      "weight": "yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "note": "数据增强：GSD 尺度扩展 + mixup（对照 v11s640）",
+      "aug": {
+        "scale": 0.9,
+        "mixup": 0.15
+      }
+    }
+  },
+  "results": [
+    {
+      "run": "v11s640_clsbal",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal\\weights\\last.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "epochs": 100,
+      "note": "类平衡损失：cls_pw=0.5 按逆频率加权（对照 v11s640）",
+      "status": "ok",
+      "seconds": 671.8,
+      "metrics": {
+        "metrics/precision(B)": 0.7734,
+        "metrics/recall(B)": 0.6168,
+        "metrics/mAP50(B)": 0.6909,
+        "metrics/mAP50-95(B)": 0.4211,
+        "fitness": 0.4211
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    }
+  ],
+  "classes": [
+    "crack",
+    "spalling",
+    "efflorescence",
+    "exposed_rebar",
+    "rust",
+    "delamination",
+    "moss"
+  ]
+}
