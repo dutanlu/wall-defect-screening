@@ -624,7 +624,7 @@ python pipeline.py --image=wall.jpg --calib-brick
 | 仓库地址 | **https://github.com/dutanlu/wall-defect-screening** |
 | 可见性 | public（无需登录即可访问） |
 | 分支 | `main` |
-| 收录 | **225 文件 / 2.63 MB** |
+| 收录 | **231 文件 / 2.65 MB** |
 | 许可证 | **MIT**（代码与文档） |
 
 > 完整记录与**如何自行核验**（含 GitHub API 统计命令）见
