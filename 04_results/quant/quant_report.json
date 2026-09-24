@@ -33,5 +33,97 @@
       "min_calib_n": 64,
       "error": "MemoryError: bad allocation"
     }
-  ]
+  ],
+  "mixed_precision": {
+    "added": "2026-09-25",
+    "why": "全量 PTQ 四档全部失败（检出 0，根因：Detect 头被一起量化）。改用混合精度：只量化主干/颈部，Detect 头（或其中解码算子）保 FP32。",
+    "fp32_source": "v11s640_best_v3.onnx",
+    "fp32_mb": 36.18,
+    "graph": {
+      "total_nodes": 318,
+      "head_nodes": 84,
+      "decode_nodes": 24
+    },
+    "class_names": [
+      "crack",
+      "spalling",
+      "efflorescence",
+      "exposed_rebar",
+      "rust",
+      "delamination",
+      "moss"
+    ],
+    "note_mb": "int8_mb 与 fp32_mb 同为「文件大小 MB」口径；见各自 artifact 路径。",
+    "runs": [
+      {
+        "calib_n": 32,
+        "baseline_fp32": {
+          "maxconf": 0.9168,
+          "n_above_025": 97
+        },
+        "variants": [
+          {
+            "tag": "A",
+            "desc": "排除全部 Detect 头",
+            "excluded_nodes": 84,
+            "usable": true,
+            "int8_mb": 11.96,
+            "int8_maxconf": 0.9069,
+            "int8_n_above_025": 95,
+            "artifact": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_quant_mixed\\v11s640_int8_mixed_A.onnx"
+          },
+          {
+            "tag": "B",
+            "desc": "只排除解码算子（cv2/cv3 卷积仍量化）",
+            "excluded_nodes": 24,
+            "usable": true,
+            "int8_mb": 9.72,
+            "int8_maxconf": 0.9075,
+            "int8_n_above_025": 94,
+            "artifact": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_quant_mixed\\v11s640_int8_mixed_B.onnx"
+          }
+        ],
+        "any_usable": true
+      },
+      {
+        "calib_n": 96,
+        "baseline_fp32": {
+          "maxconf": 0.939,
+          "n_above_025": 485
+        },
+        "variants": [
+          {
+            "tag": "A",
+            "desc": "排除全部 Detect 头",
+            "excluded_nodes": 84,
+            "usable": false,
+            "reason": "RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/model.3/conv/Conv' Status Message: bad allocation"
+          },
+          {
+            "tag": "B",
+            "desc": "只排除解码算子（cv2/cv3 卷积仍量化）",
+            "excluded_nodes": 24,
+            "usable": false,
+            "reason": "RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Concat node. Name:'/model.16/Concat' Status Message: bad allocation"
+          }
+        ],
+        "any_usable": false,
+        "note": "标定 96 张时**两档均 OOM 失败**（ONNXRuntimeError: bad allocation），与本机内存上限有关（15.7GB 物理内存，宿主应用常占 5GB+），非标定集本身的问题。⇒ 生效标定规模上限为 32 张。"
+      }
+    ],
+    "conclusion": "混合精度量化**成功**：档 B（只排除解码算子）得 **9.72 MB**，端到端可用；测试集 mAP50 = 0.7109（见 04_results/eval/v11s640_v3_int8{A,B}_test_metrics.json）。本项目不参赛道二，此项作为技术成果记录（见技术报告 §8.2.2）。",
+    "evidence": [
+      "logs/_quant_mixed/mixed_results.json",
+      "logs/_quant_mixed/mixed_results_calib32.json",
+      "logs/_quant_mixed/mixed_results_calib96.json",
+      "logs/_quant_mixed/v11s640_int8_mixed_A.onnx（11.96 MB）",
+      "logs/_quant_mixed/v11s640_int8_mixed_B.onnx（9.72 MB）"
+    ]
+  },
+  "calib_scale_study": {
+    "added": "2026-09-25",
+    "question": "标定集张数（32 vs 96）是否影响混合精度量化可用性？",
+    "answer": "实测：32 张可用、96 张 OOM 不可用。故 96 张这一档**不是**「效果更好」，而是**在本机内存下不可执行**；标定规模未获得提升。",
+    "verified_by": "logs/_quant_mixed/mixed_log_calib96.txt"
+  }
 }
