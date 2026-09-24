@@ -157,7 +157,7 @@ detection → assessment 的跃迁，可直接对接房屋体检「一房一档�
 | `exp_domain_shift.py` | **核心实验 1** | 距离域偏移：降采样模拟远距；找 mAP 崩塌点 vs GSD 理论门槛 |
 | `exp_robustness.py` | 核心实验 2 | 4 种劣化 × 3 档（暗光/模糊/过曝/低对比），看是否触发拒答 |
 | `exp_ablation.py` | 核心实验 3 | 标定误差 / 拒答风险-覆盖率 / 尺度线性度 三组消融 |
-| `step6_quantize.py` | 模型轻量化 | FP32→ONNX→**INT8 静态量化**（赛道二 <10MB、<100ms；**本项目不走赛道二，仅存档**） |
+| `step6_quantize.py` | 模型轻量化 | FP32→ONNX→**INT8 静态量化**。全量 PTQ 四档检出均为 0（§8.2）；改为**混合精度**（保留 Detect 头 FP32、只量化主干）后 **INT8 9.72 MB / mAP50 0.7109**（§8.2.2）。**本项目不参赛道二**，仅作技术成果存档 |
 
 > **02_code 全部 `.py` 清单以 `07_report/技术报告.md` §10.2 为准**（含本轮新增的
 > `_assess_blindzone_impact.py` / `_probe_f1_semantics.py` / `_exp_ablation_boundary.py` /
