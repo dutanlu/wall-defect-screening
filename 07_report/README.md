@@ -156,7 +156,7 @@
 ├── 01_data/                    数据（原始 / 去重 / 统一 / 最终数据集）
 │   ├── dataset/                训练集：images + labels + wall_defects.yaml
 │   └── audit/                  数据阶段审计报告
-├── 02_code/                    全部源码（**28 个 `.py`** = 21 正式 + 7 探针）
+├── 02_code/                    全部源码（**21 个正式模块**，另有 **7 个内部校验/探针脚本**）
 │   ├── gsd.py                  ★ 核心：GSD 标定与可判读性判定
 │   ├── measure.py              ★ 核心：OpenCV 几何量化
 │   ├── grade.py                ★ 核心：国标分级规则
