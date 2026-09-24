@@ -1,8 +1,32 @@
 # 远程仓库快照（实测抓取）
 
-> 抓取时间：2026-09-24 21:0x（北京时间）
+> 抓取时间：2026-09-24 20:57:58（北京时间）
 > 抓取方式：GitHub REST API（`api.github.com`，本机可直连）
 > 说明：本文件是**当时远程状态的原始记录**，不是复述。
+
+---
+
+## 〇、如何自行复核（不依赖本文件的数字）
+
+本文件是**某一时刻的快照**；仓库内容若在此之后有更新，下方数字会随之变化。
+因此这里给出**三条可独立执行的复核命令** —— 评审可直接运行，得到的永远是当下真值：
+
+```bash
+# 1. 仓库是否公开可访问、许可证是什么
+curl -s https://api.github.com/repos/dutanlu/wall-defect-screening
+
+# 2. 当前 main 的提交号与时间
+curl -s https://api.github.com/repos/dutanlu/wall-defect-screening/commits/main
+
+# 3. 全量文件列表（可自行统计文件数与体积）
+curl -s "https://api.github.com/repos/dutanlu/wall-defect-screening/git/trees/main?recursive=1"
+```
+
+或直接用 git 读取远程 HEAD（不需要克隆）：
+
+```bash
+git ls-remote https://github.com/dutanlu/wall-defect-screening.git HEAD
+```
 
 ---
 
@@ -17,7 +41,7 @@
 | 默认分支 | `main` |
 | 许可证 | **MIT**（MIT License）|
 | 创建时间 | 2026-09-24T02:18:45Z |
-| 最后推送 | 2026-09-24T12:49:07Z |
+| 最后推送 | 2026-09-24T12:56:32Z |
 | Stars / Forks | 0 / 0 |
 
 > 注：旧地址 `github.com/dutanlu/-` 由 GitHub 自动 **301 重定向**到新地址。
@@ -28,24 +52,24 @@
 
 | 项目 | 值 |
 |---|---|
-| main HEAD | `84baf1107c412b429bd294f5dc076df6b572d6c4` |
-| 提交信息 | LICENSE 保持纯净以通过 GitHub 识别，附加说明独立为 LICENSE-NOTES.md |
-| 提交时间 | 2026-09-24T12:47:36Z |
+| main HEAD | `3aa5db9e887a6195a2c65e04c492d8a24c14b65b` |
+| 提交信息 | 开源收尾完成报告：改名 + 许可证修复 + tag 全部完成 |
+| 提交时间 | 2026-09-24T12:56:20Z |
 | tag 名 | `v1.0-submission` |
 | tag 类型 | 附注标签（annotated）|
-| tag 指向 | `84baf1107c412b429bd294f5dc076df6b572d6c4` |
+| tag 指向 | `3aa5db9e887a6195a2c65e04c492d8a24c14b65b` |
 
 ---
 
 ## 三、内容清单
 
 - **文件数：219**
-- **体积：2.56 MB**
+- **体积：2.57 MB**
 
 ### 顶层结构
 
 ```
-logs                            115 个文件     1204.4 KB
+logs                            115 个文件     1218.2 KB
 02_code                          29 个文件      505.5 KB
 07_report                         9 个文件      378.0 KB
 04_results                       41 个文件      276.8 KB
@@ -215,7 +239,7 @@ logs                            115 个文件     1204.4 KB
      3250  logs/_PT_SCAN.md
      3712  logs/_PT_WIDE.md
      4174  logs/_QUANT_RESCUE_CONCLUSION.md
-     5968  logs/_REMOTE_EVIDENCE.md
+    18879  logs/_REMOTE_EVIDENCE.md
      8760  logs/_RESTORE_GRADIO.md
      9088  logs/_RISK_COVERAGE.md
       871  logs/_STATUS_NOW.md
@@ -271,7 +295,7 @@ logs                            115 个文件     1204.4 KB
      7502  logs/_sec78_draft.md
      2695  logs/_wheelhouse_cleanup_20260922.md
      3790  logs/_zip_verify.md
-     4870  logs/_收尾操作卡_Tag与改名.md
+     6074  logs/_开源收尾完成报告.md
     12649  logs/环境事故报告_20260921.md
      1515  requirements.txt
     17347  审查报告_交付物完整性与缺口.md
