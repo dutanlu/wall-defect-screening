@@ -200,29 +200,34 @@
 
 ## 快速复现
 
+> **本工程包已自带数据集与两个主力权重，拷贝到任意位置即可运行**（脚本内路径全部基于
+> 文件位置推导；`dataset/wall_defects.yaml` 的 `path` 若因拷贝而失效，`evaluate.py` /
+> `train.py` 会**就地自愈**为当前位置 —— 见 `code/common.py::ensure_dataset_yaml`）。
+> 下例假设工程包位于 `<工程包>`，请按实际路径替换。
+
 ```powershell
 $PY = "D:\下载\python.exe"
-cd "D:\pythonstudy 备份\创新题\外墙缺陷筛查\02_code"
-
-# 训练（若已有权重可跳过）
-& $PY train.py --runs=v8s640,v11s640
+cd "<工程包>\code"
 
 # 测试集评估（报告中引用的数字只能来自这里）
 & $PY evaluate.py --all
 
-# 实验（主力权重：03_weights/v11s640_best.pt）
-& $PY exp_domain_shift.py --weights=..\03_weights\v11s640_best.pt
-& $PY exp_robustness.py   --weights=..\03_weights\v11s640_best.pt
-& $PY exp_ablation.py     --weights=..\03_weights\v11s640_best.pt
+# 训练（若已有权重可跳过）
+& $PY train.py --runs=v8s640,v11s640
+
+# 实验（主力权重：weights/v11s640_best.pt）
+& $PY exp_domain_shift.py --weights=..\weights\v11s640_best.pt
+& $PY exp_robustness.py   --weights=..\weights\v11s640_best.pt
+& $PY exp_ablation.py     --weights=..\weights\v11s640_best.pt
 
 # INT8 量化（早期尝试记录，本项目不走赛道二；默认权重已是 v11s640）
 & $PY step6_quantize.py
 
 # 单图推理
-& $PY pipeline.py --image=wall.jpg --model=..\03_weights\v11s640_best.pt --calib-object-px=420
+& $PY pipeline.py --image=wall.jpg --model=..\weights\v11s640_best.pt --calib-object-px=420
 
 # Web 演示
-& $PY ..\06_deploy\app.py
+& $PY ..\deploy\app.py
 ```
 
 ---

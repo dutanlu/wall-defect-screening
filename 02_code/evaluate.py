@@ -217,7 +217,9 @@ def evaluate_one(weights: Path, name: str, data: str, imgsz: int,
 
 
 def main() -> None:
-    data = argv_flag("data", str(DATASET_DIR / DATASET_YAML_NAME))
+    # 兼容工程包被拷贝到别的机器：若 yaml 里的 path 仍指向训练机旧路径，就地自愈
+    from common import ensure_dataset_yaml, DATASET_YAML_NAME
+    data = str(ensure_dataset_yaml(str(DATASET_DIR / DATASET_YAML_NAME)))
     split = argv_flag("split", "test")
     device = argv_flag("device", "0")
     imgsz = int(argv_flag("imgsz", "640"))

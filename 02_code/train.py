@@ -290,7 +290,9 @@ def ensure_arial_font() -> None:
 def main() -> None:
     runs_sel = argv_flag("runs")
     epochs = argv_flag("epochs")
-    data = argv_flag("data", str(DATASET_DIR / DATASET_YAML_NAME))
+    # 兼容工程包被拷贝到别的机器：若 yaml 里的 path 仍指向训练机旧路径，就地自愈
+    from common import ensure_dataset_yaml, DATASET_YAML_NAME
+    data = str(ensure_dataset_yaml(str(DATASET_DIR / DATASET_YAML_NAME)))
     device = argv_flag("device", "0")
     resume = argv_flag("resume")
     # ----------------------------------------------------------------------

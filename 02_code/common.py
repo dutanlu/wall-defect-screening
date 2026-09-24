@@ -51,6 +51,50 @@ LOG_DIR: Path = PROJ_ROOT / "logs"
 DATASET_YAML_NAME: str = "wall_defects.yaml"
 
 # --------------------------------------------------------------------------
+# 布局自适应（2026-09-25 新增）：兼容「工程包目录重命名」后的拷贝
+# --------------------------------------------------------------------------
+# 源工程布局：01_data/dataset, 03_weights, 04_results, 05_quantify_grade,
+#             06_deploy, 07_report
+# 评测包布局：dataset,        weights,    results,   grading_rules,
+#             deploy,         report
+# 两者常量名完全一致、仅目录名不同，故此处做一次探测：经典目录不存在、
+# 而重命名目录存在时，把常量改指后者。源工程内经典目录存在 ⇒ 行为不变。
+def _adapt_layout() -> None:
+    globals_ = globals()
+
+    def pick(canon: "Path", alt_name: str) -> "Path":
+        alt = PROJ_ROOT / alt_name
+        return alt if (not canon.exists() and alt.exists()) else canon
+
+    # 注意：不能写 `DATA_DIR = pick(DATA_DIR, ...)` —— 赋值会让 DATA_DIR
+    # 在函数内变成局部变量，右侧读取时 UnboundLocalError（已实测踩到）。
+    # 仅当「经典 01_data/dataset 不存在、而 <root>/dataset 存在」时才改写
+    # DATASET_DIR；否则保持原值（源工程即此分支）。
+    # 早期版本在这里无条件 globals_["DATASET_DIR"] = data_dir，
+    # 结果把源工程的 DATASET_DIR 从 01_data/dataset 错改成 01_data（已实测踩到）。
+    classic_data = globals_["DATA_DIR"]
+    alt_data = PROJ_ROOT / "dataset"
+    if not classic_data.exists() and alt_data.exists():
+        globals_["DATA_DIR"] = alt_data
+        globals_["DATASET_DIR"] = alt_data
+        globals_["RAW_DIR"] = alt_data / "raw"
+        globals_["DEDUP_DIR"] = alt_data / "dedup"
+        globals_["UNIFIED_DIR"] = alt_data / "unified"
+        globals_["AUDIT_DIR"] = alt_data / "audit"
+    globals_["WEIGHTS_DIR"] = pick(globals_["WEIGHTS_DIR"], "weights")
+    globals_["RESULT_DIR"] = pick(globals_["RESULT_DIR"], "results")
+    globals_["TRAIN_DIR"] = globals_["RESULT_DIR"] / "train"
+    globals_["EVAL_DIR"] = globals_["RESULT_DIR"] / "eval"
+    globals_["VIS_DIR"] = globals_["RESULT_DIR"] / "vis"
+    globals_["ABLATION_DIR"] = globals_["RESULT_DIR"] / "ablation"
+    globals_["QUANT_DIR"] = pick(globals_["QUANT_DIR"], "grading_rules")
+    globals_["DEPLOY_DIR"] = pick(globals_["DEPLOY_DIR"], "deploy")
+    globals_["REPORT_DIR"] = pick(globals_["REPORT_DIR"], "report")
+
+
+_adapt_layout()
+
+# --------------------------------------------------------------------------
 # 统一类别体系（7 类，全项目唯一真源，任何脚本不得另行硬编码）
 # --------------------------------------------------------------------------
 # 变更记录：2026-09-20 由 6 类扩展为 7 类，新增 moss。
@@ -403,3 +447,53 @@ def write_dataset_yaml(path, train: str, val: str, test: str | None = None,
     lines.append("")
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text("\n".join(lines), encoding="utf-8")
+
+
+# --------------------------------------------------------------------------
+# dataset yaml 可移植性自愈（2026-09-25 新增）
+# --------------------------------------------------------------------------
+def ensure_dataset_yaml(path=None) -> "Path":
+    """保证 dataset yaml 的 `path:` 指向**当前**数据集目录，而不是训练机的旧路径。
+
+    为什么需要：
+        write_dataset_yaml 刻意写绝对路径（见该函数 docstring 的实测说明），
+        但绝对路径一旦随工程包拷到别的机器／别的盘符就失效。
+        工程包里的 yaml 是训练时生成的，`path` 记的是当时的路径；
+        评委拷走后 evaluate.py / train.py 直接读它 ⇒ FileNotFoundError。
+
+    做法：
+        读 yaml → 取 `path:` 与 `train:`/`val:`/`test:` → 若
+        `(path / train)` 不存在，而 `DATASET_DIR / train` 存在，则用当前
+        DATASET_DIR 重写 yaml 的 `path:`（其余字段原样保留）。
+
+    返回重写后的 yaml 路径。幂等；yaml 不存在或路径本就正确时不动作。
+    """
+    import re
+
+    p = Path(path) if path is not None else (DATASET_DIR / DATASET_YAML_NAME)
+    if not p.exists():
+        return p
+
+    text = p.read_text(encoding="utf-8")
+    m = re.search(r"^path:\s*(.+?)\s*$", text, flags=re.M)
+    if m is None:
+        return p
+
+    old_root = Path(m.group(1).strip().strip('"').strip("'"))
+    # 取一个划分名用于探测（优先 train）
+    m_split = re.search(r"^train:\s*(.+?)\s*$", text, flags=re.M)
+    probe_rel = m_split.group(1).strip().strip('"').strip("'") if m_split else "images/train"
+
+    if (old_root / probe_rel).exists():
+        return p                      # 旧路径仍可用，不动
+    if not (DATASET_DIR / probe_rel).exists():
+        return p                      # 当前路径也没有，别乱改
+
+    new_root = DATASET_DIR.resolve().as_posix()
+    text2 = re.sub(r"^path:\s*.+?\s*$", "path: " + new_root,
+                   text, count=1, flags=re.M)
+    if text2 != text:
+        p.write_bytes(text2.replace("\r\n", "\n")
+                      .replace("\n", "\r\n").encode("utf-8"))
+        print(f"[ensure_dataset_yaml] 已把 {p.name} 的 path 修正为: {new_root}")
+    return p
