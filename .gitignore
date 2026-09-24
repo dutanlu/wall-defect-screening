@@ -109,3 +109,8 @@ desktop.ini
 # ---------- 本工作流工具的本地状态（不含代码价值）----------
 .workbuddy/
 .genie
+
+# ---------- 多种子方差统计：三种子跑齐前是占位产物 ----------
+# _multiseed_variance.py 会逐次覆盖它。只有 seeds 里 123/2024 都为非 null 时
+# 才是有意义的结论文件，届时再手动 `git add -f` 纳入。
+04_results/eval/multiseed_variance.json

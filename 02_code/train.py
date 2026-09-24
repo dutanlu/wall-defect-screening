@@ -293,6 +293,32 @@ def main() -> None:
     data = argv_flag("data", str(DATASET_DIR / DATASET_YAML_NAME))
     device = argv_flag("device", "0")
     resume = argv_flag("resume")
+    # ----------------------------------------------------------------------
+    # [2026-09-24 新增] 多随机种子支持（--seed / --tag）
+    #
+    # 动机：目前所有实验都是 seed=42 单种子。但本项目的核心结论之一
+    #   「类平衡损失未带来可测量的精度提升」依赖的是**组间差值 + CI 半宽**
+    #   的判据；若只跑一个种子，就无法回答「这个差值会不会只是种子抖动？」
+    #   ⇒ 需要多种子复现，把「种子导致的方差」也量化出来。
+    #
+    # 设计：
+    #   --seed=<int>  覆盖 COMMON_ARGS 的 seed（并保持 deterministic=True）
+    #   --tag=<str>   给 run 名加后缀，避免多个种子写同一个输出目录
+    #                 （ultralytics exist_ok=True 会**静默覆盖**，必须分开）
+    #   例：python train.py --runs=v11s640_clsbal --seed=123 --tag=_s123
+    #       ⇒ 输出到 04_results/train/v11s640_clsbal_s123/
+    #
+    # ⚠️ 不传 --tag 时行为与改动前**逐键相同**（run 名不加后缀）。
+    # ----------------------------------------------------------------------
+    seed_override = argv_flag("seed")
+    tag = argv_flag("tag", "") or ""
+    if seed_override is not None:
+        try:
+            seed_val = int(seed_override)
+        except ValueError:
+            log(f"!! --seed 必须是整数，收到 {seed_override!r}")
+            return
+        log(f"多随机种子模式：seed={seed_val}，run 名后缀={tag!r}")
 
     keys = list(RECIPES) if not runs_sel else [k.strip() for k in runs_sel.split(",")]
     bad = [k for k in keys if k not in RECIPES]
@@ -336,6 +362,8 @@ def main() -> None:
     records = []
     for key in keys:
         cfg = RECIPES[key]
+        # [2026-09-24] 实际 run 名 = key + tag。tag 为空时与原行为完全一致。
+        run_name = f"{key}{tag}"
         # 解析成本地路径，避免联网下载失败（本机 github 隧道 502）
         resolved = resolve_weight(cfg["weight"])
         if resolved == cfg["weight"]:
@@ -351,12 +379,12 @@ def main() -> None:
         # 确实存在时才置位；否则明确提示「将从零训练」，不假装续上了。
         resuming = False
         if resume:
-            last_pt = TRAIN_DIR / key / "weights" / "last.pt"
+            last_pt = TRAIN_DIR / run_name / "weights" / "last.pt"
             if last_pt.exists():
                 resolved = str(last_pt)
                 resuming = True
             else:
-                log(f"!! {key} 未找到 {last_pt}，--resume 不生效，将从零训练")
+                log(f"!! {run_name} 未找到 {last_pt}，--resume 不生效，将从零训练")
 
         args = dict(COMMON_ARGS)
         # [2026-09-23 新增] 按实验覆盖参数。
@@ -366,13 +394,16 @@ def main() -> None:
         # 未写该字段的实验 args 与改动前**逐键相同**，行为不变。
         if cfg.get("aug"):
             args.update(cfg["aug"])
+        # [2026-09-24] 多种子覆盖。放在 aug 之后，保证「种子」是最后的显式决定。
+        if seed_override is not None:
+            args["seed"] = seed_val
         args.update(
             data=str(data),
             imgsz=cfg["imgsz"],
             batch=cfg["batch"],
             device=device,
             project=str(TRAIN_DIR),
-            name=key,
+            name=run_name,
         )
         if resuming:
             args["resume"] = True
@@ -380,14 +411,15 @@ def main() -> None:
             args["epochs"] = int(epochs)
 
         log("=" * 70)
-        log(f"[{key}] {cfg['note']}")
+        log(f"[{run_name}] {cfg['note']}")
         log(f"  weight={resolved} imgsz={cfg['imgsz']} batch={cfg['batch']} "
-            f"epochs={args['epochs']} device={device} resume={resuming}")
+            f"epochs={args['epochs']} device={device} resume={resuming} "
+            f"seed={args.get('seed')} cls_pw={args.get('cls_pw')}")
         log("=" * 70)
 
-        rec = {"run": key, "weight": resolved, "imgsz": cfg["imgsz"],
+        rec = {"run": run_name, "weight": resolved, "imgsz": cfg["imgsz"],
                "batch": cfg["batch"], "epochs": args["epochs"], "note": cfg["note"],
-               "status": "pending"}
+               "seed": args.get("seed"), "status": "pending"}
         t0 = time.time()
         try:
             model = YOLO(resolved)
@@ -399,7 +431,7 @@ def main() -> None:
             rd = getattr(results, "results_dict", None) or {}
             rec["metrics"] = {k: (round(float(v), 4) if isinstance(v, (int, float)) else v)
                               for k, v in rd.items()}
-            save_dir = str(getattr(results, "save_dir", TRAIN_DIR / key))
+            save_dir = str(getattr(results, "save_dir", TRAIN_DIR / run_name))
             rec["save_dir"] = save_dir
 
             best = Path(save_dir) / "weights" / "best.pt"
@@ -410,8 +442,10 @@ def main() -> None:
                 log(f"  最佳权重: {best} ({mb:.2f} MB)")
 
                 # 把 best.pt 也归到 03_权重/ 便于统一取用
+                # [2026-09-24] 用 run_name 而非 key：多种子时若用 key，
+                # 三个种子会反复覆盖同一个 v11s640_clsbal_best.pt。
                 import shutil
-                dst = WEIGHTS_DIR / f"{key}_best.pt"
+                dst = WEIGHTS_DIR / f"{run_name}_best.pt"
                 shutil.copy2(best, dst)
                 log(f"  已归档: {dst}")
 
@@ -423,15 +457,53 @@ def main() -> None:
             log(f"  !! 训练失败: {e}")
         records.append(rec)
 
+    # ----------------------------------------------------------------------
+    # [2026-09-24 修复] train_summary.json 必须**按 run 名合并**，不能整体重写。
+    #
+    # 踩过的坑：此前这里直接 dump 本次的 records，导致**任何一次 train.py 调用
+    #   都会把整个 summary 覆盖掉**。后果实例：2026-09-24 为验证多种子入口跑的
+    #   1 轮 smoke（seed=999）把 100 轮的正式记录冲成了 mAP50=0.0001，
+    #   而该文件是报告数字的来源之一 ⇒ **证据被静默污染**。
+    #
+    # 现在的语义：
+    #   · 读回既有 results，按 run 名做「upsert」——同名覆盖、异名追加；
+    #   · 顶层的 data_yaml / recipes / classes 一并刷新（它们本就是全局定义）；
+    #   · 读回失败（文件损坏等）时**不静默丢弃**，改为保留旧内容并另存一份
+    #     `.corrupt_<时间戳>`，再写新文件。
+    # ----------------------------------------------------------------------
+    summary_path = EVAL_DIR / "train_summary.json"
+    merged, kept = [], 0
+    if summary_path.exists():
+        try:
+            with open(summary_path, "r", encoding="utf-8") as f:
+                old = json.load(f)
+            merged = list(old.get("results") or [])
+            kept = len(merged)
+        except Exception as e:
+            stamp = time.strftime("%Y%m%d_%H%M%S")
+            broken = summary_path.with_name(f"train_summary.json.corrupt_{stamp}")
+            try:
+                shutil.copy2(summary_path, broken)
+                log(f"!! 既有 train_summary.json 解析失败（{e!r}），已另存 {broken.name}")
+            except Exception as e2:
+                log(f"!! 既有 train_summary.json 解析失败（{e!r}），另存也失败：{e2!r}")
+            merged, kept = [], 0
+
+    new_names = {r["run"] for r in records}
+    replaced = sum(1 for r in merged if r.get("run") in new_names)
+    merged = [r for r in merged if r.get("run") not in new_names] + records
+
     dump_json(
         {
             "data_yaml": str(data),
             "recipes": RECIPES,
-            "results": records,
+            "results": merged,
             "classes": CLASSES,
         },
-        EVAL_DIR / "train_summary.json",
+        summary_path,
     )
+    log(f"train_summary：新增/覆盖 {len(records)} 条"
+        f"（覆盖 {replaced} 条，保留其它 {kept - replaced} 条），现共 {len(merged)} 条")
 
     log("=" * 70)
     for r in records:
