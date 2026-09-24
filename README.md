@@ -612,7 +612,7 @@ python pipeline.py --image=wall.jpg --calib-brick
 
 | 项 | 值 |
 |---|---|
-| 仓库地址 | **https://github.com/dutanlu/-** |
+| 仓库地址 | **https://github.com/dutanlu/wall-defect-screening** |
 | 可见性 | public（无需登录即可访问） |
 | 分支 | `main` |
 | 收录 | **215 文件 / 2.53 MB** |
