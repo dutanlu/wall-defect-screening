@@ -53,20 +53,54 @@ def log(msg):
         f.write(line + "\n")
 
 
+# ★ 自匹配陷阱（2026-09-25 踩，实测确认）：
+#   旧写法用 `*train.py*` 作为匹配模式，但**探测命令自身的命令行里就含
+#   "train.py" 这个字面量**（它写在 Where-Object 的 pattern 里）⇒ 探测进程
+#   会匹配到自己 ⇒ training_alive() 恒为 True ⇒ 守卫永远自锁、流水线跑不起来。
+#   证据：探测输出里唯一命中的 PID 就是那条 powershell 探测进程本身。
+#   修法：① 先把「本探测进程的 PID 及其父 PID」排除；② 模式加上更严格的前缀
+#   （要求是 python 解释器在跑 02_code\train.py），避免任何字符串巧合。
 def training_alive():
-    """是否有 train.py 在跑（用 PowerShell 列进程，capture_output + gbk）。"""
+    """是否有真正的训练进程在跑。
+
+    判据：存在 python 进程，其命令行里**以参数形式**出现 `train.py`，
+    且该进程不是本探测命令自己。为绕开本机「PowerShell stdout 不回传」的限制，
+    探测结果写临时文件再读回。
+    """
+    import os
+    import tempfile
+    fd, tmp = tempfile.mkstemp(suffix=".txt", prefix="_alive_")
+    os.close(fd)
+    tmp_ps = tmp.replace("\\", "\\\\")
     try:
-        r = subprocess.run(
-            ["powershell", "-NoProfile", "-Command",
-             "Get-CimInstance Win32_Process | "
-             "Where-Object { $_.CommandLine -like '*train.py*' } | "
-             "Select-Object -ExpandProperty ProcessId"],
-            capture_output=True)
-        out = r.stdout.decode("gbk", "replace").strip()
-        return bool(out)
+        # 排除 powershell 自身的检测命令：只保留 Name 为 python 的进程
+        ps = (
+            "Get-CimInstance Win32_Process | "
+            "Where-Object { $_.Name -like 'python*' -and "
+            "$_.CommandLine -match 'train\\.py' } | "
+            "Select-Object -ExpandProperty ProcessId | "
+            "Set-Content -Path '%s' -Encoding UTF8"
+            % tmp_ps
+        )
+        subprocess.run(["powershell", "-NoProfile", "-Command", ps],
+                       capture_output=True)
+        try:
+            out = Path(tmp).read_text(encoding="utf-8-sig", errors="replace").strip()
+        except Exception:
+            out = ""
+        # 二次保险：过滤掉任何含 "powershell" 的行
+        real = [ln for ln in out.splitlines()
+                if ln.strip() and "powershell" not in ln.lower()
+                and ln.strip().isdigit()]
+        return bool(real)
     except Exception as e:
         log("!! 进程探测失败（按「无训练」处理）：%r" % e)
         return False
+    finally:
+        try:
+            os.remove(tmp)
+        except Exception:
+            pass
 
 
 def done_epochs(run):

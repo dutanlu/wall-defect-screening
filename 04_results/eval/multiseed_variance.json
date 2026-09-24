@@ -1,0 +1,81 @@
+{
+  "seeds": {
+    "42": {
+      "metrics/mAP50(B)": 0.72812,
+      "metrics/mAP50-95(B)": 0.44772,
+      "metrics/precision(B)": 0.76518,
+      "metrics/recall(B)": 0.65846
+    },
+    "123": {
+      "metrics/mAP50(B)": 0.7191,
+      "metrics/mAP50-95(B)": 0.42977,
+      "metrics/precision(B)": 0.7566,
+      "metrics/recall(B)": 0.66266
+    },
+    "2024": {
+      "metrics/mAP50(B)": 0.72228,
+      "metrics/mAP50-95(B)": 0.43977,
+      "metrics/precision(B)": 0.74358,
+      "metrics/recall(B)": 0.65909
+    }
+  },
+  "notes": [],
+  "baseline": {
+    "metrics/mAP50(B)": 0.72296,
+    "metrics/mAP50-95(B)": 0.44105,
+    "metrics/precision(B)": 0.77072,
+    "metrics/recall(B)": 0.66926
+  },
+  "summary": {
+    "metrics/mAP50(B)": {
+      "mean": 0.7232,
+      "std": 0.0046,
+      "n": 3
+    },
+    "metrics/mAP50-95(B)": {
+      "mean": 0.4391,
+      "std": 0.009,
+      "n": 3
+    },
+    "metrics/precision(B)": {
+      "mean": 0.7551,
+      "std": 0.0109,
+      "n": 3
+    },
+    "metrics/recall(B)": {
+      "mean": 0.6601,
+      "std": 0.0023,
+      "n": 3
+    }
+  },
+  "verdicts": {
+    "mAP50": {
+      "base": 0.723,
+      "clsbal_mean": 0.7232,
+      "diff": 0.0002,
+      "seed_std": 0.0046,
+      "diff_within_seed_std": true
+    },
+    "mAP50-95": {
+      "base": 0.441,
+      "clsbal_mean": 0.4391,
+      "diff": -0.002,
+      "seed_std": 0.009,
+      "diff_within_seed_std": true
+    },
+    "precision": {
+      "base": 0.7707,
+      "clsbal_mean": 0.7551,
+      "diff": -0.0156,
+      "seed_std": 0.0109,
+      "diff_within_seed_std": false
+    },
+    "recall": {
+      "base": 0.6693,
+      "clsbal_mean": 0.6601,
+      "diff": -0.0092,
+      "seed_std": 0.0023,
+      "diff_within_seed_std": false
+    }
+  }
+}

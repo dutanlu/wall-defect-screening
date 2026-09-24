@@ -67,6 +67,27 @@
       "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal_s123",
       "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal_s123\\weights\\best.pt",
       "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s640_clsbal_s2024",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "epochs": 100,
+      "note": "类平衡损失：cls_pw=0.5 按逆频率加权（对照 v11s640）",
+      "seed": 2024,
+      "status": "ok",
+      "seconds": 8293.3,
+      "metrics": {
+        "metrics/precision(B)": 0.7591,
+        "metrics/recall(B)": 0.6275,
+        "metrics/mAP50(B)": 0.6831,
+        "metrics/mAP50-95(B)": 0.4189,
+        "fitness": 0.4189
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal_s2024",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal_s2024\\weights\\best.pt",
+      "best_pt_mb": 18.33
     }
   ],
   "classes": [

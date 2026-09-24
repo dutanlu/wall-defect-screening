@@ -60,8 +60,8 @@ CLASSES: list[str] = [
     "crack",          # 裂缝 / 开裂
     "spalling",       # 剥落 / 掉块 / 砖块缺失 / 混凝土脱落
     "efflorescence",  # 泛碱 / 渗水 / 水渍 / 潮湿
-    "exposed_rebar",  # 露筋        （当前主力数据源暂无样本，待补数据源）
-    "rust",           # 锈迹 / 钢筋锈蚀（当前主力数据源暂无样本，待补数据源）
+    "exposed_rebar",  # 露筋        （V3 已并入：HRCDS 源 1389 框）
+    "rust",           # 锈迹 / 钢筋锈蚀（V3 已并入：Urban 等源 13685 框）
     "delamination",   # 空鼓 / 分层 / 起皮
     "moss",           # 苔藓 / 生物附着  ← 2026-09-20 新增
 ]
