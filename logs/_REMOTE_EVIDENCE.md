@@ -52,12 +52,12 @@ git ls-remote https://github.com/dutanlu/wall-defect-screening.git HEAD
 
 | 项目 | 值 |
 |---|---|
-| main HEAD | `3aa5db9e887a6195a2c65e04c492d8a24c14b65b` |
+| main HEAD | 见上方 §〇 的复核命令（快照值：`2389cc24`） |
 | 提交信息 | 开源收尾完成报告：改名 + 许可证修复 + tag 全部完成 |
 | 提交时间 | 2026-09-24T12:56:20Z |
 | tag 名 | `v1.0-submission` |
 | tag 类型 | 附注标签（annotated）|
-| tag 指向 | `3aa5db9e887a6195a2c65e04c492d8a24c14b65b` |
+| tag 指向 | 与 main HEAD 一致（见 §〇 复核命令） |
 
 ---
 
