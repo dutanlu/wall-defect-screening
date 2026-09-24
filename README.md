@@ -625,6 +625,9 @@ python pipeline.py --image=wall.jpg --calib-brick
 
 本仓库的**源代码与文档**采用 **MIT 许可**，全文见 [`LICENSE`](LICENSE)。
 
+版权归属、以及**模型权重与训练数据的许可边界**（不在 MIT 覆盖范围内），
+另见 [`LICENSE-NOTES.md`](LICENSE-NOTES.md)。
+
 ### 数据与权重**不在本仓库中**
 
 | 内容 | 是否入库 | 说明 |
