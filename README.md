@@ -608,6 +608,19 @@ python pipeline.py --image=wall.jpg --calib-brick
 
 ## 开源与许可
 
+### 本作品已开源
+
+| 项 | 值 |
+|---|---|
+| 仓库地址 | **https://github.com/dutanlu/-** |
+| 可见性 | public（无需登录即可访问） |
+| 分支 | `main` |
+| 收录 | **215 文件 / 2.53 MB** |
+| 许可证 | **MIT**（代码与文档） |
+
+> 完整记录与**如何自行核验**（含 GitHub API 统计命令）见
+> [`07_report/开源发布记录.md`](07_report/开源发布记录.md)。
+
 ### 许可
 
 本仓库的**源代码与文档**采用 **MIT 许可**，全文见 [`LICENSE`](LICENSE)。
