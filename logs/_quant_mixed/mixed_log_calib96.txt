@@ -1,39 +1,38 @@
-[21:53:05] ==============================================================================
-[21:53:05] 量化第②步：混合量化（排除 Detect 头）
-[21:53:05] ==============================================================================
-[21:53:05] FP32 源 : v11s640_best.onnx (36.14 MB)
-[21:53:05] TMP 工作: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed
-[21:53:05] 已复制到 ASCII 路径: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed\v11s640_fp32.onnx
-[21:53:06] opset 已就绪（缓存）: v11s640_fp32_opset13.onnx
-[21:53:06] 量化输入: v11s640_fp32_opset13_pre.onnx (36.16 MB)
-[21:53:06] 
-[21:53:06] 图: 总节点 318 / Detect 头(/model.23/) 84 / 其中解码算子 24
-[21:53:07] 
-[21:53:07] 分层校准集: 96 张（请求 96）
-[21:53:07]   val 各类图数: {'crack': 41, 'efflorescence': 72, 'spalling': 32, 'moss': 25, 'exposed_rebar': 92, 'rust': 239, 'delamination': 104}
-[21:53:07] 
-[21:53:07] 【基线】FP32 推理 96 张
-[21:53:18]   FP32 maxconf=0.9281  n(>0.25)=117
-[21:53:18] 
-[21:53:18] ------------------------------------------------------------------------------
-[21:53:18] 【档 A】排除全部 Detect 头 —— 排除 84 节点
-[21:53:18] ------------------------------------------------------------------------------
-[21:53:18]   quantize_static: exclude=84 节点  method=Percentile  per_channel=True
-[21:54:07]     !! 失败 Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Softmax node. Name:'/model.23/dfl/Softmax' Status Message: N:\_work\1\s\onnxruntime\core\framework\bfc_arena.cc:359 onnxrunt
-[21:54:10]   判定：量化未产出 ⇒ 不可用。原因：Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Softmax node. Name:'/model.23/dfl/Softmax' Status Message: N:\_work\1\s\onnxruntime\core\framework\bfc_arena.cc:359 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 2150400
-
-[21:54:11] 
-[21:54:11] ------------------------------------------------------------------------------
-[21:54:11] 【档 B】只排除解码算子（cv2/cv3 卷积仍量化） —— 排除 24 节点
-[21:54:11] ------------------------------------------------------------------------------
-[21:54:11]   quantize_static: exclude=24 节点  method=Percentile  per_channel=True
-[21:55:02]     !! 失败 MemoryError: Unable to allocate 4.69 MiB for an array with shape (3, 640, 640) and data type float32
-[21:55:05]   判定：量化未产出 ⇒ 不可用。原因：MemoryError: Unable to allocate 4.69 MiB for an array with shape (3, 640, 640) and data type float32
-[21:55:05] 
-[21:55:05] ==============================================================================
-[21:55:05] 汇总
-[21:55:05] ==============================================================================
-[21:55:05]   FP32 基线 maxconf = 0.9281，n(>0.25) = 117
-[21:55:05]   档 A: 量化失败（Fail: [ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while runnin）
-[21:55:05]   档 B: 量化失败（MemoryError: Unable to allocate 4.69 MiB for an array with shape (3, 640, 640) a）
-[21:55:05]   ⇒ 两档均不可用，属可定位敏感层的负结果
+[23:49:38] ==============================================================================
+[23:49:38] 量化第②步：混合量化（排除 Detect 头）
+[23:49:38] ==============================================================================
+[23:49:38] FP32 源 : v11s640_best_v3.onnx (36.18 MB)
+[23:49:38] TMP 工作: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed
+[23:49:38] 已复制到 ASCII 路径: C:\Users\dutanlu\AppData\Local\Temp\v11s_quant_mixed\v11s640_best_v3_fp32.onnx
+[23:49:39] opset 已满足: 13 >= 13，无需转换
+[23:49:40] 量化输入: v11s640_best_v3_fp32_pre.onnx (36.16 MB)
+[23:49:40] 
+[23:49:40] 图: 总节点 318 / Detect 头(/model.23/) 84 / 其中解码算子 24
+[23:49:41] 
+[23:49:41] 分层校准集: 96 张（请求 96）
+[23:49:41]   val 各类图数: {'crack': 41, 'efflorescence': 72, 'spalling': 32, 'moss': 25, 'exposed_rebar': 92, 'rust': 239, 'delamination': 104}
+[23:49:41] 
+[23:49:41] 【基线】FP32 推理 96 张
+[23:50:08]   FP32 maxconf=0.9390  n(>0.25)=485
+[23:50:08] 
+[23:50:08] ------------------------------------------------------------------------------
+[23:50:08] 【档 A】排除全部 Detect 头 —— 排除 84 节点
+[23:50:08] ------------------------------------------------------------------------------
+[23:50:08]   quantize_static: exclude=84 节点  method=Percentile  per_channel=True
+[23:51:29]     !! 失败 RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/model.3/conv/Conv' Status Message: bad allocation
+[23:51:33]   判定：量化未产出 ⇒ 不可用。原因：RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/model.3/conv/Conv' Status Message: bad allocation
+[23:51:33] 
+[23:51:33] ------------------------------------------------------------------------------
+[23:51:33] 【档 B】只排除解码算子（cv2/cv3 卷积仍量化） —— 排除 24 节点
+[23:51:33] ------------------------------------------------------------------------------
+[23:51:33]   quantize_static: exclude=24 节点  method=Percentile  per_channel=True
+[23:53:04]     !! 失败 RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Concat node. Name:'/model.16/Concat' Status Message: bad allocation
+[23:53:07]   判定：量化未产出 ⇒ 不可用。原因：RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Concat node. Name:'/model.16/Concat' Status Message: bad allocation
+[23:53:08] 
+[23:53:08] ==============================================================================
+[23:53:08] 汇总
+[23:53:08] ==============================================================================
+[23:53:08]   FP32 基线 maxconf = 0.9390，n(>0.25) = 485
+[23:53:08]   档 A: 量化失败（RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status c）
+[23:53:08]   档 B: 量化失败（RuntimeException: [ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status c）
+[23:53:08]   ⇒ 两档均不可用，属可定位敏感层的负结果
