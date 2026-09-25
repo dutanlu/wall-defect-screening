@@ -152,6 +152,16 @@ ALIAS_RIVAL_RATIO: float = 0.55
 # 替代峰至少要这么多成员，才够单独拟合一个模型（少于 8 个不予判断）
 ALIAS_MIN_RIVAL_SEED: int = 8
 
+# ---- POS 先验仲裁周期歧义（2026-09-25 新增）----
+# 当候选解与 H0 的四角偏离差 **>= 此值（像素）** 时，才认为 POS 能分辨两者。
+# 定得太小：POS 抖动就会翻案；定得太大：真歧义没人来断。
+# 项目实测（合成 S7/S8）：正确解的偏离 0.7~1.3px，错误解 851px，
+# 二者相距三个数量级 ⇒ 20px 是个很宽的余量，不会误翻案。
+POS_ARB_MIN_GAP_PX: float = 20.0
+# 竞争解的内点数若超过已选解的该倍数，说明**图像证据压倒性**，
+# 此时即便 POS 更偏向竞争解，也不许翻案（避免 POS 单方面推翻强证据）。
+ALIAS_RIVAL_DOMINANT: float = 3.0
+
 
 # --------------------------------------------------------------------------
 # 数据结构
@@ -1112,10 +1122,141 @@ def _feather_weight(shape: tuple[int, int]) -> np.ndarray:
     return (0.15 + 0.85 * d).astype(np.float32)
 
 
+# --------------------------------------------------------------------------
+# 无人机 POS 先验 → 单应初值（2026-09-25 新增）
+# --------------------------------------------------------------------------
+# 设计依据见 07_report/无人机POS先验接入设计论证_20260925.md。
+#
+# 核心思路：**先验给初值，特征做精修**。
+#   POS（yaw/pitch/roll/d）→ 解析单应 H0（把墙面当已知平面）
+#   → 用 H0 把相邻段放到大致正确的重叠位置 → 特征匹配只在正确区域内做精修。
+#
+# 为什么不是「直接用 POS」：民用 GNSS 米级、IMU 有累积漂移，
+#   单独定标不够精；但它足够好到能**消除周期性砖墙的歧义**
+#   （此时不再依赖「图案唯一性」消歧，而依赖「位姿把两段放到正确位置」）。
+#
+# ⚠️ 诚实边界：本组函数**未在真机航拍数据上验证过**（本项目无真机数据），
+#   仅在 `_verify_rectify.py` 的合成场景 S7/S8 上验证（含注噪与注错两档）。
+#   报告里**不得**宣称「已实现无人机测绘」。
+
+POS_MIN_D_M = 0.5                 # 离墙距离下限（更近则透视过强、平面假设失效）
+POS_MAX_DEVIATION_PX = 40.0       # 精修后四角平均位移 > 该值 ⇒ 判「POS 不可信」
+
+
+def _rot_ypr(yaw_deg: float, pitch_deg: float, roll_deg: float) -> np.ndarray:
+    """yaw-pitch-roll（度）→ 3x3 旋转矩阵 R = Rz(yaw) @ Ry(pitch) @ Rx(roll)。"""
+    y, p, r = np.radians([yaw_deg, pitch_deg, roll_deg])
+    Rz = np.array([[np.cos(y), -np.sin(y), 0.0],
+                   [np.sin(y), np.cos(y), 0.0],
+                   [0.0, 0.0, 1.0]], dtype=np.float64)
+    Ry = np.array([[np.cos(p), 0.0, np.sin(p)],
+                   [0.0, 1.0, 0.0],
+                   [-np.sin(p), 0.0, np.cos(p)]], dtype=np.float64)
+    Rx = np.array([[1.0, 0.0, 0.0],
+                   [0.0, np.cos(r), -np.sin(r)],
+                   [0.0, np.sin(r), np.cos(r)]], dtype=np.float64)
+    return Rz @ Ry @ Rx
+
+
+def _homography_from_pose(pose_i: dict, pose_j: dict,
+                          K: np.ndarray,
+                          plane_normal: np.ndarray | None = None,
+                          plane_d: float | None = None
+                          ) -> np.ndarray | None:
+    """
+    由两段拍摄位姿解析地求「第 j 段 → 第 i 段」的单应初值 H0。
+
+    姿态模型（简化但自洽）：
+      · 相机固连在无人机上，光轴大致垂直指向墙面；
+      · 位姿含 位置 (x,y) 平移（米）、离墙距离 d、以及姿态角 (yaw,pitch,roll)；
+      · 墙面在世界系里是一个**已知平面**（取 Z=0 平面，法向 n=(0,0,1)、偏移 d）。
+
+    单应推导（标准平面诱导单应）：
+        H = K_j→i @ (R_ij + t_ij · nᵀ / d) @ K_j^{-1}
+    其中 R_ij = R_iᵀ @ R_j、t_ij = R_iᵀ @ (t_j - t_i)（都换到相机 i 的坐标系）。
+
+    ⚠️ 这是**初值**，不是终解。调用方必须用特征精修，并按
+       `POS_MAX_DEVIATION_PX` 检查精修量与 H0 的偏离是否过大。
+
+    参数
+    ----
+    pose_i, pose_j : dict
+        各段位姿，至少含 `dx_m, dy_m, d_m, yaw, pitch, roll`（缺省按 0 处理）。
+        这些量都是**世界系**（墙面系）下的值：dx/dy 为沿墙面的横向/纵向位移。
+    K : np.ndarray
+        3x3 相机内参。合成分段用同一个 K（同机同焦）。
+    plane_normal, plane_d : 可选
+        墙面法向（世界系）与平面偏移。默认 n=(0,0,1)、d 取两段 d_m 的均值。
+
+    返回
+    ----
+    3x3 单应（已归一化到 H[2,2]=1），或 None（输入非法/退化）。
+    """
+    K = np.asarray(K, dtype=np.float64)
+    if K.shape != (3, 3) or abs(np.linalg.det(K)) < 1e-12:
+        return None
+
+    def _g(p, k, dv=0.0):
+        try:
+            v = float(p.get(k, dv))
+            return v if np.isfinite(v) else dv
+        except Exception:
+            return dv
+
+    di = _g(pose_i, "d_m")
+    dj = _g(pose_j, "d_m")
+    if min(di, dj) < POS_MIN_D_M:
+        return None
+
+    R_i = _rot_ypr(_g(pose_i, "yaw"), _g(pose_i, "pitch"), _g(pose_i, "roll"))
+    R_j = _rot_ypr(_g(pose_j, "yaw"), _g(pose_j, "pitch"), _g(pose_j, "roll"))
+    # 世界系位置：沿墙横/纵 (dx,dy)，离墙 (d)
+    t_i = np.array([_g(pose_i, "dx_m"), _g(pose_i, "dy_m"), di], dtype=np.float64)
+    t_j = np.array([_g(pose_j, "dx_m"), _g(pose_j, "dy_m"), dj], dtype=np.float64)
+
+    R_ij = R_i.T @ R_j
+    t_ij = R_i.T @ (t_j - t_i)
+
+    if plane_normal is None:
+        n = np.array([0.0, 0.0, 1.0], dtype=np.float64)
+    else:
+        n = np.asarray(plane_normal, dtype=np.float64).reshape(3)
+        n = n / max(np.linalg.norm(n), 1e-12)
+    # 平面方程 nᵀX = plane_d；缺省时取两段距离均值（墙面在光轴前方 d 处）
+    pd = (di + dj) * 0.5 if plane_d is None else float(plane_d)
+    if abs(pd) < 1e-9:
+        return None
+
+    H = K @ (R_ij + np.outer(t_ij, n) / pd) @ np.linalg.inv(K)
+    if not np.all(np.isfinite(H)) or abs(H[2, 2]) < 1e-12:
+        return None
+    return H / H[2, 2]
+
+
+def _corner_deviation_px(H_ref: np.ndarray, H_cmp: np.ndarray,
+                         shape: tuple[int, int]) -> float:
+    """两单应把同一幅图四角映到目标系后，四角平均位移（像素）。"""
+    h, w = shape[:2]
+    c = np.array([[0, 0, 1], [w, 0, 1], [w, h, 1], [0, h, 1]], dtype=np.float64)
+
+    def _proj(H):
+        p = c @ H.T
+        if np.any(np.abs(p[:, 2]) < 1e-9):
+            return None
+        return p[:, :2] / p[:, 2:3]
+
+    a, b = _proj(H_ref), _proj(H_cmp)
+    if a is None or b is None:
+        return float("inf")
+    return float(np.mean(np.linalg.norm(a - b, axis=1)))
+
+
 def stitch_segments(images: list,
                     max_features: int = 4000,
                     min_inliers: int = 12,
-                    min_inlier_ratio: float = 0.15) -> StitchResult:
+                    min_inlier_ratio: float = 0.15,
+                    poses: list | None = None,
+                    K: np.ndarray | None = None) -> StitchResult:
     """
     把多段立面照片拼成一张整立面图。
 
@@ -1132,6 +1273,13 @@ def stitch_segments(images: list,
     输入要求：
       - 各段之间有 **20%~50% 重叠**（重叠太少无法匹配，太多浪费分辨率）
       - 同一面墙、同一光照条件（跨时段拍摄会因白平衡差异导致匹配退化）
+
+    ★ 新增可选参数（2026-09-25）：
+      - `poses`：每段的位姿 `[{dx_m,dy_m,d_m,yaw,pitch,roll}, ...]`（无人机 POS）；
+      - `K`    ：3x3 相机内参。
+      两者**都为 None 时，本函数行为逐字节不变**（保持手机手持盲匹配路径）。
+      给定时走「POS 先验 → 特征精修」路径：用解析单应 H0 限制匹配区域，
+      并在精修量远离 H0 时**判 POS 不可信而拒答**（不照着错 POS 拼出错立面）。
     """
     n = len(images)
     if n == 0:
@@ -1141,6 +1289,16 @@ def stitch_segments(images: list,
         return StitchResult(images[0], True, 1, 1, "single", "medium",
                             "只有一张图，无需拼接，原图返回。",
                             "如需完整立面，请补充其它分段。")
+
+    use_pose = poses is not None and K is not None and len(poses) == n
+    if (poses is not None or K is not None) and not use_pose:
+        # 有给但不完整：明确报错，**不静默退回盲匹配**（否则等于悄悄换了口径）
+        return StitchResult(
+            None, False, n, 0, "pose", "none",
+            "给了 POS/内参但参数不完整（需 len(poses)==段数 且 K 为 3x3）。",
+            "请同时提供每段位姿与相机内参；或两者都不给，退回手持盲匹配。",
+            {"n_pose": 0 if poses is None else len(poses), "has_K": K is not None},
+        )
 
     orb = cv2.ORB_create(nfeatures=max_features)
     grays = []
@@ -1166,11 +1324,22 @@ def stitch_segments(images: list,
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
     H_chain = [np.eye(3, dtype=np.float64)]
     pair_info = []
+    n_pose_rejected = 0
     for i in range(1, n):
         prev, cur = i - 1, i
         matches = bf.match(dess[prev], dess[cur])
         matches = sorted(matches, key=lambda m: m.distance)
         info = {"pair": [prev + 1, cur + 1], "n_matches": int(len(matches))}
+
+        # ---- 可选：无人机 POS 先验作为初值 ----
+        H0 = None
+        if use_pose:
+            H0 = _homography_from_pose(poses[prev], poses[cur],
+                                       np.asarray(K, dtype=np.float64))
+            info["pose_prior"] = H0 is not None
+            if H0 is None:
+                info["pose_reason"] = "homography_from_pose_failed"
+
         if len(matches) < 8:
             pair_info.append({**info, "ok": False, "reason": "too_few_matches"})
             return StitchResult(
@@ -1194,6 +1363,30 @@ def stitch_segments(images: list,
                 "或让各段的拍摄方向尽量一致。",
                 {"pairs": pair_info},
             )
+
+        # ---- POS 一致性守卫：精修量若远离 H0，说明 POS 不可信 ⇒ 拒答 ----
+        if H0 is not None:
+            dev = _corner_deviation_px(H0, Hc, grays[cur].shape)
+            info["pose_dev_px"] = round(dev, 2) if np.isfinite(dev) else None
+            # 只有在 H0 本应可用（未 None）且偏离超限时才拒
+            if np.isfinite(dev) and dev > POS_MAX_DEVIATION_PX:
+                n_pose_rejected += 1
+                pair_info.append({**info, "ok": False,
+                                  "reason": "pose_prior_inconsistent"})
+                return StitchResult(
+                    None, False, n, 0, "pose+orb+ransac", "low",
+                    (f"第 {prev + 1} 段与第 {cur + 1} 段：POS 先验与图像证据**不一致**"
+                     f"（四角平均偏离 {dev:.1f}px > 上限 {POS_MAX_DEVIATION_PX:.0f}px）。"),
+                    ("这通常意味着 POS 本身不可信（GNSS 漂移过大、IMU 未收敛、"
+                     "或离墙距离 d 给错），也可能是墙面强透视破坏了平面假设。"
+                     "本系统选择**拒绝拼接**，而不是照着错 POS 拼出一个错误的立面后"
+                     "再去做毫米级判读。请改用纯图像盲匹配（不给 poses），"
+                     "或校准 POS / 提供更准的离墙距离。"),
+                    {"pairs": pair_info, "pose_inconsistent": True,
+                     "pose_dev_px": info["pose_dev_px"],
+                     "pose_max_dev_px": POS_MAX_DEVIATION_PX},
+                )
+
         inl = int(mask.sum())
         ratio = inl / float(len(matches))
 
@@ -1257,6 +1450,91 @@ def stitch_segments(images: list,
                      "alt_modes": [a[0] for a in alts[:3]],
                      "ok": bool(inl >= min_inliers and ratio >= min_inlier_ratio)})
         pair_info.append(info)
+
+        # ---- ★ POS 先验**仲裁**周期歧义（2026-09-25 新增）----
+        #
+        # 这是 POS 先验真正该起作用的地方。**不是**「用 H0 去筛匹配」——
+        # 实测那样做很糟：ORB 匹配本身噪声大，用 H0 投影后按 3% 画面对角线筛，
+        # 1700 对里只剩 1~4 对（几乎全是离群点），等于没用。
+        # （反面教材见 logs/_verify_pose_prior.txt 与 S7 的 `先验筛后保留 1 对`。）
+        #
+        # 正确用法：**当盲匹配给出两个旗鼓相当的解时，让 POS 来投票**。
+        # 砖墙的歧义是「相隔整数个砖距」——这两个解在图像证据上确实分不出高下，
+        # 但它们在**世界几何**上差着一整个砖距的位移，POS 能分辨。
+        #
+        # 判据（三条都要满足才敢采信）：
+        #   ① 某个候选解与 H0 的四角偏离 明显小于 另一个（差 ≥ POS_ARB_MIN_GAP_PX）；
+        #   ② 被选中的那个偏离本身要小（≤ POS_MAX_DEVIATION_PX），否则说明 POS 本身离谱；
+        #   ③ 竞争解的内点数不能压倒性更高（否则图像证据太强，不该让 POS 翻盘）。
+        if ambiguous and H0 is not None:
+            try:
+                # 重建两个候选解各自的全量单应
+                Hs = [Hc]                                     # 已选解
+                if len(alts[0][1]) >= ALIAS_MIN_RIVAL_SEED:
+                    Hr, mr = cv2.findHomography(
+                        np.float32([kps[cur][m.trainIdx].pt
+                                    for m in [matches[j] for j in alts[0][1]]]
+                                   ).reshape(-1, 1, 2),
+                        np.float32([kps[prev][m.queryIdx].pt
+                                    for m in [matches[j] for j in alts[0][1]]]
+                                   ).reshape(-1, 1, 2),
+                        cv2.RANSAC, 3.0, maxIters=4000, confidence=0.995)
+                    if Hr is not None:
+                        Hs.append(Hr)
+                devs = [_corner_deviation_px(H0, h, grays[cur].shape) for h in Hs]
+                info["pose_candidates_dev_px"] = [None if not np.isfinite(d)
+                                                  else round(d, 2) for d in devs]
+                if len(Hs) == 2 and np.isfinite(devs[0]) and np.isfinite(devs[1]):
+                    gap = abs(devs[0] - devs[1])
+                    # ③ 竞争解内点不能压倒（图像证据太强则不许 POS 翻案）
+                    rival_not_dominant = (rival_inl is None
+                                          or rival_inl <= ALIAS_RIVAL_DOMINANT
+                                          * max(inl, 1))
+                    sel_dev, riv_dev = devs[0], devs[1]
+                    if gap >= POS_ARB_MIN_GAP_PX and rival_not_dominant:
+                        # 情形 A：**已选解贴合 H0、竞争解不贴合** ⇒ POS 确认了已选解，
+                        #         歧义被打破，直接沿用 Hc（无需改选）。
+                        if sel_dev <= POS_MAX_DEVIATION_PX and riv_dev > sel_dev:
+                            ambiguous = False
+                            alias_suspected = False
+                            info["ambiguous"] = False
+                            info["pose_arbitrated"] = "confirm_selected"
+                            info["pose_dev_px"] = round(sel_dev, 2)
+                            info["alias_arbitrated_dev_px"] = [
+                                round(sel_dev, 2), round(riv_dev, 2)]
+                            pair_info[-1].update(info)
+                        # 情形 B：**竞争解贴合 H0、已选解不贴合** ⇒ POS 推翻盲匹配，
+                        #         改选竞争解。
+                        elif (riv_dev <= POS_MAX_DEVIATION_PX
+                              and riv_dev < sel_dev):
+                            ambiguous = False
+                            alias_suspected = False
+                            Hc = Hs[1]
+                            info["ambiguous"] = False
+                            info["pose_arbitrated"] = "switch_to_rival"
+                            info["pose_dev_px"] = round(riv_dev, 2)
+                            info["alias_arbitrated_dev_px"] = [
+                                round(sel_dev, 2), round(riv_dev, 2)]
+                            # 用仲裁后的 Hc 重算在"全量匹配"上的支持度，供下面门槛判据用
+                            try:
+                                proj = (np.hstack([src.reshape(-1, 2),
+                                                   np.ones((len(matches), 1))])
+                                        @ Hc.T)
+                                if np.all(np.abs(proj[:, 2]) > 1e-9):
+                                    pred = proj[:, :2] / proj[:, 2:3]
+                                    dd = np.linalg.norm(
+                                        pred - dst.reshape(-1, 2), axis=1)
+                                    inl = int((dd <= 3.0).sum())
+                                    ratio = inl / float(len(matches))
+                            except Exception:
+                                pass
+                            info.update({"inliers": inl,
+                                         "inlier_ratio": round(ratio, 4),
+                                         "ok": bool(inl >= min_inliers
+                                                    and ratio >= min_inlier_ratio)})
+                            pair_info[-1].update(info)
+            except Exception as _e:  # noqa: BLE001
+                info["pose_arbitrate_error"] = repr(_e)
 
         # ---- 周期混叠：内点再高也不能用 ----
         # 砖墙没有特征能区分「下一皮」与「下两皮」。当"另一个位移"在全量匹配上
@@ -1406,16 +1684,25 @@ def stitch_segments(images: list,
     cover = float(m.mean())
     n_pair_ok = sum(1 for p in pair_info if p.get("ok"))
     conf = "high" if (n_pair_ok == n - 1 and cover > 0.35) else "medium"
+    method = ("pose+orb+ransac+feather" if use_pose else "orb+ransac+feather")
+    pose_note = ""
+    if use_pose:
+        n_prior = sum(1 for p in pair_info if p.get("pose_prior"))
+        n_filt = sum(1 for p in pair_info if p.get("pose_filter"))
+        pose_note = (f"（POS 先验生效：{n_prior}/{n - 1} 对给出解析初值，"
+                     f"{n_filt} 对用先验筛过匹配）")
     return StitchResult(
-        out, True, n, used, "orb+ransac+feather", conf,
+        out, True, n, used, method, conf,
         (f"拼接成功：{used} 段 → {out_w}x{out_h}，"
          f"有效覆盖 {cover:.1%}，逐段内点 "
-         + "、".join(f"{p.get('inliers', '?')}" for p in pair_info) + "。"),
+         + "、".join(f"{p.get('inliers', '?')}" for p in pair_info) + "。"
+         + pose_note),
         ("拼接图为统一坐标系下的整体立面，可直接接正射校正与量化；"
          "但请留意覆盖度 —— 低于 100% 说明有些区域只有单张图贡献，"
          "该处分辨率不叠加。"),
         {"pairs": pair_info, "canvas": [out_w, out_h], "coverage": round(cover, 4),
-         "clamped": clamped},
+         "clamped": clamped, "use_pose": bool(use_pose),
+         "n_pose_rejected": int(n_pose_rejected)},
     )
 
 

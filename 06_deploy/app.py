@@ -354,6 +354,32 @@ def analyze(image_rgb: np.ndarray,
                 f"仅保留「疑似存在」提示，建议靠近复拍后再定级。"
                 + (f" 【本次具体原因】{_why}。" if (_win_bad or _quality_blocked) else "")
             )
+            # [2026-09-25 新增·C 路采集闭环] 把「建议靠近复拍」从**废话**变成**具体动作**。
+            #   原句「建议靠近复拍后再定级」没告诉用户"靠近到多少"。
+            #   advice.advise_distance 由目标尺寸反解出「需 GSD ≤ X ⇒ 距离 ≤ Y m」，
+            #   并与 gsd.calibrate_by_camera 严格互逆（有往返自检，见 advice.py）。
+            #   ⚠️ 本段**只追加建议文本**，不改任何测量值 / 分级 / GSD ⇒ 不影响已上报数字。
+            try:
+                from advice import advise_distance
+                _tgt_mm = 0.30 if _is_line(m.cls_name) else 10.0
+                _adv = advise_distance(
+                    _tgt_mm,
+                    image_width_px=int(img.shape[1]),
+                    lens_label="主摄 24mm",
+                )
+                if _adv.feasible:
+                    g.confidence_note += (
+                        f" 【补拍建议】要判 {_tgt_mm:g}mm 目标需 GSD ≤ "
+                        f"{_adv.required_gsd:.3f} mm/px ⇒ 请靠近至 "
+                        f"**≤ {_adv.max_distance_m:.2f} m**（该距离下画面覆盖约 "
+                        f"{_adv.cover_mm_at_max/1000:.2f} m 宽）。")
+                else:
+                    g.confidence_note += (
+                        f" 【补拍建议】用当前镜头判 {_tgt_mm:g}mm 目标即使贴到 "
+                        f"{_adv.max_distance_m*100:.0f}cm 也不够 ⇒ 请改用更长焦段或"
+                        f"提高画面分辨率。")
+            except Exception:
+                pass      # 建议是增强项，任何异常都不得影响主流程
     # 拒答后重新汇总风险等级：不可判定的条目不应参与 C 级升级
     effective = [g for g in grades if g.severity != "unjudgeable"]
     n_void = len(grades) - len(effective)

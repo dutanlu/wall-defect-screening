@@ -782,6 +782,93 @@ seg_s6 = build_segments(rich=False, anchor="repeated_plain", tag="s6")
 run_stitch(seg_s6, "S6_periodic_repeated", "S6", "拒答（互相当替身）")
 
 
+# --------------------------------------------------------------------------
+# 6b. POS 先验（合成注入）—— 2026-09-25 新增
+# --------------------------------------------------------------------------
+# 目的：验证「把无人机 POS 当作单应初值」这一环真的能用，并验证**注入错误 POS 时
+#       系统会兜底拒答**（而不是照着错 POS 拼出一个错误的立面还宣称成功）。
+#
+# ⚠️ 诚实边界：这是**合成注入**，不是真机航拍。报告里不得写「已实现无人机测绘」。
+#
+# 几何换算（与 make_brick_view 自洽）：
+#   世界单位是 mm，相机离墙 D=4000mm，段间沿墙平移 STEP_MM=1285mm，无偏航。
+#   ⇒ 第 i 段的 POS = {dx_m=i*STEP_MM/1000, d_m=D/1000, yaw=pitch=roll=0}
+#     内参 K = [[F,0,cx],[0,F,cy],[0,0,1]]（cx=SEG_CX, cy=SEG_CY）
+hdr("6b. POS 先验（合成注入）")
+
+K_SYN = np.array([[F, 0.0, SEG_CX],
+                  [0.0, F, SEG_CY],
+                  [0.0, 0.0, 1.0]], dtype=np.float64)
+
+
+def _syn_poses(n: int = 3, dx_m_override: dict | None = None) -> list:
+    """按合成几何生成 n 段位姿（dx_m_override 可覆盖某段的 dx_m，用于注错）。"""
+    ps = []
+    for i in range(n):
+        dx_m = i * STEP_MM / 1000.0
+        if dx_m_override and i in dx_m_override:
+            dx_m = dx_m_override[i]
+        ps.append(dict(dx_m=dx_m, dy_m=0.0, d_m=D / 1000.0,
+                       yaw=0.0, pitch=0.0, roll=0.0))
+    return ps
+
+
+def run_stitch_pose(segs, key, tag, expect, poses, K):
+    """带 POS 的拼接（并打印 POS 相关诊断）。"""
+    try:
+        st = R.stitch_segments(segs, poses=poses, K=K)
+    except Exception:
+        say(f"  [{tag}] !! stitch_segments(poses=...) 抛异常：")
+        for ln in traceback.format_exc().splitlines():
+            say("       " + ln)
+        RESULTS[key] = {"exception": traceback.format_exc()}
+        return
+    say(f"  [{tag}] ok={st.ok} conf={st.confidence} n_used={st.n_used}/{st.n_input}"
+        f"  method={st.method}   （预期：{expect}）")
+    say(f"           message: {st.message[:200]}")
+    for pr in (st.detail.get("pairs") or []):
+        bits = []
+        if "pose_prior" in pr:
+            bits.append(f"先验初值={'有' if pr['pose_prior'] else '无'}")
+        if "pose_filter" in pr:
+            pf = pr["pose_filter"]
+            bits.append(f"先验筛后保留 {pf.get('kept')} 对"
+                        + (f"（{pf.get('fallback')}）" if pf.get("fallback") else ""))
+        if "pose_dev_px" in pr:
+            bits.append(f"精修偏离 {pr['pose_dev_px']}px")
+        if bits:
+            say(f"           对 {pr['pair'][0]}-{pr['pair'][1]}: " + "；".join(bits))
+    if st.image is not None:
+        save(f"stitched_{tag}.png", st.image)
+        say(f"           拼接宽度 {st.image.shape[1]}px")
+    RESULTS[key] = st.to_dict()
+
+
+say("S7 = 纯周期砖格 + **正确的 POS 先验**（合成注入）")
+say("     预期：POS 把匹配限制到正确重叠区 ⇒ 有望拼成功（周期砖格本来会拒答）")
+seg_s7 = build_segments(rich=False, anchor="none", tag="s7")
+run_stitch_pose(seg_s7, "S7_pose_correct", "S7", "成功或如实报告", _syn_poses(), K_SYN)
+
+say("")
+say("S8 = 纯周期砖格 + **错误的 POS**（把第 3 段 dx 强行改成 5 米，实际约 2.57 米）")
+say("     预期：**必须拒答**并点名『POS 先验与图像证据不一致』——")
+say("     证明 POS 不可信时系统会兜底，而不是照着错 POS 拼出错立面")
+seg_s8 = build_segments(rich=False, anchor="none", tag="s8")
+run_stitch_pose(seg_s8, "S8_pose_wrong", "S8", "拒答（POS 不一致）",
+                _syn_poses(dx_m_override={2: 5.0}), K_SYN)
+
+say("")
+say("S9 = 纯周期砖格 + **带噪声的 POS**（每段 dx 加 ±0.02m≈2cm 抖动）")
+say("     预期：小噪声不应导致误拒 —— 用来标定”守卫阈值是否过紧“")
+_rng9 = np.random.RandomState(20260925)
+_noisy = _syn_poses()
+for _p in _noisy:
+    _p["dx_m"] += float(_rng9.uniform(-0.02, 0.02))
+seg_s9 = build_segments(rich=False, anchor="none", tag="s9")
+run_stitch_pose(seg_s9, "S9_pose_noisy", "S9", "不误拒（成功）或如实报告",
+                _noisy, K_SYN)
+
+
 st1 = R.stitch_segments([seg_s2[0]])
 say("")
 say(f"[单段] ok={st1.ok} method={st1.method} msg={st1.message}")
