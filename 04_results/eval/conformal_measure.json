@@ -1,0 +1,35 @@
+{
+ "alpha": 0.1,
+ "target_coverage": 0.9,
+ "n_cal": 360,
+ "n_test": 216,
+ "n_abstain": 480,
+ "quantiles_by_bin": {
+  "B_screen(3-8px)": {
+   "n": 150,
+   "q_lo": -4.6310224533081055,
+   "q_hi": 1.0
+  },
+  "C_quantify(>=8px)": {
+   "n": 210,
+   "q_lo": -19.13634769121806,
+   "q_hi": -1.5138012886047363
+  }
+ },
+ "coverage_by_bin": {
+  "B_screen(3-8px)": {
+   "n": 90,
+   "coverage": 0.9666666666666667,
+   "median_width_mm": 5.631
+  },
+  "C_quantify(>=8px)": {
+   "n": 126,
+   "coverage": 0.9126984126984127,
+   "median_width_mm": 17.6225
+  }
+ },
+ "overall_coverage_mondrian": 0.9351851851851852,
+ "overall_coverage_no_binning": 0.9212962962962963,
+ "pass_overall": true,
+ "boundary": "仅**合成域**上验证；不得声称真机 90% 保证（不满足可交换性）。"
+}

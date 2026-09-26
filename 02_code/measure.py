@@ -123,41 +123,41 @@ def segment_defect(roi: np.ndarray, cls_name: str) -> tuple[np.ndarray, str]:
     # 面积过滤：丢掉过小的连通域
     min_area = max(12, int(0.0008 * roi.shape[0] * roi.shape[1]))
     n, labels, stats, _ = cv2.connectedComponentsWithStats(th, connectivity=8)
-    mask = np.zeros_like(th)
-    for i in range(1, n):
-        if stats[i, cv2.CC_STAT_AREA] >= min_area:
-            mask[labels == i] = 255
+
+    # ★ 2026-09-26 改为**查表**（单次 O(N) 向量化）。
+    #   原写法是逐连通域做一次**全图** `labels == i` 比较 ⇒ O(连通域数 × ROI 像素数)，
+    #   ROI 大且连通域多时会明显变慢（实测该函数在真实 ROI 上约 16.8 ms）。
+    #   等价性要点：原循环是 `range(1, n)`，**标签 0（背景）从不参与**
+    #   ⇒ 查表时也必须排除 0，`lut[0]` 保持 0。两者产出 mask 字节完全相同，
+    #   由 `logs/_verify_lut_filter.py` 逐像素验证。
+    area = stats[:, cv2.CC_STAT_AREA]
+    keep_ids = np.nonzero(area >= min_area)[0]
+    keep_ids = keep_ids[keep_ids != 0]          # ★ 显式排除背景标签 0
+    lut = np.zeros(n, dtype=np.uint8)
+    lut[keep_ids] = 255
+    mask = lut[labels]
     return mask, method
 
 
 # --------------------------------------------------------------------------
 # 线状缺陷测量：骨架化求长度 + 距离变换求宽度
 # --------------------------------------------------------------------------
-def _thin_skeleton(mask: np.ndarray) -> np.ndarray:
+def _thin_skeleton_zs_full(img: np.ndarray) -> np.ndarray:
+    """原版：全图向量化 Zhang-Suen 细化。
+
+    ⚠️ **本函数是回归对照的基准，不要删、不要改**。
+    2026-09-26 优化前的实现即此；`_thin_skeleton_active` 必须与它**逐像素等价**，
+    由 `logs/_verify_thin_active.py` 在 **28 个用例**上同时导入两者做对照。
+
+    ★★★ **本函数会原地修改传入的数组**（内部有 `img[delete] = 0`）。
+      上游 `_thin_skeleton` 因为先 `(mask > 0).astype(np.uint8)` 造了新数组，
+      所以正式路径不受影响；但**直接拿它做基准测试会踩坑**：
+      在同一份数组上连续调用，第 1 次就把输入"细化"了，之后都是在
+      **已收敛的骨架**上跑 ⇒ 耗时被严重低估、等价性比对退化成平凡通过。
+      （实测证据：同一份数组 `img.sum()` 报 327,526 前景，
+        紧接着的 `np.nonzero` 只剩 30,059 点。）
+      ⇒ **凡对它计时或比对，必须每轮传 `.copy()`。**
     """
-    骨架化。
-
-    优先 cv2.ximgproc.thinning（contrib 模块）。
-    本机实测 cv2 5.0.0 **不含 ximgproc**，因此必须自带实现。
-
-    这里实现标准 Zhang-Suen 细化算法（纯 numpy 向量化版）。
-    踩坑记录：先前用手写的「形态学开运算相减」近似，会把结果叠加成
-    2D 宽带而非 1px 线 —— 300px 的裂缝量出 64672px 长度（差 200 倍）。
-    Zhang-Suen 是经过验证的经典算法，按它逐步删除边界点即可。
-    """
-    if mask is None or cv2.countNonZero(mask) == 0:
-        return np.zeros_like(mask)
-
-    # 方案 1：contrib 的 thinning（最可靠，本机不可用）
-    try:
-        if hasattr(cv2, "ximgproc") and hasattr(cv2.ximgproc, "thinning"):
-            return cv2.ximgproc.thinning(mask)
-    except Exception:
-        pass
-
-    # 方案 2：标准 Zhang-Suen 细化
-    img = (mask > 0).astype(np.uint8)
-
     def neighbors(im):
         """返回 8 邻域矩阵 (P2..P9)，顺序按 Zhang-Suen 定义（顺时针）。"""
         p2 = np.roll(im, -1, 0)          # 上
@@ -197,16 +197,238 @@ def _thin_skeleton(mask: np.ndarray) -> np.ndarray:
     return (img * 255).astype(np.uint8)
 
 
-def _skeleton_length_px(skel: np.ndarray) -> float:
+# Zhang-Suen 的 8 邻域偏移，**顺序必须与 np.roll 版逐个对应**：
+#   p2=(+1,0) p3=(+1,-1) p4=(0,-1) p5=(-1,-1) p6=(-1,0) p7=(-1,+1) p8=(0,+1) p9=(+1,+1)
+# 注意 p2 名义上是「上」，但 np.roll(im,-1,axis=0)[y,x] 取的是 im[y+1,x]。
+# 这个顺序构成一个完整的环，A（0->1 跳变数）才成立 —— **不要"顺手修正"它**，
+# 一改就会得到与原版不同的骨架。
+_ZS_OFFSETS = ((1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1))
+
+# 掩膜像素数低于此值时走全图版：小掩膜上活跃集的固定开销（坐标拼装、unique）
+# 反而比全图布尔运算更贵（实测 190x243 仅 1.58x，更小则可能 <1x）。
+_ZS_ACTIVE_MIN_PX = 4096
+
+# ★ 关于「宽正面兜底」——**实测证明它弊大于利，故不采用**（留档以免后人重做）
+#   曾实现过一个兜底：检测首轮删除面宽度 ratio=(|D0|+|P1|)/|前景| ≥ 0.35 时，
+#   放弃活跃集、交回全图版。动机是修「密集细条纹」形态（合成实测 0.37~0.51x）。
+#   但真实负载实测结果**变差**：
+#     · 无兜底：变慢 0/80，中位 4.17x，整体 4.08x
+#     · 有兜底：变慢 7/80，中位 3.62x，整体 3.27x
+#   根因：兜底为了做判断必须先跑一次 `_zs_eval_full`（约 10~25 ms），
+#   而退回全图版会让这部分**白白浪费** ⇒ 「退回」并不是零成本，它自己就会造成回归。
+#   ⇒ 教训：**保守回退只有当回退路径不比原路径更贵时才真的"保守"。**
+#   证据：logs/_thin_workload_dist.txt、logs/_thin_d0_ratio.txt。
+#   已知局限（如实记录）：对**合成**的密集细条纹掩膜（2px 条纹 0.51x、5px 条纹 0.37x）
+#   活跃集版更慢。该类形态无法由 `segment_defect` 产出（其形态学开运算会削掉细结构），
+#   真实负载 80 例无一变慢。
+
+
+def _zs_eval_full(img: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """对**整幅图**做一次向量化 Zhang-Suen 求值，返回 (d0, d1) 两个布尔掩膜。
+
+    完全是 `_thin_skeleton_zs_full` 单步逻辑的镜像，只是**同时**算出两套 cond 的删除判据
+    （两者共用 B、A，只多两次布尔与）。供活跃集版处理**首轮**用。
+
+    ★ 为什么需要它：活跃集版若首轮就对全部前景坐标做 8 次 gather，
+      而前景又占满全图（如整幅实心），那一步会比全图版的 400 次 roll **更贵**
+      —— 实测 `实心_2000x2900` 活跃集反而慢 3.4 倍（0.29x）。
+      首轮改用本函数（连续内存的 roll）后该问题消失。
     """
-    估算骨架的真实弧长（像素）。
+    im = img
+    p2 = np.roll(im, -1, 0)
+    p3 = np.roll(np.roll(im, -1, 0), 1, 1)
+    p4 = np.roll(im, 1, 1)
+    p5 = np.roll(np.roll(im, 1, 0), 1, 1)
+    p6 = np.roll(im, 1, 0)
+    p7 = np.roll(np.roll(im, 1, 0), -1, 1)
+    p8 = np.roll(im, -1, 1)
+    p9 = np.roll(np.roll(im, -1, 0), -1, 1)
+    seq = (p2, p3, p4, p5, p6, p7, p8, p9)
+    B = p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9
+    A = np.zeros_like(B, dtype=np.int16)
+    for i in range(8):
+        A += ((seq[i] == 0) & (seq[(i + 1) % 8] == 1)).astype(np.int16)
+    base = (im == 1) & (B >= 2) & (B <= 6) & (A == 1)
+    d0 = base & ((p2 * p4 * p6) == 0) & ((p4 * p6 * p8) == 0)
+    d1 = base & ((p2 * p4 * p8) == 0) & ((p2 * p6 * p8) == 0)
+    return d0, d1
 
-    为什么不能直接数前景像素：8 邻域下对角线相邻的两个点，
-    实际几何距离是 sqrt(2) 而不是 1。直接计数会把斜线的长度低估/高估。
-    正确做法是分别统计「水平/垂直相邻对」与「对角相邻对」，加权求和。
 
-    这里用「对每个前景点，看它右、下、右下、左下四个方向的邻居」来统计，
-    保证每条连接只被计一次。
+def _zs_ring_alive(alive: np.ndarray, ys: np.ndarray, xs: np.ndarray,
+                   H: int, W: int) -> tuple[np.ndarray, np.ndarray]:
+    """返回被删像素的 1 邻域中**仍存活**者的坐标（模运算复刻 np.roll 的环绕）。"""
+    ay: list[np.ndarray] = []
+    ax: list[np.ndarray] = []
+    for dy, dx in _ZS_OFFSETS:
+        ny = (ys + dy) % H
+        nx = (xs + dx) % W
+        m = alive[ny, nx]
+        ay.append(ny[m])
+        ax.append(nx[m])
+    if not ay:
+        e = np.empty(0, dtype=np.int64)
+        return e, e
+    return np.concatenate(ay), np.concatenate(ax)
+
+
+def _thin_skeleton_active(img: np.ndarray) -> np.ndarray:
+    """活跃集（脏区）增量版 Zhang-Suen —— 与全图版**逐像素等价**。
+
+    动机：全图版每轮对整幅图做 8 次 roll + 一轮布尔运算，实测占 measure 耗时的 97.6%。
+    但一次删除只影响其 1 邻域 ⇒ 每轮真正需要重新求值的，只是「上一轮被删像素的 1 邻域」。
+
+    ★★ 与历史失败路线的本质区别（务必看懂，否则会重踩）：
+      历史第 1/5 条路线是「**crop 子图 + 边界补 0**」，破坏了 np.roll 的**环绕语义**
+      （`logs/_thin_diag.txt` 已实证：第 0 行的"上邻居"取到末行）。
+      本实现**完全不裁剪**：整幅图始终存在，只是在**坐标数组**上求值，
+      邻域用模运算 `(y+dy) % H`、`(x+dx) % W` **复刻 np.roll 的环绕**。
+
+    ★★ step0/step1 双判据陷阱（本节第一版就栽在这里）：
+      Zhang-Suen 两个 step 用**不同的 cond**。若每个 step 只重算"当前判据"，
+      则某像素在 step0 判为 False、且不在任何删除点的邻域内时，step1 会被跳过 ——
+      但它在 cond1 下本应被删。
+      ⇒ 正解：**一次求值同时算 d0 与 d1**（两者共用 B、A，只多两次布尔运算），
+        并把 `d_other & ~d_this` 的坐标存进 P[other] 交给另一步。
+
+    ★★ 首轮走全图向量化（第二个实测出来的坑）：
+      首轮候选集 = 全部前景。若对 `|前景|` 个坐标做 8 次 gather，而前景又占满全图，
+      那一步比全图版的 400 次 roll **更贵** —— 实测 `实心_2000x2900` 活跃集慢 3.4 倍。
+      ⇒ 首轮 step 0 改用 `_zs_eval_full`（连续内存 roll），之后才切到活跃集路径。
+      实测修掉后 `实心_2000x2900` 由 0.29x 转为显著加速。
+
+    正确性不变量：
+      若像素 p 不在任何删除点的 1 邻域内，则 p 的 0/1 邻域与上一 step 完全一致，
+      此时 d0、d1 都未变。`U ∪ P[s]` 恰为「需重新求值 或 已知可删」的集合，
+      故每个 step 删除的集合与原版逐位相同。
+
+    ⚠️ 本函数只接受 0/1 的 uint8 图（调用方已做 `(mask > 0).astype(np.uint8)`）。
+    """
+    H, W = img.shape
+    alive = img.astype(bool)
+    empty = np.empty(0, dtype=np.int64)
+
+    # ---------------- 第 1 轮 step 0：全图向量化（便宜） ----------------
+    d0m, d1m = _zs_eval_full(img)
+
+    Dy, Dx = np.nonzero(d0m)
+    if Dy.size:
+        alive[Dy, Dx] = False
+    py, px = np.nonzero(d1m & ~d0m)
+    # P[s] = 「上次求值时刻满足 step s 的 cond、但当时未删除」的坐标
+    P = {0: (empty, empty), 1: (py.astype(np.int64), px.astype(np.int64))}
+    U = _zs_ring_alive(alive, Dy, Dx, H, W) if Dy.size else (empty, empty)
+    changed = bool(Dy.size)          # 第 1 轮 step 0 是否删过
+    guard = 1
+
+    def active_step(step: int) -> bool:
+        """跑一个 step 的活跃集路径；返回本步是否删过。就地更新 P / U。"""
+        nonlocal U
+        uys, uxs = U
+        pys, pxs = P[step]
+        if uys.size and pys.size:
+            cy = np.concatenate((uys, pys))
+            cx = np.concatenate((uxs, pxs))
+            key = np.unique(cy * W + cx)
+            cy = key // W
+            cx = key % W
+        elif pys.size:
+            cy, cx = pys, pxs
+        elif uys.size:
+            cy, cx = uys, uxs
+        else:
+            P[1 - step] = (empty, empty)
+            U = (empty, empty)
+            return False
+
+        # 只保留仍存活的候选（等价于全图版的 (img == 1) 条件）
+        keep = alive[cy, cx]
+        cy = cy[keep]
+        cx = cx[keep]
+        if cy.size == 0:
+            P[1 - step] = (empty, empty)
+            U = (empty, empty)
+            return False
+
+        # 8 邻域：模运算复刻 np.roll 的环绕语义（**绝不裁剪**）
+        nb = [alive[(cy + dy) % H, (cx + dx) % W] for dy, dx in _ZS_OFFSETS]
+        B = np.zeros(cy.shape, dtype=np.int16)
+        for a in nb:
+            B += a
+        A = np.zeros(cy.shape, dtype=np.int16)
+        for i in range(8):
+            A += (~nb[i] & nb[(i + 1) % 8])
+
+        p2, p4, p6, p8 = nb[0], nb[2], nb[4], nb[6]
+        common = (B >= 2) & (B <= 6) & (A == 1)
+        d0 = common & (~(p2 & p4 & p6)) & (~(p4 & p6 & p8))
+        d1 = common & (~(p2 & p4 & p8)) & (~(p2 & p6 & p8))
+
+        ds = d0 if step == 0 else d1
+        do = d1 if step == 0 else d0
+
+        dyy, dxx = cy[ds], cx[ds]
+        if dyy.size:
+            alive[dyy, dxx] = False
+
+        oy, ox = cy[do & ~ds], cx[do & ~ds]
+        P[1 - step] = (oy, ox)
+        U = _zs_ring_alive(alive, dyy, dxx, H, W) if dyy.size else (empty, empty)
+        return bool(dyy.size)
+
+    # ---------------- 第 1 轮 step 1（活跃集路径） ----------------
+    changed = active_step(1) or changed
+
+    # ---------------- 后续轮 ----------------
+    while changed and guard < 200:
+        changed = False
+        guard += 1
+        for step in (0, 1):
+            if active_step(step):
+                changed = True
+
+    out = np.zeros((H, W), dtype=np.uint8)
+    out[alive] = 255
+    return out
+
+
+def _thin_skeleton(mask: np.ndarray) -> np.ndarray:
+    """
+    骨架化（分发器）。
+
+    优先 cv2.ximgproc.thinning（contrib 模块）。
+    本机实测 cv2 5.0.0 **不含 ximgproc**，因此必须自带实现。
+
+    自带实现是标准 Zhang-Suen 细化，有两个版本（两者**逐像素等价**）：
+      · `_thin_skeleton_active`   —— 活跃集增量版，用于大掩膜（瓶颈优化，见其 docstring）
+      · `_thin_skeleton_zs_full`  —— 全图向量化版，用于小掩膜（活跃集固定开销不划算）
+    分发阈值见 `_ZS_ACTIVE_MIN_PX`。
+
+    踩坑记录：先前用手写的「形态学开运算相减」近似，会把结果叠加成
+    2D 宽带而非 1px 线 —— 300px 的裂缝量出 64672px 长度（差 200 倍）。
+    Zhang-Suen 是经过验证的经典算法，按它逐步删除边界点即可。
+    """
+    if mask is None or cv2.countNonZero(mask) == 0:
+        return np.zeros_like(mask)
+
+    # 方案 1：contrib 的 thinning（最可靠，本机不可用）
+    try:
+        if hasattr(cv2, "ximgproc") and hasattr(cv2.ximgproc, "thinning"):
+            return cv2.ximgproc.thinning(mask)
+    except Exception:
+        pass
+
+    # 方案 2：标准 Zhang-Suen 细化（按掩膜大小选择实现）
+    img = (mask > 0).astype(np.uint8)
+    if img.size < _ZS_ACTIVE_MIN_PX:
+        return _thin_skeleton_zs_full(img)
+    return _thin_skeleton_active(img)
+
+
+def _skeleton_length_px_pyslow(skel: np.ndarray) -> float:
+    """**原实现（纯 Python set 循环）** —— 保留作回归对照，勿删。
+
+    它逐点做 4 次哈希查找；大掩膜上实测 17~20 ms（占 measure 6~14%）。
+    向量化版必须与它**位级等价**，由 `logs/_verify_skeleton_length.py` 对照验证。
     """
     ys, xs = np.nonzero(skel > 0)
     if ys.size == 0:
@@ -223,6 +445,50 @@ def _skeleton_length_px(skel: np.ndarray) -> float:
                     n_diag += 1
                 else:
                     n_orth += 1
+    return n_orth * 1.0 + n_diag * float(np.sqrt(2.0))
+
+
+def _shift_no_wrap(b: np.ndarray, dy: int, dx: int) -> np.ndarray:
+    """返回 `res[y, x] = b[y+dy, x+dx]`，**越界一律取 False（不环绕）**。
+
+    ★ 与原实现语义严格一致：原实现用 `(y+dy, x+dx) in pts` 做集合查找，
+      越界坐标根本不在集合里 ⇒ 等价于「越界为 False」。
+      （**注意与 `_thin_skeleton` 的区别**：那里用 `np.roll`，是**会环绕**的。）
+    """
+    res = np.zeros_like(b)
+    h, w = b.shape
+    ys_src = slice(max(0, dy), h + min(0, dy))
+    ys_dst = slice(max(0, -dy), h + min(0, -dy))
+    xs_src = slice(max(0, dx), w + min(0, dx))
+    xs_dst = slice(max(0, -dx), w + min(0, -dx))
+    res[ys_dst, xs_dst] = b[ys_src, xs_src]
+    return res
+
+
+def _skeleton_length_px(skel: np.ndarray) -> float:
+    """
+    估算骨架的真实弧长（像素）。
+
+    为什么不能直接数前景像素：8 邻域下对角线相邻的两个点，
+    实际几何距离是 sqrt(2) 而不是 1。直接计数会把斜线的长度低估/高估。
+    正确做法是分别统计「水平/垂直相邻对」与「对角相邻对」，加权求和。
+
+    统计口径（与原实现逐条一致）：对每个前景点，看它**右 / 下 / 右下 / 左下**
+    四个方向的邻居是否也是前景，每条连接只被计一次。
+
+    ★ 2026-09-26 改为向量化（`logs/_bench_extra_stages.txt` 实测它占 measure 6~14%）。
+      等价性不靠碰运气：原实现用普通下标 + set 查找 ⇒ **越界坐标天然不在集合里**，
+      即**无环绕**；本实现用 `_shift_no_wrap` 精确复刻这一点（见 `logs/_verify_skeleton_length.py`）。
+      返回值的运算顺序与浮点常数与原来一致 ⇒ **位级相同**。
+    """
+    b = skel > 0
+    if not b.any():
+        return 0.0
+    # 右 / 下 记为正交；右下 / 左下 记为对角
+    n_orth = (int(np.count_nonzero(b & _shift_no_wrap(b, 0, 1)))
+              + int(np.count_nonzero(b & _shift_no_wrap(b, 1, 0))))
+    n_diag = (int(np.count_nonzero(b & _shift_no_wrap(b, 1, 1)))
+              + int(np.count_nonzero(b & _shift_no_wrap(b, 1, -1))))
     return n_orth * 1.0 + n_diag * float(np.sqrt(2.0))
 
 

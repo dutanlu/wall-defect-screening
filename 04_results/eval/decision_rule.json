@@ -1,0 +1,235 @@
+{
+ "signal": "生产路径的双侧窗口：px<3 / 3<=px<=ks-1 / px>ks-1",
+ "error_event": "|rel_err| > 0.1",
+ "regimes": {
+  "px<3(太小)": {
+   "n": 3,
+   "mean_abs_rel": 73.33,
+   "p_err": 1.0
+  },
+  "3<=px<=ks-1(接受带)": {
+   "n": 11,
+   "mean_abs_rel": 29.24,
+   "p_err": 0.8182
+  },
+  "px>ks-1(过大)": {
+   "n": 15,
+   "mean_abs_rel": 83.82,
+   "p_err": 1.0
+  }
+ },
+ "decision_boundary": [
+  {
+   "r_rephoto": 0.001,
+   "r_human": 0.01,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.001,
+   "r_human": 0.1,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.001,
+   "r_human": 1.0,
+   "optimal": {
+    "px<3(太小)": "R",
+    "3<=px<=ks-1(接受带)": "A",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.01,
+   "r_human": 0.01,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.01,
+   "r_human": 0.1,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.01,
+   "r_human": 1.0,
+   "optimal": {
+    "px<3(太小)": "R",
+    "3<=px<=ks-1(接受带)": "A",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.1,
+   "r_human": 0.01,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.1,
+   "r_human": 0.1,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 0.1,
+   "r_human": 1.0,
+   "optimal": {
+    "px<3(太小)": "R",
+    "3<=px<=ks-1(接受带)": "A",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 1.0,
+   "r_human": 0.01,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 1.0,
+   "r_human": 0.1,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "H",
+    "px>ks-1(过大)": "H"
+   }
+  },
+  {
+   "r_rephoto": 1.0,
+   "r_human": 1.0,
+   "optimal": {
+    "px<3(太小)": "H",
+    "3<=px<=ks-1(接受带)": "A",
+    "px>ks-1(过大)": "H"
+   }
+  }
+ ],
+ "gate_vs_constant": {
+  "all_pass": true,
+  "detail": [
+   {
+    "r_rephoto": 0.001,
+    "r_human": 0.01,
+    "loss_policy": 0.01,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.01,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.001,
+    "r_human": 0.1,
+    "loss_policy": 0.1,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.1,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.001,
+    "r_human": 1.0,
+    "loss_policy": 0.912338,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 1.0,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.01,
+    "r_human": 0.01,
+    "loss_policy": 0.01,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.01,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.01,
+    "r_human": 0.1,
+    "loss_policy": 0.1,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.1,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.01,
+    "r_human": 1.0,
+    "loss_policy": 0.913269,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 1.0,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.1,
+    "r_human": 0.01,
+    "loss_policy": 0.01,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.01,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.1,
+    "r_human": 0.1,
+    "loss_policy": 0.1,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.1,
+    "pass": true
+   },
+   {
+    "r_rephoto": 0.1,
+    "r_human": 1.0,
+    "loss_policy": 0.922579,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 1.0,
+    "pass": true
+   },
+   {
+    "r_rephoto": 1.0,
+    "r_human": 0.01,
+    "loss_policy": 0.01,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.01,
+    "pass": true
+   },
+   {
+    "r_rephoto": 1.0,
+    "r_human": 0.1,
+    "loss_policy": 0.1,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 0.1,
+    "pass": true
+   },
+   {
+    "r_rephoto": 1.0,
+    "r_human": 1.0,
+    "loss_policy": 0.931041,
+    "loss_always_A": 0.931041,
+    "loss_always_H": 1.0,
+    "pass": true
+   }
+  ]
+ },
+ "boundary": "仅合成域验证；真机误差结构与成本结构可能不同。",
+ "wording_rule": "表述为「在成本比=r 时最优行动是 X」，不是「应该 X」。",
+ "note_vs_v1": "第一版用单侧 px>=3 分箱 ⇒ 决策退化（总是 A）。本项目生产判据实为**双侧窗口**，改用它作信号后决策非退化。"
+}

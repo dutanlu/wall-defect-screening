@@ -1,0 +1,564 @@
+{
+  "model": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v8s640\\weights\\best.pt",
+  "args": {
+    "conf": "0.25",
+    "imgsz": "640",
+    "distance": "20",
+    "focal": "24",
+    "calib_object_px": "420",
+    "calib_object_mm": "210",
+    "calib_object_name": "A4短边210mm",
+    "calib_brick": false,
+    "brick_pitch_mm": "250",
+    "env": "二类环境（露天/潮湿）",
+    "jgj125": "",
+    "out": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis",
+    "rectify": false,
+    "rectify_force": false
+  },
+  "results": [
+    {
+      "image": "logs\\_batch_e2e\\greybrick-yolo__1174.jpg",
+      "size": [
+        448,
+        448
+      ],
+      "status": "ok",
+      "n_detections": 9,
+      "calibration": {
+        "mm_per_px": 0.5,
+        "method": "calib_object",
+        "confidence": "high",
+        "detail": {
+          "object": "A4短边210mm",
+          "pixel_width": 420.0,
+          "real_width_mm": 210.0
+        }
+      },
+      "interpretability": {
+        "crack_0.3mm": {
+          "feasible": false,
+          "min_readable_mm": 1.5,
+          "comfort_mm": 4.0,
+          "gsd_mm_per_px": 0.5,
+          "target_mm": 0.3,
+          "pixels_on_target": 0.6,
+          "level": "insufficient",
+          "message": "不可判读：目标 0.3mm 仅占 0.60px，低于判读下限（3px）。系统拒绝就此给出结论。",
+          "advice": "当前仅能可靠测量 >= 1.5mm 的缺陷。若必须判读 0.3mm，拍摄距离需缩短至约 1/13.3，或改用无人机贴近/搭架人工检查——这属于「鉴定层」工作，不在本筛查系统的能力范围内。"
+        },
+        "blob_10mm": {
+          "feasible": true,
+          "min_readable_mm": 1.5,
+          "comfort_mm": 4.0,
+          "gsd_mm_per_px": 0.5,
+          "target_mm": 10.0,
+          "pixels_on_target": 20.0,
+          "level": "measurement",
+          "message": "可精测：目标 10mm 在当前图像上约 20.0px，满足量化门槛（>=8px），可给出毫米级结论。",
+          "advice": "无需调整，可直接量化并出分级结论。"
+        },
+        "can_report_mm": false,
+        "can_screen": true
+      },
+      "capability": {
+        "大面积剥落(>100mm)": {
+          "target_mm": 100.0,
+          "pixels": 200.0,
+          "usable": true,
+          "level": "measurement"
+        },
+        "中等剥落(>50mm)": {
+          "target_mm": 50.0,
+          "pixels": 100.0,
+          "usable": true,
+          "level": "measurement"
+        },
+        "小剥落(>10mm)": {
+          "target_mm": 10.0,
+          "pixels": 20.0,
+          "usable": true,
+          "level": "measurement"
+        },
+        "露筋(钢筋直径10-25mm)": {
+          "target_mm": 12.0,
+          "pixels": 24.0,
+          "usable": true,
+          "level": "measurement"
+        },
+        "明显裂缝(>1.0mm)": {
+          "target_mm": 1.0,
+          "pixels": 2.0,
+          "usable": false,
+          "level": "insufficient"
+        },
+        "裂缝定级(0.5mm)": {
+          "target_mm": 0.5,
+          "pixels": 1.0,
+          "usable": false,
+          "level": "insufficient"
+        },
+        "裂缝定级(0.3mm)": {
+          "target_mm": 0.3,
+          "pixels": 0.6,
+          "usable": false,
+          "level": "insufficient"
+        },
+        "裂缝定级(0.2mm)": {
+          "target_mm": 0.2,
+          "pixels": 0.4,
+          "usable": false,
+          "level": "insufficient"
+        }
+      },
+      "rectify": null,
+      "image_used": "original",
+      "measurements": [
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            161,
+            124,
+            197,
+            208
+          ],
+          "length_px": 198.8528,
+          "width_mean_px": 3.4591,
+          "width_max_px": 6.0,
+          "area_px": 673.0,
+          "equiv_diameter_px": 0.0,
+          "length_mm": 99.4264,
+          "width_mean_mm": 1.7296,
+          "width_max_mm": 3.0,
+          "area_mm2": 168.25,
+          "area_m2": 0.0002,
+          "elongation": 57.4861,
+          "area_ratio": 0.2226,
+          "method": "blackhat7+otsu",
+          "ks": 7,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.8421
+        },
+        {
+          "cls_name": "efflorescence",
+          "bbox_xyxy": [
+            0,
+            286,
+            204,
+            365
+          ],
+          "length_px": 8.6672,
+          "width_mean_px": 0.0,
+          "width_max_px": 8.6672,
+          "area_px": 59.0,
+          "equiv_diameter_px": 8.6672,
+          "length_mm": 0.0,
+          "width_mean_mm": 0.0,
+          "width_max_mm": 0.0,
+          "area_mm2": 14.75,
+          "area_m2": 0.0,
+          "elongation": 0.0,
+          "area_ratio": 0.0037,
+          "method": "meddev9+otsu",
+          "ks": 9,
+          "window_ok": false,
+          "window_note": "量出尺寸 8.67px 超出本 ROI 的可靠上界 8px（形态学核 ks=9）",
+          "conf": 0.7609
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            157,
+            50,
+            185,
+            129
+          ],
+          "length_px": 134.8406,
+          "width_mean_px": 3.0732,
+          "width_max_px": 4.3938,
+          "area_px": 406.0,
+          "equiv_diameter_px": 0.0,
+          "length_mm": 67.4203,
+          "width_mean_mm": 1.5366,
+          "width_max_mm": 2.1969,
+          "area_mm2": 101.5,
+          "area_m2": 0.0001,
+          "elongation": 43.8757,
+          "area_ratio": 0.1835,
+          "method": "blackhat7+otsu",
+          "ks": 7,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.7569
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            179,
+            203,
+            210,
+            293
+          ],
+          "length_px": 229.1665,
+          "width_mean_px": 3.0802,
+          "width_max_px": 4.9969,
+          "area_px": 627.0,
+          "equiv_diameter_px": 0.0,
+          "length_mm": 114.5833,
+          "width_mean_mm": 1.5401,
+          "width_max_mm": 2.4984,
+          "area_mm2": 156.75,
+          "area_m2": 0.0002,
+          "elongation": 74.4,
+          "area_ratio": 0.2247,
+          "method": "blackhat7+otsu",
+          "ks": 7,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.7264
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            132,
+            0,
+            169,
+            54
+          ],
+          "length_px": 123.397,
+          "width_mean_px": 3.0691,
+          "width_max_px": 4.3938,
+          "area_px": 354.0,
+          "equiv_diameter_px": 0.0,
+          "length_mm": 61.6985,
+          "width_mean_mm": 1.5345,
+          "width_max_mm": 2.1969,
+          "area_mm2": 88.5,
+          "area_m2": 0.0001,
+          "elongation": 40.2063,
+          "area_ratio": 0.1772,
+          "method": "blackhat7+otsu",
+          "ks": 7,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.7211
+        },
+        {
+          "cls_name": "spalling",
+          "bbox_xyxy": [
+            207,
+            291,
+            330,
+            359
+          ],
+          "length_px": 6.6756,
+          "width_mean_px": 0.0,
+          "width_max_px": 6.6756,
+          "area_px": 35.0,
+          "equiv_diameter_px": 6.6756,
+          "length_mm": 0.0,
+          "width_mean_mm": 0.0,
+          "width_max_mm": 0.0,
+          "area_mm2": 8.75,
+          "area_m2": 0.0,
+          "elongation": 0.0,
+          "area_ratio": 0.0042,
+          "method": "meddev9+otsu",
+          "ks": 9,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.681
+        },
+        {
+          "cls_name": "spalling",
+          "bbox_xyxy": [
+            282,
+            380,
+            335,
+            448
+          ],
+          "length_px": 5.109,
+          "width_mean_px": 0.0,
+          "width_max_px": 5.109,
+          "area_px": 20.5,
+          "equiv_diameter_px": 5.109,
+          "length_mm": 0.0,
+          "width_mean_mm": 0.0,
+          "width_max_mm": 0.0,
+          "area_mm2": 5.125,
+          "area_m2": 0.0,
+          "elongation": 0.0,
+          "area_ratio": 0.0057,
+          "method": "meddev9+otsu",
+          "ks": 9,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.4771
+        },
+        {
+          "cls_name": "efflorescence",
+          "bbox_xyxy": [
+            42,
+            63,
+            167,
+            133
+          ],
+          "length_px": 5.5852,
+          "width_mean_px": 0.0,
+          "width_max_px": 5.5852,
+          "area_px": 24.5,
+          "equiv_diameter_px": 5.5852,
+          "length_mm": 0.0,
+          "width_mean_mm": 0.0,
+          "width_max_mm": 0.0,
+          "area_mm2": 6.125,
+          "area_m2": 0.0,
+          "elongation": 0.0,
+          "area_ratio": 0.0028,
+          "method": "meddev9+otsu",
+          "ks": 9,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.4054
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            182,
+            209,
+            209,
+            280
+          ],
+          "length_px": 162.9533,
+          "width_mean_px": 2.9593,
+          "width_max_px": 4.3938,
+          "area_px": 368.0,
+          "equiv_diameter_px": 0.0,
+          "length_mm": 81.4767,
+          "width_mean_mm": 1.4797,
+          "width_max_mm": 2.1969,
+          "area_mm2": 92.0,
+          "area_m2": 0.0001,
+          "elongation": 55.0644,
+          "area_ratio": 0.192,
+          "method": "blackhat7+otsu",
+          "ks": 7,
+          "window_ok": true,
+          "window_note": "",
+          "conf": 0.3367
+        }
+      ],
+      "grades": [
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            161,
+            124,
+            197,
+            208
+          ],
+          "metric_name": "width_max_mm",
+          "metric_value": 3.0,
+          "limit_mm": 0.2,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「裂缝」疑似存在（置信度 0.84）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 danger 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】用当前镜头判 0.3mm 目标即使贴到 3cm 也不够 ⇒ 请改用更长焦段或提高画面分辨率。",
+          "extra": {
+            "length_mm": 99.4,
+            "elongation": 57.49,
+            "env_class": "二类环境（露天/潮湿）",
+            "px_width_max": 6.0
+          }
+        },
+        {
+          "cls_name": "efflorescence",
+          "bbox_xyxy": [
+            0,
+            286,
+            204,
+            365
+          ],
+          "metric_name": "area_ratio",
+          "metric_value": 0.0037,
+          "limit_mm": null,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「泛碱渗水」疑似存在（置信度 0.76）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 ok 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】要判 10mm 目标需 GSD ≤ 3.333 mm/px ⇒ 请靠近至 **≤ 1.00 m**。",
+          "extra": {
+            "area_m2": 1e-05,
+            "equiv_diameter_px": 8.7,
+            "elem_type": "wall"
+          }
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            157,
+            50,
+            185,
+            129
+          ],
+          "metric_name": "width_max_mm",
+          "metric_value": 2.197,
+          "limit_mm": 0.2,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「裂缝」疑似存在（置信度 0.76）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 danger 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】用当前镜头判 0.3mm 目标即使贴到 3cm 也不够 ⇒ 请改用更长焦段或提高画面分辨率。",
+          "extra": {
+            "length_mm": 67.4,
+            "elongation": 43.88,
+            "env_class": "二类环境（露天/潮湿）",
+            "px_width_max": 4.39
+          }
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            179,
+            203,
+            210,
+            293
+          ],
+          "metric_name": "width_max_mm",
+          "metric_value": 2.498,
+          "limit_mm": 0.2,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「裂缝」疑似存在（置信度 0.73）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 danger 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】用当前镜头判 0.3mm 目标即使贴到 3cm 也不够 ⇒ 请改用更长焦段或提高画面分辨率。",
+          "extra": {
+            "length_mm": 114.6,
+            "elongation": 74.4,
+            "env_class": "二类环境（露天/潮湿）",
+            "px_width_max": 5.0
+          }
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            132,
+            0,
+            169,
+            54
+          ],
+          "metric_name": "width_max_mm",
+          "metric_value": 2.197,
+          "limit_mm": 0.2,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「裂缝」疑似存在（置信度 0.72）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 danger 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】用当前镜头判 0.3mm 目标即使贴到 3cm 也不够 ⇒ 请改用更长焦段或提高画面分辨率。",
+          "extra": {
+            "length_mm": 61.7,
+            "elongation": 40.21,
+            "env_class": "二类环境（露天/潮湿）",
+            "px_width_max": 4.39
+          }
+        },
+        {
+          "cls_name": "spalling",
+          "bbox_xyxy": [
+            207,
+            291,
+            330,
+            359
+          ],
+          "metric_name": "area_ratio",
+          "metric_value": 0.0042,
+          "limit_mm": null,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「剥落缺失」疑似存在（置信度 0.68）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 ok 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】要判 10mm 目标需 GSD ≤ 3.333 mm/px ⇒ 请靠近至 **≤ 1.00 m**。",
+          "extra": {
+            "area_m2": 1e-05,
+            "equiv_diameter_px": 6.7,
+            "elem_type": "wall"
+          }
+        },
+        {
+          "cls_name": "spalling",
+          "bbox_xyxy": [
+            282,
+            380,
+            335,
+            448
+          ],
+          "metric_name": "area_ratio",
+          "metric_value": 0.0057,
+          "limit_mm": null,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「剥落缺失」疑似存在（置信度 0.48）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 ok 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】要判 10mm 目标需 GSD ≤ 3.333 mm/px ⇒ 请靠近至 **≤ 1.00 m**。",
+          "extra": {
+            "area_m2": 1e-05,
+            "equiv_diameter_px": 5.1,
+            "elem_type": "wall"
+          }
+        },
+        {
+          "cls_name": "efflorescence",
+          "bbox_xyxy": [
+            42,
+            63,
+            167,
+            133
+          ],
+          "metric_name": "area_ratio",
+          "metric_value": 0.0028,
+          "limit_mm": null,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「泛碱渗水」疑似存在（置信度 0.41）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 ok 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】要判 10mm 目标需 GSD ≤ 3.333 mm/px ⇒ 请靠近至 **≤ 1.00 m**。",
+          "extra": {
+            "area_m2": 1e-05,
+            "equiv_diameter_px": 5.6,
+            "elem_type": "wall"
+          }
+        },
+        {
+          "cls_name": "crack",
+          "bbox_xyxy": [
+            182,
+            209,
+            209,
+            280
+          ],
+          "metric_name": "width_max_mm",
+          "metric_value": 2.197,
+          "limit_mm": 0.2,
+          "exceeded": false,
+          "severity": "unjudgeable",
+          "reason": "仅在图像中检出「裂缝」疑似存在（置信度 0.34）；尺寸与分级均无法判定（原因：图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22）））",
+          "confidence_note": "本条尺寸结论已作废：当前 GSD=0.50 mm/px 下，该类目标达不到毫米级判读门槛（原判 danger 不可信）。仅保留「疑似存在」提示，建议靠近复拍后再定级。 【本次具体原因】图像质量不达标（高 ISO 噪点（噪声 MAD 6.00 > 4.22））。 【补拍建议】用当前镜头判 0.3mm 目标即使贴到 3cm 也不够 ⇒ 请改用更长焦段或提高画面分辨率。",
+          "extra": {
+            "length_mm": 81.5,
+            "elongation": 55.06,
+            "env_class": "二类环境（露天/潮湿）",
+            "px_width_max": 4.39
+          }
+        }
+      ],
+      "risk": {
+        "level": "U",
+        "level_desc": "当前图像质量/分辨率不足以支撑任何定量判定，无法给出危险性等级。",
+        "n_defects": 0,
+        "n_danger": 0,
+        "n_attention": 0,
+        "n_moisture_hints": 0,
+        "structural_defects": 0,
+        "need_professional_inspection": true,
+        "disclaimer": "本等级为图像筛查层面的风险排序结果，依据 GB 50010-2010 与 JGJ 125-2016 的判据做粗略对齐，不构成法定鉴定结论。达到 B/C 级应转由具备资质的专业机构进场鉴定。",
+        "n_unjudgeable": 9,
+        "abstained": true
+      },
+      "annotated": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\greybrick-yolo__1174_annotated.jpg"
+    }
+  ]
+}

@@ -45,6 +45,7 @@ import _verify_rectify as V  # noqa: E402
 import rectify as R  # noqa: E402
 from advice import gsd_at_distance, advise_distance, LENS_PRESETS  # noqa: E402
 from gsd import Calibration, screening_capability  # noqa: E402
+from common import imwrite_u  # noqa: E402
 
 OUT = Path(CODE).resolve().parent / "logs" / "_survey_demo"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -58,10 +59,20 @@ def say(s: str = "") -> None:
 
 
 def save_png(name: str, img) -> None:
+    """落盘演示图。
+
+    ⚠️ 必须用 `imwrite_u`：本机实测 `cv2.imwrite` 对含非 ASCII 的路径
+    **返回 False 且不抛异常**（本工程路径含中文）⇒ 原写法下这些 PNG
+    **一张都写不出来且完全无声**，而技术报告 §11.7 却把它们列为产物。
+    2026-09-26 发现并修正；改后成功/失败都会打一行，不再静默。
+    """
     if img is None:
         return
-    import cv2
-    cv2.imwrite(str(OUT / name), img)
+    p = OUT / name
+    if imwrite_u(p, img):
+        say(f"  [图] {p.name}")
+    else:
+        say(f"  [图][落盘失败] {p.name}")
 
 
 def main() -> int:

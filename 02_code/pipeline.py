@@ -47,6 +47,7 @@ from common import (
     RESULT_DIR,
     VIS_DIR,
     argv_flag,
+    default_weight,
     dump_json,
     ensure_dirs,
     imread_u,
@@ -57,13 +58,20 @@ from common import (
 )
 from gsd import (
     Calibration,
+    assess_image_quality,
     assess_interpretability,
     calibrate_by_brick_period,
     calibrate_by_camera,
     calibrate_by_object,
     screening_capability,
 )
-from grade import building_risk_level, grade_all
+from grade import (
+    LINE_CLASSES,
+    apply_abstention,
+    building_risk_level,
+    classify_unjudgeable,
+    grade_all,
+)
 from measure import draw_measurement, measure_instance
 from rectify import rectify as rectify_image
 
@@ -146,9 +154,19 @@ def get_calibration(args: dict, image: np.ndarray,
     return c
 
 
-def run_one(image_path: Path, model, args: dict) -> dict:
-    """处理单张图像，返回结构化结果。"""
-    img = imread_u(image_path)
+def run_one(image_path: Path, model, args: dict, image=None) -> dict:
+    """处理单张图像，返回结构化结果。
+
+    `image` 可选：**已解码的图像数组**；给定时**跳过磁盘读取**。
+    加这个形参的原因：`video_screen` 逐帧「写盘 → 读盘」只为了适配本函数
+    「路径进」的契约，纯属 I/O 浪费。调用方若已在内存里有帧，可直接传入。
+    默认 `None` ⇒ 行为与改动前**逐字节一致**（不影响 `pipeline --dir`
+    与 `batch_screen` 两个既有入口）。
+
+    ⚠️ `str(image_path)` 仍会写进结果的 `image` 字段，故调用方应传一个
+       有意义的标识路径（视频路径下它是帧的逻辑名，未必真实落盘）。
+    """
+    img = imread_u(image_path) if image is None else image
     if img is None:
         log(f"  读取失败: {image_path.name}")
         return {"image": str(image_path), "status": "read_failed"}
@@ -216,7 +234,39 @@ def run_one(image_path: Path, model, args: dict) -> dict:
     grades = grade_all(measurements, env_class=env_class,
                        is_main_rebar_zone=is_main_rebar_zone,
                        is_slab_tension=is_slab_tension)
-    risk = building_risk_level(grades)
+
+    # ---- 5b) 弃权传染到输出层（2026-09-25 修复）----
+    # ★★ 这是一个**真实存在的缺陷修复**，不是可选增强：
+    #   原先此处直接 `building_risk_level(grades)`，完全不看可判读性
+    #   ⇒ 标定兜底给出 GSD≈67mm/px 时，一条裂缝被量成「宽 401.79mm」
+    #   ⇒ 判 danger ⇒ 风险报 **C（局部危房）**，而同图 interpretability
+    #   明明说 `insufficient`。**自相矛盾的输出比不输出更危险**。
+    #   报告 §2.3 把「拒答传染到输出层」列为设计亮点，但该逻辑此前
+    #   只存在于 `06_deploy/app.py` 的展示路径 ⇒ 报告所述与 API 行为
+    #   不一致。现在把判定抽到 `grade.classify_unjudgeable` /
+    #   `grade.apply_abstention` 的**单一共享实现**，两个入口都调它，
+    #   保证只有一套口径。
+    _quality = assess_image_quality(img)
+    _flags = classify_unjudgeable(measurements, interp_crack, interp_blob,
+                                  quality=_quality)
+
+    def _advise_for(cls_name: str) -> str:
+        """按类给「靠近到多少米才能判读」的具体补拍建议（增强项）。"""
+        from advice import advise_distance
+        tgt = 0.30 if cls_name in LINE_CLASSES else 10.0
+        adv = advise_distance(tgt, image_width_px=int(img.shape[1]),
+                              lens_label="主摄 24mm")
+        if adv.feasible:
+            return (f"【补拍建议】要判 {tgt:g}mm 目标需 GSD ≤ "
+                    f"{adv.required_gsd:.3f} mm/px ⇒ 请靠近至 "
+                    f"**≤ {adv.max_distance_m:.2f} m**。")
+        return (f"【补拍建议】用当前镜头判 {tgt:g}mm 目标即使贴到 "
+                f"{adv.max_distance_m*100:.0f}cm 也不够 ⇒ 请改用更长焦段或"
+                f"提高画面分辨率。")
+
+    risk, n_unjudgeable = apply_abstention(
+        grades, measurements, _flags, calib=calib, quality=_quality,
+        advise_fn=_advise_for)
 
     # ---- 6) 可视化 ----
     vis = img.copy()
@@ -259,9 +309,20 @@ def run_one(image_path: Path, model, args: dict) -> dict:
         cv2.putText(vis, t, (10, y), cv2.FONT_HERSHEY_SIMPLEX, 0.55,
                     (0, 255, 255), 1, cv2.LINE_AA)
 
-    save_dir = Path(args.get("out", str(VIS_DIR)))
-    ensure_dirs(save_dir)
-    imwrite_u(save_dir / f"{image_path.stem}_annotated.jpg", vis)
+    # ★ 2026-09-26：标注图改为**可选落盘**（默认关，用 `--save-annotated` 开启）。
+    # 为什么：批量与视频场景下逐图写 annotated.jpg 属纯 I/O 浪费 ——
+    #   它们要的是聚合结论，不是每张配图。
+    # 顺带把返回值也检查上：`cv2.imwrite` 对含非 ASCII 的路径会**静默返回 False**，
+    #   本工程统一走 `imwrite_u`（内部 imencode + tofile）。
+    annotated_path = None
+    if args.get("save_annotated"):
+        save_dir = Path(args.get("out", str(VIS_DIR)))
+        ensure_dirs(save_dir)
+        _ann = save_dir / f"{image_path.stem}_annotated.jpg"
+        if imwrite_u(_ann, vis):
+            annotated_path = _ann
+        else:
+            log(f"  [warn] 标注图落盘失败：{_ann}")
 
     return {
         "image": str(image_path),
@@ -284,15 +345,29 @@ def run_one(image_path: Path, model, args: dict) -> dict:
         # 正射校正记录：None 表示本次未启用（见报告 §6.5）
         "rectify": rect,
         "image_used": (rect or {}).get("image_used", "original"),
-        "measurements": [m.to_dict() for m in measurements],
+        # ★ 显式合并 conf：Measurement.to_dict() 走 asdict()，只序列化
+        #   dataclass 声明字段，而 conf 是运行时塞进 __dict__ 的额外字段
+        #   ⇒ 不显式取出来，下游（含 video_screen 的跨帧聚合）拿到的
+        #   置信度恒为 0.0。app.py 的 payload 有同样处理，两处口径须一致。
+        #   本次新增（2026-09-25）——视频聚合需按置信度挑代表帧，
+        #   缺了它就会把所有帧的代表都选成「第一个」。
+        "measurements": [
+            {**m.to_dict(), "conf": round(float(m.__dict__.get("conf", 0.0)), 4)}
+            for m in measurements
+        ],
         "grades": [g.to_dict() for g in grades],
         "risk": risk,
-        "annotated": str(save_dir / f"{image_path.stem}_annotated.jpg"),
+        # 未开启 --save-annotated 时为 None。**不要**写成不存在的路径 ——
+        # 否则下游 JSON 会残留指向空文件的引用（video_screen.py:498 会透传本字段）。
+        "annotated": (str(annotated_path) if annotated_path else None),
     }
 
 
 def main() -> None:
-    model_path = argv_flag("model", str(Path(str(RESULT_DIR)) / "train" / "v8s640" / "weights" / "best.pt"))
+    # 默认权重统一走 common.default_weight()（单一实现）。
+    # ★ 2026-09-25 修正：原先硬写 v8s640，**早已不是主力**（主力 2026-09-20 起
+    #   切到 v11s640），且路径落在训练工作目录 ⇒ 交付包里必然不存在。
+    model_path = argv_flag("model", default_weight("v11s640"))
     single = argv_flag("image")
     folder = argv_flag("dir")
     save_json = argv_flag("json", "")
@@ -309,6 +384,8 @@ def main() -> None:
         "env": argv_flag("env", "二类环境（露天/潮湿）"),
         "jgj125": argv_flag("jgj125", ""),
         "out": argv_flag("out", str(VIS_DIR)),
+        # 标注图默认不落盘（批量/视频下逐图写盘是纯 I/O 浪费）
+        "save_annotated": _flag("save-annotated"),
         # 斜拍正射校正（rectify.py / 报告 §6.5）
         "rectify": _flag("rectify"),
         "rectify_force": (str(argv_flag("rectify", "")).strip().lower() == "force"),

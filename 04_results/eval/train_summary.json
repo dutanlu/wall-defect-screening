@@ -1,5 +1,5 @@
 {
-  "data_yaml": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dataset\\wall_defects.yaml",
+  "data_yaml": "01_data\\dataset_merged\\wall_defects_merged.yaml",
   "recipes": {
     "v8s640": {
       "weight": "yolov8s.pt",
@@ -44,6 +44,26 @@
         "scale": 0.9,
         "mixup": 0.15
       }
+    },
+    "v11s896": {
+      "weight": "yolo11s.pt",
+      "imgsz": 896,
+      "batch": 16,
+      "note": "高分辨率训练：imgsz 640→896（露筋召回专项，对照 v11s640）",
+      "aug": {
+        "workers": 0
+      }
+    },
+    "v11s896_nomosaic": {
+      "weight": "yolo11s.pt",
+      "imgsz": 896,
+      "batch": 16,
+      "note": "高分辨率 + 关闭 mosaic（mosaic 进一步压扁细长目标）",
+      "aug": {
+        "mosaic": 0.0,
+        "close_mosaic": 0,
+        "workers": 0
+      }
     }
   },
   "results": [
@@ -87,6 +107,243 @@
       },
       "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal_s2024",
       "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_clsbal_s2024\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s896",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 896,
+      "batch": 16,
+      "epochs": 1,
+      "note": "高分辨率训练：imgsz 640→896（露筋召回专项，对照 v11s640）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 219.7,
+      "metrics": {
+        "metrics/precision(B)": 0.7653,
+        "metrics/recall(B)": 0.0338,
+        "metrics/mAP50(B)": 0.0267,
+        "metrics/mAP50-95(B)": 0.014,
+        "fitness": 0.014
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s896",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s896\\weights\\best.pt",
+      "best_pt_mb": 18.36
+    },
+    {
+      "run": "v11s640_r20",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "epochs": 20,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 1391.3,
+      "metrics": {
+        "metrics/precision(B)": 0.698,
+        "metrics/recall(B)": 0.5839,
+        "metrics/mAP50(B)": 0.6452,
+        "metrics/mAP50-95(B)": 0.3699,
+        "fitness": 0.3699
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_r20",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_r20\\weights\\best.pt",
+      "best_pt_mb": 18.32
+    },
+    {
+      "run": "v11s896_r20",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 896,
+      "batch": 16,
+      "epochs": 20,
+      "note": "高分辨率训练：imgsz 640→896（露筋召回专项，对照 v11s640）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 3215.0,
+      "metrics": {
+        "metrics/precision(B)": 0.714,
+        "metrics/recall(B)": 0.564,
+        "metrics/mAP50(B)": 0.623,
+        "metrics/mAP50-95(B)": 0.3592,
+        "fitness": 0.3592
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s896_r20",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s896_r20\\weights\\best.pt",
+      "best_pt_mb": 18.36
+    },
+    {
+      "run": "v11s640_merge",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "epochs": 20,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 1389.7,
+      "metrics": {
+        "metrics/precision(B)": 0.7117,
+        "metrics/recall(B)": 0.564,
+        "metrics/mAP50(B)": 0.6301,
+        "metrics/mAP50-95(B)": 0.3577,
+        "fitness": 0.3577
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge\\weights\\best.pt",
+      "best_pt_mb": 18.32
+    },
+    {
+      "run": "v11s640_merge100",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "epochs": 100,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 6668.3,
+      "metrics": {
+        "metrics/precision(B)": 0.7191,
+        "metrics/recall(B)": 0.6238,
+        "metrics/mAP50(B)": 0.6688,
+        "metrics/mAP50-95(B)": 0.4025,
+        "fitness": 0.4025
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge100",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge100\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s640_b16",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_b16\\weights\\last.pt",
+      "imgsz": 640,
+      "batch": 16,
+      "workers": 4,
+      "epochs": 100,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 2027.6,
+      "metrics": {
+        "metrics/precision(B)": 0.7805,
+        "metrics/recall(B)": 0.6204,
+        "metrics/mAP50(B)": 0.6949,
+        "metrics/mAP50-95(B)": 0.4232,
+        "fitness": 0.4232
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_b16",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_b16\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s896_r100",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 896,
+      "batch": 16,
+      "workers": 4,
+      "epochs": 100,
+      "note": "高分辨率训练：imgsz 640→896（露筋召回专项，对照 v11s640）",
+      "seed": 42,
+      "status": "ok",
+      "seconds": 14201.7,
+      "metrics": {
+        "metrics/precision(B)": 0.7282,
+        "metrics/recall(B)": 0.6423,
+        "metrics/mAP50(B)": 0.6918,
+        "metrics/mAP50-95(B)": 0.4236,
+        "fitness": 0.4236
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s896_r100",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s896_r100\\weights\\best.pt",
+      "best_pt_mb": 18.37
+    },
+    {
+      "run": "v11s640_s123",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "workers": 4,
+      "epochs": 100,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 123,
+      "status": "ok",
+      "seconds": 6645.7,
+      "metrics": {
+        "metrics/precision(B)": 0.7732,
+        "metrics/recall(B)": 0.5893,
+        "metrics/mAP50(B)": 0.6736,
+        "metrics/mAP50-95(B)": 0.4157,
+        "fitness": 0.4157
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_s123",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_s123\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s640_merge_s123",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "workers": 4,
+      "epochs": 100,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 123,
+      "status": "ok",
+      "seconds": 6651.8,
+      "metrics": {
+        "metrics/precision(B)": 0.7171,
+        "metrics/recall(B)": 0.6184,
+        "metrics/mAP50(B)": 0.664,
+        "metrics/mAP50-95(B)": 0.4106,
+        "fitness": 0.4106
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge_s123",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge_s123\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s640_s2024",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_s2024\\weights\\last.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "workers": 4,
+      "epochs": 100,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 2024,
+      "status": "ok",
+      "seconds": 4496.1,
+      "metrics": {
+        "metrics/precision(B)": 0.7894,
+        "metrics/recall(B)": 0.5943,
+        "metrics/mAP50(B)": 0.6788,
+        "metrics/mAP50-95(B)": 0.4248,
+        "fitness": 0.4248
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_s2024",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_s2024\\weights\\best.pt",
+      "best_pt_mb": 18.33
+    },
+    {
+      "run": "v11s640_merge_s2024",
+      "weight": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\yolo11s.pt",
+      "imgsz": 640,
+      "batch": 24,
+      "workers": 4,
+      "epochs": 100,
+      "note": "版本对照：v11 vs v8（答辩「为何选该版本」依据）",
+      "seed": 2024,
+      "status": "ok",
+      "seconds": 7023.3,
+      "metrics": {
+        "metrics/precision(B)": 0.7278,
+        "metrics/recall(B)": 0.6198,
+        "metrics/mAP50(B)": 0.6727,
+        "metrics/mAP50-95(B)": 0.402,
+        "fitness": 0.402
+      },
+      "save_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge_s2024",
+      "best_pt": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge_s2024\\weights\\best.pt",
       "best_pt_mb": 18.33
     }
   ],

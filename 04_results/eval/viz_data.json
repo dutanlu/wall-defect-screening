@@ -1,0 +1,447 @@
+{
+  "source": "04_results/eval/*_test_metrics.json（唯一数据源，未加工）",
+  "note": "所有数字直接取自评估 JSON 的 overall / per_class，未经二次计算",
+  "models": {
+    "v8n640": {
+      "file": "v8n640_test_metrics.json",
+      "run": "v8n640",
+      "weights": "v8n640_best.pt",
+      "weights_mb": 5.99,
+      "imgsz": 640,
+      "mAP50": 0.71723,
+      "mAP50_95": 0.41092,
+      "precision": 0.78115,
+      "recall": 0.64488
+    },
+    "v8s640": {
+      "file": "v8s640_test_metrics.json",
+      "run": "v8s640",
+      "weights": "v8s640_best.pt",
+      "weights_mb": 21.51,
+      "imgsz": 640,
+      "mAP50": 0.73559,
+      "mAP50_95": 0.43244,
+      "precision": 0.73014,
+      "recall": 0.70441
+    },
+    "v8s1024": {
+      "file": "v8s1024_test_metrics.json",
+      "run": "v8s1024",
+      "weights": "v8s1024_best.pt",
+      "weights_mb": 21.58,
+      "imgsz": 640,
+      "mAP50": 0.71429,
+      "mAP50_95": 0.40722,
+      "precision": 0.72881,
+      "recall": 0.69745
+    },
+    "v11s640": {
+      "file": "v11s640_test_metrics.json",
+      "run": "v11s640",
+      "weights": "v11s640_best.pt",
+      "weights_mb": 18.33,
+      "imgsz": 640,
+      "mAP50": 0.72296,
+      "mAP50_95": 0.44105,
+      "precision": 0.77072,
+      "recall": 0.66926
+    },
+    "v11s640_aug": {
+      "file": "v11s640_aug_test_metrics.json",
+      "run": "v11s640_aug",
+      "weights": "best.pt",
+      "weights_mb": 18.33,
+      "imgsz": 640,
+      "mAP50": 0.72659,
+      "mAP50_95": 0.43806,
+      "precision": 0.71739,
+      "recall": 0.65795
+    },
+    "v11s640_clsbal": {
+      "file": "v11s640_clsbal_test_metrics.json",
+      "run": "v11s640_clsbal",
+      "weights": "v11s640_clsbal_best.pt",
+      "weights_mb": 18.33,
+      "imgsz": 640,
+      "mAP50": 0.72812,
+      "mAP50_95": 0.44772,
+      "precision": 0.76518,
+      "recall": 0.65846
+    }
+  },
+  "deploy": {
+    "pt_gpu": {
+      "file": "v11s640_test_metrics.json",
+      "run": "v11s640",
+      "weights": "v11s640_best.pt",
+      "weights_mb": 18.33,
+      "imgsz": 640,
+      "mAP50": 0.72296,
+      "mAP50_95": 0.44105,
+      "precision": 0.77072,
+      "recall": 0.66926
+    },
+    "pt_cpu": {
+      "file": "v11s640_pt_cpu_test_metrics.json",
+      "run": "v11s640_pt_cpu",
+      "weights": "v11s640_best.pt",
+      "weights_mb": 18.33,
+      "imgsz": 640,
+      "mAP50": 0.72261,
+      "mAP50_95": 0.44136,
+      "precision": 0.77244,
+      "recall": 0.66796
+    },
+    "onnx_v3": {
+      "file": "v11s640_onnx_v3_test_metrics.json",
+      "run": "v11s640_onnx_v3",
+      "weights": "v11s640_best_v3.onnx",
+      "weights_mb": 36.18,
+      "imgsz": 640,
+      "mAP50": 0.71781,
+      "mAP50_95": 0.4032,
+      "precision": 0.74379,
+      "recall": 0.68201
+    },
+    "fp16": {
+      "file": "v11s640_v3_fp16_test_metrics.json",
+      "run": "v11s640_v3_fp16",
+      "weights": "v11s640_best_v3_fp16.onnx",
+      "weights_mb": 18.14,
+      "imgsz": 640,
+      "mAP50": 0.718,
+      "mAP50_95": 0.40307,
+      "precision": 0.74404,
+      "recall": 0.68235
+    },
+    "int8A": {
+      "file": "v11s640_v3_int8A_test_metrics.json",
+      "run": "v11s640_v3_int8A",
+      "weights": "v11s640_int8_mixed_A.onnx",
+      "weights_mb": 11.96,
+      "imgsz": 640,
+      "mAP50": 0.71083,
+      "mAP50_95": 0.40054,
+      "precision": 0.7383,
+      "recall": 0.67143
+    },
+    "int8B": {
+      "file": "v11s640_v3_int8B_test_metrics.json",
+      "run": "v11s640_v3_int8B",
+      "weights": "v11s640_int8_mixed_B.onnx",
+      "weights_mb": 9.72,
+      "imgsz": 640,
+      "mAP50": 0.71093,
+      "mAP50_95": 0.39699,
+      "precision": 0.75226,
+      "recall": 0.67022
+    }
+  },
+  "d_path": {
+    "baseline": {
+      "file": "v11s640_test_metrics.json",
+      "run": "v11s640",
+      "weights": "v11s640_best.pt",
+      "weights_mb": 18.33,
+      "imgsz": 640,
+      "mAP50": 0.72296,
+      "mAP50_95": 0.44105,
+      "precision": 0.77072,
+      "recall": 0.66926
+    },
+    "B1_rust3000": {
+      "file": "d_B1_rust3000_test_metrics.json",
+      "run": "d_B1_rust3000",
+      "weights": "best.pt",
+      "weights_mb": 18.31,
+      "imgsz": 640,
+      "mAP50": 0.72311,
+      "mAP50_95": 0.42895,
+      "precision": 0.79986,
+      "recall": 0.64267
+    },
+    "B2_rust1000": {
+      "file": "d_B2_rust1000_test_metrics.json",
+      "run": "d_B2_rust1000",
+      "weights": "best.pt",
+      "weights_mb": 18.31,
+      "imgsz": 640,
+      "mAP50": 0.70995,
+      "mAP50_95": 0.40718,
+      "precision": 0.74688,
+      "recall": 0.64725
+    }
+  },
+  "per_class_v11s640": [
+    {
+      "cls": "crack",
+      "cn": "裂缝",
+      "ap50": 0.7283,
+      "ap50_95": 0.3345,
+      "precision": 0.806,
+      "recall": 0.7241,
+      "instances": 58,
+      "images": 22
+    },
+    {
+      "cls": "spalling",
+      "cn": "剥落缺失",
+      "ap50": 0.7734,
+      "ap50_95": 0.4292,
+      "precision": 0.7439,
+      "recall": 0.7431,
+      "instances": 43,
+      "images": 17
+    },
+    {
+      "cls": "efflorescence",
+      "cn": "泛碱渗水",
+      "ap50": 0.8411,
+      "ap50_95": 0.6255,
+      "precision": 0.8582,
+      "recall": 0.7155,
+      "instances": 116,
+      "images": 36
+    },
+    {
+      "cls": "exposed_rebar",
+      "cn": "露筋",
+      "ap50": 0.4568,
+      "ap50_95": 0.2636,
+      "precision": 0.6657,
+      "recall": 0.3946,
+      "instances": 147,
+      "images": 46
+    },
+    {
+      "cls": "rust",
+      "cn": "锈迹",
+      "ap50": 0.7392,
+      "ap50_95": 0.5522,
+      "precision": 0.8693,
+      "recall": 0.6554,
+      "instances": 1149,
+      "images": 120
+    },
+    {
+      "cls": "delamination",
+      "cn": "空鼓分层",
+      "ap50": 0.6996,
+      "ap50_95": 0.397,
+      "precision": 0.7113,
+      "recall": 0.6521,
+      "instances": 68,
+      "images": 52
+    },
+    {
+      "cls": "moss",
+      "cn": "苔藓附着",
+      "ap50": 0.8223,
+      "ap50_95": 0.4855,
+      "precision": 0.7407,
+      "recall": 0.8,
+      "instances": 65,
+      "images": 10
+    }
+  ],
+  "dataset": {
+    "test_images": 285,
+    "test_instances": 1646,
+    "n_classes": 7,
+    "per_class_instances": {
+      "crack": 58,
+      "spalling": 43,
+      "efflorescence": 116,
+      "exposed_rebar": 147,
+      "rust": 1149,
+      "delamination": 68,
+      "moss": 65
+    }
+  },
+  "train_summary": {
+    "keys": [
+      "data_yaml",
+      "recipes",
+      "results",
+      "classes"
+    ],
+    "raw_overview": {
+      "data_yaml": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dataset\\wall_defects.yaml",
+      "classes": [
+        "crack",
+        "spalling",
+        "efflorescence",
+        "exposed_rebar",
+        "rust",
+        "delamination",
+        "moss"
+      ]
+    }
+  },
+  "robustness": {
+    "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640\\weights\\best.pt",
+    "split": "test",
+    "imgsz": 640,
+    "levels": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "note": "受控退化仿真：对同一批标注图像施加单一质量退化后重新评估。因果清晰但噪声模型与真实退化有偏差，结论应作趋势性证据引用。",
+    "rows": [
+      {
+        "deg": "baseline",
+        "deg_cn": "原始(基线)",
+        "level": 0.0,
+        "precision": 0.7707,
+        "recall": 0.6693,
+        "mAP50": 0.723,
+        "mAP50_95": 0.4411
+      },
+      {
+        "deg": "lowlight",
+        "deg_cn": "低照度",
+        "level": 0.25,
+        "n_images": 285,
+        "precision": 0.7576,
+        "recall": 0.6815,
+        "mAP50": 0.7172,
+        "mAP50_95": 0.4362,
+        "d_mAP50": -0.0058,
+        "d_mAP50_95": -0.0049
+      },
+      {
+        "deg": "lowlight",
+        "deg_cn": "低照度",
+        "level": 0.5,
+        "n_images": 285,
+        "precision": 0.698,
+        "recall": 0.5884,
+        "mAP50": 0.642,
+        "mAP50_95": 0.3748,
+        "d_mAP50": -0.081,
+        "d_mAP50_95": -0.0663
+      },
+      {
+        "deg": "lowlight",
+        "deg_cn": "低照度",
+        "level": 1.0,
+        "n_images": 285,
+        "precision": 0.5539,
+        "recall": 0.1297,
+        "mAP50": 0.1586,
+        "mAP50_95": 0.0849,
+        "d_mAP50": -0.5644,
+        "d_mAP50_95": -0.3562
+      },
+      {
+        "deg": "blur",
+        "deg_cn": "失焦模糊",
+        "level": 0.25,
+        "n_images": 285,
+        "precision": 0.7629,
+        "recall": 0.6394,
+        "mAP50": 0.7126,
+        "mAP50_95": 0.4344,
+        "d_mAP50": -0.0104,
+        "d_mAP50_95": -0.0067
+      },
+      {
+        "deg": "blur",
+        "deg_cn": "失焦模糊",
+        "level": 0.5,
+        "n_images": 285,
+        "precision": 0.7271,
+        "recall": 0.6054,
+        "mAP50": 0.6732,
+        "mAP50_95": 0.4024,
+        "d_mAP50": -0.0498,
+        "d_mAP50_95": -0.0387
+      },
+      {
+        "deg": "blur",
+        "deg_cn": "失焦模糊",
+        "level": 1.0,
+        "n_images": 285,
+        "precision": 0.6906,
+        "recall": 0.5093,
+        "mAP50": 0.5595,
+        "mAP50_95": 0.3095,
+        "d_mAP50": -0.1635,
+        "d_mAP50_95": -0.1316
+      },
+      {
+        "deg": "overexpose",
+        "deg_cn": "过曝",
+        "level": 0.25,
+        "n_images": 285,
+        "precision": 0.6971,
+        "recall": 0.6981,
+        "mAP50": 0.7047,
+        "mAP50_95": 0.4192,
+        "d_mAP50": -0.0183,
+        "d_mAP50_95": -0.0219
+      },
+      {
+        "deg": "overexpose",
+        "deg_cn": "过曝",
+        "level": 0.5,
+        "n_images": 285,
+        "precision": 0.662,
+        "recall": 0.57,
+        "mAP50": 0.6042,
+        "mAP50_95": 0.3441,
+        "d_mAP50": -0.1188,
+        "d_mAP50_95": -0.097
+      },
+      {
+        "deg": "overexpose",
+        "deg_cn": "过曝",
+        "level": 1.0,
+        "n_images": 285,
+        "precision": 0.5773,
+        "recall": 0.2737,
+        "mAP50": 0.3044,
+        "mAP50_95": 0.1704,
+        "d_mAP50": -0.4186,
+        "d_mAP50_95": -0.2707
+      },
+      {
+        "deg": "lowcontrast",
+        "deg_cn": "低对比(雨天)",
+        "level": 0.25,
+        "n_images": 285,
+        "precision": 0.741,
+        "recall": 0.6401,
+        "mAP50": 0.7038,
+        "mAP50_95": 0.4285,
+        "d_mAP50": -0.0192,
+        "d_mAP50_95": -0.0126
+      },
+      {
+        "deg": "lowcontrast",
+        "deg_cn": "低对比(雨天)",
+        "level": 0.5,
+        "n_images": 285,
+        "precision": 0.703,
+        "recall": 0.5991,
+        "mAP50": 0.663,
+        "mAP50_95": 0.3959,
+        "d_mAP50": -0.06,
+        "d_mAP50_95": -0.0452
+      },
+      {
+        "deg": "lowcontrast",
+        "deg_cn": "低对比(雨天)",
+        "level": 1.0,
+        "n_images": 285,
+        "precision": 0.6429,
+        "recall": 0.4512,
+        "mAP50": 0.5345,
+        "mAP50_95": 0.3111,
+        "d_mAP50": -0.1885,
+        "d_mAP50_95": -0.13
+      }
+    ]
+  }
+}

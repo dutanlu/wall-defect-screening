@@ -283,6 +283,13 @@ $PY = "D:\下载\python.exe"        # 本机真实环境（含 ultralytics / tor
 & $PY train.py --runs=v8s640,v11s640    # v8 vs v11 版本对比
 ```
 
+**可覆盖的参数**：`--runs=` `--tag=` `--epochs=` `--data=` `--seed=` `--resume`
+`--device=` `--imgsz=` `--batch=` `--workers=`
+（⚠️ 该脚本**没有 `--help`**：加未知参数会被静默忽略并**直接开跑**。）
+> ⚠️ 本机系统内存仅 16.88 GB：`workers=4` 可能在训练**中途**触发
+> `MemoryError in DataLoader worker`，**而退出码仍是 0**（静默失败）。
+> 长训练建议显式 `--workers=0`（更稳但更慢），并**启动后读 `args.yaml` 确认生效值**。
+
 | 实验名 | 权重 | imgsz | 目的 |
 |---|---|---|---|
 | `v11s640` | yolo11s | 640 | **主力配置**（mAP50-95 / 体积 / 误检三项最优） |

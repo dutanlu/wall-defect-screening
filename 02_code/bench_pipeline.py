@@ -42,10 +42,22 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import (  # noqa: E402
-    PROJ_ROOT, RESULT_DIR, VIS_DIR, argv_flag, dump_json, imread_u, list_images, log,
+    PROJ_ROOT, RESULT_DIR, VIS_DIR, argv_flag, default_weight, dump_json, imread_u,
+    list_images, log,
 )
-from gsd import assess_interpretability, calibrate_by_object, screening_capability  # noqa: E402
-from grade import building_risk_level, grade_all  # noqa: E402
+from gsd import (  # noqa: E402
+    assess_image_quality,
+    assess_interpretability,
+    calibrate_by_object,
+    screening_capability,
+)
+from grade import (  # noqa: E402
+    LINE_CLASSES,
+    apply_abstention,
+    building_risk_level,
+    classify_unjudgeable,
+    grade_all,
+)
 from measure import draw_measurement, measure_instance  # noqa: E402
 from rectify import rectify as rectify_image  # noqa: E402
 
@@ -179,6 +191,35 @@ def _measure_real(img_path: Path, model, args: dict, device: str,
         grades = grade_all(measurements, env_class=args["env"])
         building_risk_level(grades)
 
+    # ---- 以下两段是 2026-09-26 补上的：原 bench 漏算，导致端到端数字偏低 ----
+    # 与真实入口 `pipeline.py:239-259` 严格同构（顺序、参数、advise_fn 都对齐）。
+    with seg(clk, "quality_gate"):
+        # 对全分辨率原图做成像自检（Laplacian / 中值 / 两次 median），纯 CPU
+        _quality = assess_image_quality(img)
+
+    with seg(clk, "abstain"):
+        _flags = classify_unjudgeable(measurements, interp_crack, interp_blob,
+                                      quality=_quality)
+
+        def _advise_for(cls_name: str) -> str:
+            from advice import advise_distance
+            tgt = 0.30 if cls_name in LINE_CLASSES else 10.0
+            adv = advise_distance(tgt, image_width_px=int(img.shape[1]),
+                                  lens_label="主摄 24mm")
+            if adv.feasible:
+                return (f"【补拍建议】要判 {tgt:g}mm 目标需 GSD ≤ "
+                        f"{adv.required_gsd:.3f} mm/px ⇒ 请靠近至 "
+                        f"**≤ {adv.max_distance_m:.2f} m**。")
+            return (f"【补拍建议】用当前镜头判 {tgt:g}mm 目标即使贴到 "
+                    f"{adv.max_distance_m*100:.0f}cm 也不够 ⇒ 请改用更长焦段或"
+                    f"提高画面分辨率。")
+
+        risk, n_unjudgeable = apply_abstention(
+            grades, measurements, _flags, calib=calib, quality=_quality,
+            advise_fn=_advise_for)
+        args["_last_risk"] = risk
+        args["_last_n_unjudgeable"] = n_unjudgeable
+
     with seg(clk, "draw"):
         vis = img.copy()
         for m in measurements:
@@ -268,8 +309,9 @@ def main() -> int:
         out_lines.append(s)
         print(s, flush=True)
 
-    model_path = argv_flag("model",
-                           str(RESULT_DIR / "train" / "v8s640" / "weights" / "best.pt"))
+    # 默认权重统一走 common.default_weight()（2026-09-25 修正：
+    # 原先硬写 v8s640 且落在训练工作目录，交付包里不存在）
+    model_path = argv_flag("model", default_weight("v11s640"))
     img_one = argv_flag("image")
     src_dir = argv_flag("dir", str(VIS_DIR))
     # ⚠️ 输出路径必须可被 --json 覆盖：不同分辨率/参数组合要分别留档，
@@ -351,7 +393,8 @@ def main() -> int:
     # ---- 各阶段单图均值：从「每张图最后一圈」的 segments_ms 汇总 ----
     # 每张图恰好贡献一圈，所以「求和 / 图片数」就是单图均值，语义无歧义。
     stage_names = ["load", "rectify", "predict_ultralytics", "calibrate",
-                   "interpret", "measure", "grade", "draw", "save"]
+                   "interpret", "measure", "grade", "quality_gate",
+                   "abstain", "draw", "save"]
     seg_sum: dict[str, float] = {s: 0.0 for s in stage_names}
     for r in ok:
         for k, v in (r.get("segments_ms") or {}).items():

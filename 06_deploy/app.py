@@ -40,10 +40,16 @@ import json
 import traceback
 from pathlib import Path
 
-# 把 02_code 加入 sys.path，才能 import 项目模块
+# 把代码目录加入 sys.path，才能 import 项目模块。
+# ★ 源码布局与交付包布局的**目录名不同**（源码 `02_code` / 包内 `code`），
+#   且包内 run_app.bat 不设 PYTHONPATH ⇒ 硬编码源码名会让「包内实跑入口」直接崩
+#   （实测 `ModuleNotFoundError: No module named 'common'`）。
+#   故这里做布局感知：两个名字都试，源码侧行为不变。
 DEPLOY_DIR = Path(__file__).resolve().parent
 PROJ_ROOT = DEPLOY_DIR.parent
 CODE_DIR = PROJ_ROOT / "02_code"
+if not CODE_DIR.exists():
+    CODE_DIR = PROJ_ROOT / "code"      # 交付包布局
 sys.path.insert(0, str(CODE_DIR))
 
 import numpy as np                                    # noqa: E402
@@ -88,25 +94,17 @@ def _find_default_weight() -> Path | None:
     两者在本项目实测体积相同（如 v11s640 均为 18.33 MB），但
     `03_weights` 是交付语义明确的成品目录，路径更稳定；
     `04_results/train/` 属训练工作目录，重训时会被覆盖。
+
+    ★ 2026-09-25 重构：候选列表**不再在本函数内重复维护**，改为委托
+    `common.default_weight()`（单一实现）。原因：`batch_screen.py` /
+    `video_screen.py` 曾各自硬写 `results/train/v11s640/weights/best.pt`
+    ⇒ 交付包（排除训练工作目录）里开箱即失败。三处入口若各写一份候选，
+    就会各自漂移；现在统一由 common 负责，本函数只做 Path 包装。
     """
-    candidates = [
-        # 主力：v11s640（成品权重优先）
-        WEIGHTS_DIR / "v11s640_best.pt",
-        TRAIN_DIR / "v11s640" / "weights" / "best.pt",
-        # 兜底：其余已训练配置
-        WEIGHTS_DIR / "v8s640_best.pt",
-        TRAIN_DIR / "v8s640" / "weights" / "best.pt",
-        WEIGHTS_DIR / "v8n640_best.pt",
-        TRAIN_DIR / "v8n640" / "weights" / "best.pt",
-    ]
-    for c in candidates:
-        if c.exists():
-            return c
-    for c in sorted(WEIGHTS_DIR.glob("*_best.pt")):
-        return c
-    for c in sorted(TRAIN_DIR.glob("*/weights/best.pt")):
-        return c
-    return None
+    from common import default_weight
+    w = default_weight("v11s640")
+    p = Path(w)
+    return p if p.exists() else None
 
 
 def get_model(weight_path: str | None = None):
@@ -135,6 +133,106 @@ def get_model(weight_path: str | None = None):
 # --------------------------------------------------------------------------
 # 核心推理：单张图 → 结构化结论
 # --------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# P2/P3 落地：测量区间（conformal）+ 下一步行动（期望损失）
+#   来源：04_results/eval/conformal_measure.json（P2）、decision_rule.json（P3）
+#   ★ 只做**附加信息**：不参与任何测量值 / 分级 / GSD ⇒ 不影响已上报数字。
+# ---------------------------------------------------------------------------
+_I3_CACHE: dict = {}
+
+# P3 决策所用的成本比（**显式写出**，不藏在代码里）：
+#   r_re = 再拍成本 / 错结论代价 = 0.01
+#   r_hu = 上门鉴定成本 / 错结论代价 = 1.0
+#   取这一组是因为它落在决策边界的**非退化区**（R / A / H 三种行动都会出现）。
+I3_R_RE = 0.01
+I3_R_HU = 1.0
+
+
+def _i3_paths():
+    """兼容两种布局：源码 `<root>/04_results/eval/…` 与交付包 `<pack>/results/eval/…`。"""
+    root = Path(__file__).resolve().parent.parent
+    out = {}
+    for name in ("conformal_measure.json", "decision_rule.json"):
+        for rel in (("04_results", "eval"), ("results", "eval")):
+            p = root.joinpath(*rel, name)
+            if p.exists():
+                out[name] = p
+                break
+    return out
+
+
+def _i3_load():
+    if _I3_CACHE:
+        return _I3_CACHE
+    import json as _json
+    paths = _i3_paths()
+    for name, p in paths.items():
+        try:
+            _I3_CACHE[name] = _json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            _I3_CACHE[name] = {}
+    return _I3_CACHE
+
+
+def crack_interval_mm(width_mm: float, px_on: float):
+    """给裂缝线宽配 90% 区间；**超出 P2 校准范围时返回 None**（不外推）。
+
+    P2 的校准范围：`crack` 线宽、`px_on_target >= 3`，按 `3-8px` / `>=8px` 分箱。
+    """
+    data = _i3_load().get("conformal_measure.json") or {}
+    q = (data.get("quantiles_by_bin") or {})
+    if not q or width_mm is None or px_on is None or px_on < 3:
+        return None
+    key = next((k for k in q if k.startswith("C_")), None) if px_on >= 8 else \
+        next((k for k in q if k.startswith("B_")), None)
+    if key is None or data.get("alpha") is None:
+        return None
+    lo = width_mm - q[key]["q_hi"]
+    hi = width_mm - q[key]["q_lo"]
+    # ★ 下界截零：宽度不可能为负。conformal 区间是无约束分位数区间，
+    #   测值小、分位数宽时会给出负下界（实测 0.35mm 的 B 箱给到 -0.65mm）。
+    #   截零后仍**如实标注**区间宽度，不掩盖"区间很宽"这一事实。
+    lo = max(0.0, lo)
+    width = hi - lo
+    note = None
+    if width > 3.0 * max(width_mm, 0.05):
+        note = "区间远宽于测值 ⇒ 实际信息量低，不宜据此判定"
+    return {"lo_mm": round(lo, 3), "hi_mm": round(hi, 3),
+            "width_mm": round(width, 3),
+            "level": 1.0 - float(data["alpha"]), "bin": key,
+            "note": note,
+            "domain": "合成域（非真机保证）"}
+
+
+def decide_next_step(px_on: float, px_hi: float | None) -> dict:
+    """按 P3 的参数化边界给「下一步」。区间按生产路径的双侧窗口划分。"""
+    rr, rh = I3_R_RE, I3_R_HU
+    acc = _i3_load().get("decision_rule.json") or {}
+    reg = acc.get("regimes") or {}
+    pa = (reg.get("3<=px<=ks-1(接受带)") or {}).get("p_err")
+    if pa is None:
+        pa = 0.82
+    if px_on < 3:
+        rg = "px<3(太小)"
+        loss = {"R": rr + pa, "H": rh, "A": 1.0}
+    elif px_hi is not None and px_on > px_hi:
+        rg = "px>ks-1(过大)"
+        loss = {"H": rh, "A": 1.0, "R": rr + 1.0}
+    else:
+        rg = "3<=px<=ks-1(接受带)"
+        loss = {"A": pa, "H": rh, "R": rr + pa}
+    prio = {"H": 0, "R": 1, "A": 2}          # 并列时取更保守（安全优先）
+    m = min(loss.values())
+    best = sorted([k for k, v in loss.items() if abs(v - m) <= 1e-12],
+                  key=lambda k: prio[k])[0]
+    TEXT = {"A": "按当前测量出结论", "R": "建议再拍一张（靠近/换长焦）",
+            "H": "建议请专业机构进场"}
+    return {"action": best, "text": TEXT[best], "regime": rg,
+            "cost_ratio": {"rephoto_over_miss": rr, "human_over_miss": rh},
+            "expected_loss": {k: round(v, 4) for k, v in loss.items()},
+            "domain": "合成域参数化边界"}
+
+
 def analyze(image_rgb: np.ndarray,
             calib_mode: str,
             calib_object_px: float,
@@ -176,7 +274,7 @@ def analyze(image_rgb: np.ndarray,
         calibrate_by_object,
         screening_capability,
     )
-    from grade import building_risk_level, grade_all
+    from grade import grade_all  # building_risk_level 由 apply_abstention 内部调用
     from measure import draw_measurement, measure_instance
     from rectify import rectify as rectify_fun
 
@@ -294,7 +392,6 @@ def analyze(image_rgb: np.ndarray,
     grades = grade_all(measurements, env_class=env_class,
                        is_main_rebar_zone=is_main_rebar_zone,
                        is_slab_tension=is_slab_tension)
-    risk = building_risk_level(grades)
 
     # ---- 5b) 拒答的「传染性」处理（本项目最容易被忽略、但最要命的一环）----
     #
@@ -306,96 +403,60 @@ def analyze(image_rgb: np.ndarray,
     # 正确做法：一旦某类目标不可判读，就要把该类的**定量结论全部降级为
     # 「无法判定」**，只保留「此处疑似存在 X」的存在性提示。
     # 这就是 selective prediction 必须贯穿到输出层，而不能只停在横幅里。
-    crack_interp = assess_interpretability(calib, 0.30)
-    blob_interp = assess_interpretability(calib, 10.0)
+    # ★ 2026-09-26 去重：原先这里又算了一遍**完全相同**的两次
+    #   `assess_interpretability`（同 calib、同目标尺寸 0.30 / 10.0），
+    #   与第 3 步的 `interp_crack` / `interp_blob` 参数逐一相同 ⇒ 返回值必然相同。
+    #   现直接复用上面那两次的结果，不再重复计算。
     # [2026-09-23 新增·成像维度] 图像质量自检：**几何合格 != 图像可用**。
     # 实测（logs/_IMAGE_QUALITY_GATE.md）：低照度 L1.0 时几何判据仍说「可判读」，
     # 而 mAP50 已从 0.723 崩到 0.1586 —— 只靠几何会在一张近乎全黑的图上说「可判读」。
     _quality = assess_image_quality(img)
-    _quality_blocked = not _quality.ok
-    if _quality_blocked:
-        crack_unjudgeable = True
-        blob_unjudgeable = True
-    else:
-        crack_unjudgeable = crack_interp.level != "measurement"
-        blob_unjudgeable = blob_interp.level != "measurement"
 
-    def _is_line(cls: str) -> bool:
-        return cls in ("crack", "exposed_rebar", "rust")
+    # ★★★ 2026-09-25 重构：本处**不再自带一份弃权实现**。
+    #
+    # 为什么必须改（自检发现，见 logs/_REBAR_LINECLASS_FIX_20260925.md §七）：
+    #   §11.9 声称「已把弃权从『只在界面里』修成『全链路共享』」，但**只做了一半**：
+    #     · `grade.classify_unjudgeable` / `apply_abstention` 抽出来了 ✅
+    #     · `pipeline.py` 已改为调用它 ✅
+    #     · **`app.py`（界面）仍保留一份 ~90 行的内联副本** ❌
+    #   于是两处**各自漂移**：本次把 `grade.LINE_CLASSES` 收敛为 `("crack",)`
+    #   （露筋/锈迹改按 10mm 判读门槛）后，pipeline 那边生效了，
+    #   而 app.py 里的 `_is_line()` 还写着三元组 ⇒ **界面与 CLI 给出不同结论**。
+    #   —— 这正是 §11.9 想要根除的那类缺陷，只是当时漏了界面这一份。
+    # ⇒ 现在统一由 `grade` 的共享实现负责，app.py 只负责「渲染 + 补拍建议」。
 
-    for m, g in zip(measurements, grades):
-        unjudgeable = (crack_unjudgeable if _is_line(m.cls_name)
-                       else blob_unjudgeable)
-        # [2026-09-23 新增·测量窗口上界] 几何上 px 够，但超出本 ROI 的可靠上界
-        # (ks−1) 时同样会静默失明。实测见 logs/_RISK_COVERAGE.md：
-        # 单侧判据 risk 60.7% -> 补上界后 29.2%。
-        _win_bad = not bool(getattr(m, "window_ok", True))
-        if _win_bad:
-            unjudgeable = True
-        if unjudgeable:
-            # 该类的尺寸本来就不可信，其 severity 无意义 -> 强制降为
-            # 「无法判定」，并把原因写清楚
-            prev = g.severity
-            g.severity = "unjudgeable"
-            g.exceeded = False
-            # ⚠️ reason 里原本写着「裂缝宽 230.19mm > 限值 0.20mm」——
-            # 即 severity 作废了，那个荒唐的数字仍会从 reason 字段漏出去。
-            # 使用者读到「230mm 超限」照样会做处置决策。所以 reason 必须一起替换。
-            g.reason = (f"仅在图像中检出「{CLASS_CN.get(m.cls_name, m.cls_name)}」"
-                        f"疑似存在（置信度 {float(m.__dict__.get('conf', 0.0)):.2f}）；"
-                        f"尺寸与分级均无法判定")
-            _why = ("图像质量不达标（" + _quality.note + "）" if _quality_blocked
-                    else (m.window_note if _win_bad
-                          else "该类目标达不到毫米级判读门槛"))
-            g.reason = g.reason.rstrip("。") + f"（原因：{_why}）"
-            g.confidence_note = (
-                f"本条尺寸结论已作废：当前 GSD={calib.mm_per_px:.2f} mm/px 下，"
-                f"该类目标达不到毫米级判读门槛（原判 {prev} 不可信）。"
-                f"仅保留「疑似存在」提示，建议靠近复拍后再定级。"
-                + (f" 【本次具体原因】{_why}。" if (_win_bad or _quality_blocked) else "")
-            )
-            # [2026-09-25 新增·C 路采集闭环] 把「建议靠近复拍」从**废话**变成**具体动作**。
-            #   原句「建议靠近复拍后再定级」没告诉用户"靠近到多少"。
-            #   advice.advise_distance 由目标尺寸反解出「需 GSD ≤ X ⇒ 距离 ≤ Y m」，
-            #   并与 gsd.calibrate_by_camera 严格互逆（有往返自检，见 advice.py）。
-            #   ⚠️ 本段**只追加建议文本**，不改任何测量值 / 分级 / GSD ⇒ 不影响已上报数字。
-            try:
-                from advice import advise_distance
-                _tgt_mm = 0.30 if _is_line(m.cls_name) else 10.0
-                _adv = advise_distance(
-                    _tgt_mm,
-                    image_width_px=int(img.shape[1]),
-                    lens_label="主摄 24mm",
-                )
-                if _adv.feasible:
-                    g.confidence_note += (
-                        f" 【补拍建议】要判 {_tgt_mm:g}mm 目标需 GSD ≤ "
-                        f"{_adv.required_gsd:.3f} mm/px ⇒ 请靠近至 "
-                        f"**≤ {_adv.max_distance_m:.2f} m**（该距离下画面覆盖约 "
-                        f"{_adv.cover_mm_at_max/1000:.2f} m 宽）。")
-                else:
-                    g.confidence_note += (
-                        f" 【补拍建议】用当前镜头判 {_tgt_mm:g}mm 目标即使贴到 "
-                        f"{_adv.max_distance_m*100:.0f}cm 也不够 ⇒ 请改用更长焦段或"
-                        f"提高画面分辨率。")
-            except Exception:
-                pass      # 建议是增强项，任何异常都不得影响主流程
-    # 拒答后重新汇总风险等级：不可判定的条目不应参与 C 级升级
-    effective = [g for g in grades if g.severity != "unjudgeable"]
-    n_void = len(grades) - len(effective)
-    if effective:
-        risk = building_risk_level(effective)
-    else:
-        # 全部条目都不可判定 —— 不能报 A（"安全"）。
-        # 对筛查工具而言，「判不了」和「没问题」是两回事，
-        # 把前者说成后者是最危险的误报。
-        risk = building_risk_level([])
-        risk["level"] = "U"
-        risk["level_desc"] = ("当前图像质量/分辨率不足以支撑任何定量判定，"
-                              "无法给出危险性等级。")
-        risk["need_professional_inspection"] = True
-    risk["n_unjudgeable"] = n_void
-    risk["abstained"] = bool(n_void)
+    def _advise_for(cls_name: str) -> str:
+        """按类给「靠近到多少米才能判读」的具体补拍建议（增强项）。
+
+        [2026-09-25 新增·C 路采集闭环] 把「建议靠近复拍」从**废话**变成**具体动作**：
+          原句「建议靠近复拍后再定级」没告诉用户"靠近到多少"。
+          `advice.advise_distance` 由目标尺寸反解「需 GSD ≤ X ⇒ 距离 ≤ Y m」，
+          并与 `gsd.calibrate_by_camera` 严格互逆（有往返自检，见 advice.py）。
+        ⚠️ 本函数**只产出建议文本**，不改任何测量值 / 分级 / GSD ⇒ 不影响已上报数字。
+        """
+        from advice import advise_distance
+        from grade import LINE_CLASSES
+        tgt = 0.30 if cls_name in LINE_CLASSES else 10.0
+        adv = advise_distance(tgt, image_width_px=int(img.shape[1]),
+                              lens_label="主摄 24mm")
+        if adv.feasible:
+            return (f" 【补拍建议】要判 {tgt:g}mm 目标需 GSD ≤ "
+                    f"{adv.required_gsd:.3f} mm/px ⇒ 请靠近至 "
+                    f"**≤ {adv.max_distance_m:.2f} m**（该距离下画面覆盖约 "
+                    f"{adv.cover_mm_at_max/1000:.2f} m 宽）。")
+        return (f" 【补拍建议】用当前镜头判 {tgt:g}mm 目标即使贴到 "
+                f"{adv.max_distance_m*100:.0f}cm 也不够 ⇒ 请改用更长焦段或"
+                f"提高画面分辨率。")
+
+    # 共享实现：与 pipeline.py / batch_screen.py / video_screen.py 同一口径
+    from grade import apply_abstention, classify_unjudgeable
+    _flags = classify_unjudgeable(measurements, interp_crack, interp_blob,
+                                  quality=_quality)
+    risk, n_void = apply_abstention(grades, measurements, _flags,
+                                    calib=calib, quality=_quality,
+                                    advise_fn=_advise_for)
+    # apply_abstention 内部已做「全部弃权 ⇒ U」的正确处理（不改报 A）。
+    # risk 直接复用，不再在本地重算一遍（避免第二处口径）。
 
     # ---- 6) 画图 ----
     colors = {
@@ -586,6 +647,62 @@ def render_markdown(p: dict) -> str:
             f"（当前图像分辨率不足以支撑该类的毫米级结论，"
             f"这些条目**未计入**上面的风险等级）"
         )
+    # ---- P2/P3 落地：测量区间 + 下一步（**附加信息，不改任何数字**）----
+    _iv_rows = []
+    _dec_rows = []
+    # ★ 用 payload 里的 measurements（dict），不是 analyze() 的局部变量；
+    #   字段名是 to_dict() 之后的 cls_name / width_mean_mm / width_mean_px。
+    for _m in p["measurements"]:
+        if (_m.get("cls_name") or "") != "crack":
+            continue
+        _w = _m.get("width_mean_mm")
+        _px = _m.get("width_mean_px")
+        _iv = crack_interval_mm(_w, _px)
+        if _iv:
+            _iv_rows.append((_w, _iv))
+        # ks 上界：payload 里没有单独字段，从 method 串里解析 `ks`（与 measure.py 同源）
+        _hi_px = None
+        _mt = _m.get("method") or ""
+        if "ks" in _mt:
+            try:
+                import re as _re
+                _d = _re.findall(r"\d+", _mt)
+                if _d:
+                    _hi_px = int(_d[-1]) - 1
+            except Exception:
+                _hi_px = None
+        if _px is not None:
+            _dec_rows.append((_px, _hi_px))
+    if _dec_rows:
+        # 多条测量时取**最保守**的行动（H > R > A），与并列规则同一原则
+        _prio = {"H": 0, "R": 1, "A": 2}
+        _decs = [decide_next_step(_px, _hi) for _px, _hi in _dec_rows]
+        _dec = sorted(_decs, key=lambda d: _prio[d["action"]])[0]
+    if _iv_rows:
+        lines += [
+            "",
+            "### 测量区间与下一步（附加信息）",
+            "",
+            f"- 裂缝宽度 90% 区间（**合成域校准**，非真机保证）：",
+        ]
+        for _w, _iv in _iv_rows[:6]:
+            lines.append(
+                f"  - {_w:.2f} mm ⇒ **[{_iv['lo_mm']:.2f}, {_iv['hi_mm']:.2f}] mm**"
+                f"（宽 {_iv['width_mm']:.2f}mm，分箱 {_iv['bin']}）"
+                + (f" ⚠️ {_iv['note']}" if _iv.get('note') else "")
+            )
+        _dl = _dec["expected_loss"]
+        _best = _dec["action"]
+        lines += [
+            f"- 下一步建议：**{_dec['text']}**"
+            f"（区间 {_dec['regime']}；成本比 再拍/错结论="
+            f"{_dec['cost_ratio']['rephoto_over_miss']}、"
+            f"鉴定/错结论={_dec['cost_ratio']['human_over_miss']}）",
+            f"  - 期望损失：A={_dl['A']} / R={_dl['R']} / H={_dl['H']}"
+            f" ⇒ 取 **{_best}**（并列时取更保守）",
+            f"  - ⚠️ 区间与建议均为**附加信息**，不参与测量值/分级；"
+            f"区间仅在合成域校准过。",
+        ]
     lines += [
         "",
         "### 尺度标定",

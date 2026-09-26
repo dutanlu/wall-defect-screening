@@ -1,0 +1,36 @@
+{
+ "task": "BFDD crack 零样本跨源评测（不训练、不改 V3）",
+ "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\v11s640_best.pt",
+ "imgsz": 640,
+ "conf": 0.25,
+ "n_bfdd_val_images": 152,
+ "n_bfdd_crack_boxes": 1267,
+ "in_domain": {
+  "source": "04_results/eval/v11s640_test_metrics.json",
+  "class": "crack",
+  "ap50": 0.7283,
+  "precision": 0.806,
+  "recall": 0.7241,
+  "instances": 58,
+  "images": 22
+ },
+ "cross_domain": {
+  "class": "crack (BFDD v1)",
+  "ap50": 0.002560018606267118,
+  "precision": 0.016116142781033564,
+  "recall": 0.09550118389897395,
+  "hit_rate": 0.010260457774269928,
+  "n_gt_boxes": 1267,
+  "n_hit": 13
+ },
+ "delta_ap50": -0.7257399813937329,
+ "per_class_ap50_on_bfdd_gt": {
+  "crack": 0.00256
+ },
+ "caveats": [
+  "BFDD 是**语义分割**掩膜转检测框，与 V3 的检测框标注**语义不同**（细长裂缝网的外接框偏大）⇒ 除严格 AP50 外另报免 IoU 阈值的命中率",
+  "BFDD 为**他人公开数据**（CC BY 4.0，东南大学），采集为无人机单次航测战役（4 天）",
+  "本项目**无真实无人机数据**；本项是**零样本跨源评测**，不是无人机实测",
+  "只评测，**未训练、未微调**，V3 的已上报数字未受影响"
+ ]
+}

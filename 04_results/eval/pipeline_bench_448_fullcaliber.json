@@ -1,0 +1,497 @@
+{
+  "model": "D:/pythonstudy 备份/创新题/外墙缺陷筛查/03_weights/v11s640_best.pt",
+  "device": "0",
+  "config": {
+    "conf": "0.25",
+    "imgsz": "640",
+    "calib_px": "8400",
+    "env": "二类环境（露天/潮湿）",
+    "rectify": false,
+    "upscale": 1.0
+  },
+  "repeat_per_image": 3,
+  "n_images": 16,
+  "note": "每张图恰好贡献「最后一圈」的分层耗时，故求和/图片数即单图均值。已预热；第 1 圈不计入。GPU 计时经 cuda.synchronize 包夹。",
+  "stage_ms_per_image": {
+    "load": 1.04,
+    "rectify": 0.0,
+    "predict_ultralytics": 9.46,
+    "calibrate": 0.01,
+    "interpret": 0.03,
+    "measure": 2.83,
+    "grade": 0.02,
+    "quality_gate": 2.88,
+    "abstain": 0.05,
+    "draw": 0.2,
+    "save": 1.49
+  },
+  "end_to_end_ms_per_image_sum": 18.0,
+  "end_to_end_wall_clock_p50_ms": 17.53,
+  "consistency_ratio": 1.027,
+  "per_image": [
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1006_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 5,
+      "end_to_end_ms_median": 17.91,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.97,
+        "predict_ultralytics": 9.539,
+        "calibrate": 0.005,
+        "interpret": 0.025,
+        "measure": 2.66,
+        "grade": 0.022,
+        "quality_gate": 3.052,
+        "abstain": 0.048,
+        "draw": 0.193,
+        "save": 1.368
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1039_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 7,
+      "end_to_end_ms_median": 20.33,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.183,
+        "predict_ultralytics": 9.198,
+        "calibrate": 0.004,
+        "interpret": 0.025,
+        "measure": 4.703,
+        "grade": 0.027,
+        "quality_gate": 2.895,
+        "abstain": 0.047,
+        "draw": 0.229,
+        "save": 1.768
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\10_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 2,
+      "end_to_end_ms_median": 18.5,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.104,
+        "predict_ultralytics": 9.103,
+        "calibrate": 0.005,
+        "interpret": 0.026,
+        "measure": 2.585,
+        "grade": 0.016,
+        "quality_gate": 3.034,
+        "abstain": 0.048,
+        "draw": 0.178,
+        "save": 1.403
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1174_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 7,
+      "end_to_end_ms_median": 19.4,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.093,
+        "predict_ultralytics": 8.677,
+        "calibrate": 0.008,
+        "interpret": 0.037,
+        "measure": 3.839,
+        "grade": 0.035,
+        "quality_gate": 2.958,
+        "abstain": 0.058,
+        "draw": 0.231,
+        "save": 1.5
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1180_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 2,
+      "end_to_end_ms_median": 17.03,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.17,
+        "predict_ultralytics": 9.175,
+        "calibrate": 0.005,
+        "interpret": 0.025,
+        "measure": 1.515,
+        "grade": 0.02,
+        "quality_gate": 3.281,
+        "abstain": 0.031,
+        "draw": 0.146,
+        "save": 1.487
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1190_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 1,
+      "end_to_end_ms_median": 16.65,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.951,
+        "predict_ultralytics": 10.37,
+        "calibrate": 0.005,
+        "interpret": 0.025,
+        "measure": 1.008,
+        "grade": 0.016,
+        "quality_gate": 2.781,
+        "abstain": 0.011,
+        "draw": 0.138,
+        "save": 1.44
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1239_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 2,
+      "end_to_end_ms_median": 16.82,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.034,
+        "predict_ultralytics": 9.66,
+        "calibrate": 0.005,
+        "interpret": 0.026,
+        "measure": 1.361,
+        "grade": 0.02,
+        "quality_gate": 2.956,
+        "abstain": 0.01,
+        "draw": 0.169,
+        "save": 1.453
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1398_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 6,
+      "end_to_end_ms_median": 18.36,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.972,
+        "predict_ultralytics": 9.158,
+        "calibrate": 0.006,
+        "interpret": 0.031,
+        "measure": 3.067,
+        "grade": 0.028,
+        "quality_gate": 2.891,
+        "abstain": 0.057,
+        "draw": 0.227,
+        "save": 2.184
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1406_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 11,
+      "end_to_end_ms_median": 21.36,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.177,
+        "predict_ultralytics": 9.342,
+        "calibrate": 0.006,
+        "interpret": 0.028,
+        "measure": 6.119,
+        "grade": 0.041,
+        "quality_gate": 3.09,
+        "abstain": 0.048,
+        "draw": 0.311,
+        "save": 1.602
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1434_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 6,
+      "end_to_end_ms_median": 20.8,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.98,
+        "predict_ultralytics": 9.757,
+        "calibrate": 0.006,
+        "interpret": 0.029,
+        "measure": 5.304,
+        "grade": 0.026,
+        "quality_gate": 2.865,
+        "abstain": 0.055,
+        "draw": 0.268,
+        "save": 1.461
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1441_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 7,
+      "end_to_end_ms_median": 19.9,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.068,
+        "predict_ultralytics": 9.427,
+        "calibrate": 0.006,
+        "interpret": 0.028,
+        "measure": 4.416,
+        "grade": 0.029,
+        "quality_gate": 2.638,
+        "abstain": 0.053,
+        "draw": 0.249,
+        "save": 1.552
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1470_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 2,
+      "end_to_end_ms_median": 16.57,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.95,
+        "predict_ultralytics": 9.723,
+        "calibrate": 0.005,
+        "interpret": 0.027,
+        "measure": 1.501,
+        "grade": 0.016,
+        "quality_gate": 2.695,
+        "abstain": 0.03,
+        "draw": 0.14,
+        "save": 1.217
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1498_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 3,
+      "end_to_end_ms_median": 17.15,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.919,
+        "predict_ultralytics": 9.818,
+        "calibrate": 0.006,
+        "interpret": 0.026,
+        "measure": 1.814,
+        "grade": 0.018,
+        "quality_gate": 2.798,
+        "abstain": 0.081,
+        "draw": 0.192,
+        "save": 1.379
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\152_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 4,
+      "end_to_end_ms_median": 16.58,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.97,
+        "predict_ultralytics": 9.067,
+        "calibrate": 0.005,
+        "interpret": 0.026,
+        "measure": 1.85,
+        "grade": 0.021,
+        "quality_gate": 2.605,
+        "abstain": 0.046,
+        "draw": 0.183,
+        "save": 1.242
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1539_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 3,
+      "end_to_end_ms_median": 17.1,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 1.061,
+        "predict_ultralytics": 9.736,
+        "calibrate": 0.006,
+        "interpret": 0.027,
+        "measure": 1.71,
+        "grade": 0.018,
+        "quality_gate": 2.753,
+        "abstain": 0.04,
+        "draw": 0.177,
+        "save": 1.364
+      }
+    },
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\vis\\1746_annotated.jpg",
+      "status": "ok",
+      "size": [
+        448,
+        448
+      ],
+      "orig_size": [
+        448,
+        448
+      ],
+      "upscale": 1.0,
+      "megapixels": 0.2,
+      "n_detections": 3,
+      "end_to_end_ms_median": 16.58,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 0.987,
+        "predict_ultralytics": 9.615,
+        "calibrate": 0.005,
+        "interpret": 0.029,
+        "measure": 1.849,
+        "grade": 0.022,
+        "quality_gate": 2.798,
+        "abstain": 0.088,
+        "draw": 0.228,
+        "save": 1.377
+      }
+    }
+  ]
+}

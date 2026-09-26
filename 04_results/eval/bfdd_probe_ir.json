@@ -1,0 +1,50 @@
+{
+ "modality": "ir",
+ "init": "预训练初始化：D:/pythonstudy 备份/创新题/外墙缺陷筛查/logs/_yolo11n-seg.pt",
+ "epochs": 80,
+ "imgsz": 512,
+ "batch": 8,
+ "seed": 0,
+ "conf": 0.25,
+ "train_minutes": 17.4,
+ "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\_public_datasets\\bfdd\\_runs\\ir\\weights\\best.pt",
+ "run_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\_public_datasets\\bfdd\\_runs\\ir",
+ "iou": {
+  "n_images": 152,
+  "per_class": {
+   "v1": {
+    "iou": 5.8210500082768056e-05,
+    "gt_px": 548883,
+    "pred_boxes": 2
+   },
+   "v2": {
+    "iou": 0.0,
+    "gt_px": 414101,
+    "pred_boxes": 0
+   },
+   "v3": {
+    "iou": 0.13108732631832481,
+    "gt_px": 174759,
+    "pred_boxes": 32
+   },
+   "v4": {
+    "iou": 0.44147813879790027,
+    "gt_px": 781138,
+    "pred_boxes": 72
+   },
+   "v5": {
+    "iou": 0.029654652622918876,
+    "gt_px": 1453649,
+    "pred_boxes": 13
+   }
+  }
+ },
+ "val_seg_maps_per_class": [
+  3.6937485403101586e-05,
+  0.0,
+  0.020213800037033696,
+  0.013832513966758404,
+  0.0005317449010448091
+ ],
+ "note": "yolo11n-seg 从零训练；IoU 由本项目自算（预测掩膜并集 vs 真值掩膜），因为预登记判据写的是 IoU 而非 mAP。val_seg_maps 仅作旁证。"
+}

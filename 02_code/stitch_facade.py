@@ -43,7 +43,7 @@ import numpy as np
 CODE = Path(__file__).resolve().parent
 sys.path.insert(0, str(CODE))
 
-from common import imread_u, log  # noqa: E402
+from common import imread_u, imwrite_u, log  # noqa: E402
 import rectify as R  # noqa: E402
 from gsd import calibrate_by_brick_period, screening_capability  # noqa: E402
 
@@ -70,11 +70,17 @@ def stitch_and_assess(images: list, out_dir: Path,
     canvas = st.image
     res["canvas_w"] = int(canvas.shape[1])
     res["canvas_h"] = int(canvas.shape[0])
-    try:
-        import cv2
-        cv2.imwrite(str(out_dir / "stitched_facade.png"), canvas)
-    except Exception as e:
-        log(f"[warn] 整立面图落盘失败: {e}")
+    # ⚠️ 必须用 `imwrite_u`，不能用 `cv2.imwrite`：
+    #   本机实测 `cv2.imwrite` 对**含非 ASCII 的路径**返回 False 且**不抛异常**
+    #   （本工程路径含中文）⇒ 原写法下整立面图**永远写不出来，而且完全无声**：
+    #   因为不抛异常，外层 `except Exception` 形同虚设，连 warn 都不会打。
+    #   2026-09-26 修：改用 imwrite_u 并**显式检查返回值**。
+    _png = out_dir / "stitched_facade.png"
+    if imwrite_u(_png, canvas):
+        res["canvas_png"] = str(_png)
+    else:
+        res["canvas_png"] = None
+        log(f"[warn] 整立面图落盘失败（imwrite_u 返回 False）：{_png}")
 
     # ---- 统一尺度：优先砖缝周期（整立面必然含砖缝）----
     calib = calibrate_by_brick_period(canvas, brick_pitch_mm=pitch_mm, axis=axis)

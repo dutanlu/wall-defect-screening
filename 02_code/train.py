@@ -19,6 +19,13 @@ train.py —— 外墙缺陷检测训练脚本（本项目主训练入口）
   python train.py --runs=v8s640            # 只跑主力配置
   python train.py --epochs=5 --runs=v8s640 # 快速冒烟
   python train.py --data=D:/xxx/wall_defects.yaml
+  python train.py --runs=v11s896 --imgsz=896 --batch=16   # 显式钉住 imgsz/batch
+  python train.py --runs=v11s640 --tag=_b16 --imgsz=640 --batch=16 --workers=0
+
+★ 支持的参数：--runs= --tag= --epochs= --data= --seed= --resume --device=
+  --imgsz= --batch= --workers=  （**没有 --help**；加未知参数会被静默忽略并直接开跑）
+⚠️ 本机系统内存仅 ~16.9 GB：workers=4 可能在训练中途 MemoryError（且退出码仍 0）。
+   长训练建议显式 --workers=0。
 
 输出：
   04_结果/训练/<run_name>/**（Ultralytics 标准输出：weights/best.pt、results.csv 等）
@@ -140,6 +147,38 @@ RECIPES: dict[str, dict] = {
         "weight": "yolo11s.pt", "imgsz": 640, "batch": 24,
         "note": "数据增强：GSD 尺度扩展 + mixup（对照 v11s640）",
         "aug": {"scale": 0.9, "mixup": 0.15},
+    },
+    # ------------------------------------------------------------------
+    # [2026-09-25 新增] 针对「露筋」短板的两个候选（见 logs/_WEAK_CLASS_DIAG.txt）
+    #
+    # 依据：露筋 AP50=0.4568（七类唯一低于 0.70），召回仅 0.3946。
+    #   错误形态归因：完全漏检 41.5% + 低置信度被切 13.6%，「框对但类错」为 0
+    #   ⇒ 既不是类间混淆，也不是阈值问题，而是纯粹的召回不足。
+    #   几何证据：露筋长宽比 P90=10.3（七类最高），平均归一化宽仅 0.1535
+    #   ⇒ 640 输入下宽约 98px 的细长目标，IoU 对端点偏移极敏感。
+    #
+    # ⚠️ 已证伪的路径（勿重复）：**推理侧**单纯提高 imgsz 反而全线下降
+    #   （896: mAP50 −0.0185 / 1024: −0.0492，七类无一例外），
+    #   因为权重是在 640 学的，属训练-推理尺度失配。
+    #   故必须**在训练侧**提分辨率。见 logs/_EXP_IMGSZ_INFER.md。
+    #
+    # 对照关系：两个配方只差 mosaic 一项，各自与 v11s640 比。
+    # ------------------------------------------------------------------
+    "v11s896": {
+        "weight": "yolo11s.pt", "imgsz": 896, "batch": 16,
+        "note": "高分辨率训练：imgsz 640→896（露筋召回专项，对照 v11s640）",
+        # batch 从 24 降到 16：896² 的激活占用约为 640² 的 2 倍，
+        # 12.2 GB 显存下 24 会 OOM（估）。16 是保守起点。
+        # ★ workers=0 必须显式设：896 档 4 个 worker 会各自缓存解码后的
+        #   896×896 图，本机可用内存仅 6 GB ⇒ 实测 20 步后
+        #   `DataLoader worker exited unexpectedly`（2026-09-25 冒烟复现）。
+        #   v11s640_clsbal 配方已因同样原因改用 workers=0。
+        "aug": {"workers": 0},
+    },
+    "v11s896_nomosaic": {
+        "weight": "yolo11s.pt", "imgsz": 896, "batch": 16,
+        "note": "高分辨率 + 关闭 mosaic（mosaic 进一步压扁细长目标）",
+        "aug": {"mosaic": 0.0, "close_mosaic": 0, "workers": 0},
     },
 }
 
@@ -292,9 +331,56 @@ def main() -> None:
     epochs = argv_flag("epochs")
     # 兼容工程包被拷贝到别的机器：若 yaml 里的 path 仍指向训练机旧路径，就地自愈
     from common import ensure_dataset_yaml, DATASET_YAML_NAME
-    data = str(ensure_dataset_yaml(str(DATASET_DIR / DATASET_YAML_NAME)))
+    # ----------------------------------------------------------------------
+    # [2026-09-25 新增] --data= 支持
+    #
+    # 动机：露筋标注碎片合并实验（logs/_watch_merge_ab.py）需要在**另一个数据集**
+    #   （dataset_merged/）上训练，唯一变量是标签。但此前本函数把 data 写死为
+    #   DATASET_DIR/wall_defects.yaml —— 文件头 docstring 第 21 行承诺支持
+    #   `--data=`，**而实现里从未读取**（一次「只在注释里承诺」的坑，
+    #   与纪律「docstring 点名的产物必须真存在」同类）。
+    #
+    # 设计：
+    #   --data=<path>  显式指定数据集 yaml；不传时行为与改动前**逐键相同**。
+    #   ★ 显式指定时**不调用 ensure_dataset_yaml**（就地自愈只适用于默认数据集；
+    #     对实验用 yaml 若强行改写其 path，会破坏实验配置的可追溯性）。
+    # ----------------------------------------------------------------------
+    data_arg = argv_flag("data")
+    if data_arg:
+        data = str(Path(data_arg))
+        if not Path(data).exists():
+            log(f"!! --data 指定的数据集配置不存在: {data}")
+            raise SystemExit(2)
+        log(f"[data] 使用显式指定的数据集配置（跳过自愈）: {data}")
+    else:
+        data = str(ensure_dataset_yaml(str(DATASET_DIR / DATASET_YAML_NAME)))
     device = argv_flag("device", "0")
     resume = argv_flag("resume")
+    # ----------------------------------------------------------------------
+    # [2026-09-25 新增] --imgsz= / --batch= 覆盖
+    #
+    # 动机：imgsz 对照实验（logs/_watch_imgsz_ab.py）存在**混杂因子** ——
+    #   配方表里 v11s640 是 batch=24、v11s896 是 batch=16，两者同时变，
+    #   所以严格说只能表述为「imgsz640+batch24」vs「imgsz896+batch16」，
+    #   不能归因到 imgsz。要补做 **batch 单变量**对照（640@16 vs 896@16），
+    #   就必须能把 batch 显式钉住 —— 而在此之前 imgsz/batch 只能从 RECIPES 取，
+    #   无法覆盖（又一次「docstring 承诺了却做不到」的同款问题）。
+    #
+    # 设计：
+    #   不传时行为与改动前**逐键相同**（仍用 cfg["imgsz"] / cfg["batch"]）。
+    # ----------------------------------------------------------------------
+    imgsz_override = argv_flag("imgsz")
+    batch_override = argv_flag("batch")
+    # [2026-09-25 新增] --workers= 覆盖
+    #   动机：COMMON_ARGS 里 workers=4（2026-09-21 提速改动）。但本机系统内存仅 ~16.9 GB，
+    #   4 个 dataloader worker 各自缓存解码后的图会把内存吃穿 ——
+    #   实测：v11s640_b16 跑到第 7 轮时
+    #     `numpy._ArrayMemoryError: Unable to allocate 4.69 MiB ...`
+    #     `Caught MemoryError in DataLoader worker process 1`
+    #   而退出码仍是 0（静默失败）。v11s640_clsbal / v11s896 配方已各自改用 workers=0，
+    #   但**默认配方 v11s640 没有** ⇒ 需要一个能显式钉住 workers 的开关。
+    #   不传时行为与改动前**逐键相同**。
+    workers_override = argv_flag("workers")
     # ----------------------------------------------------------------------
     # [2026-09-24 新增] 多随机种子支持（--seed / --tag）
     #
@@ -399,10 +485,13 @@ def main() -> None:
         # [2026-09-24] 多种子覆盖。放在 aug 之后，保证「种子」是最后的显式决定。
         if seed_override is not None:
             args["seed"] = seed_val
+        # 有效 imgsz / batch：命令行覆盖优先（不传时 == cfg 值，行为不变）
+        eff_imgsz = int(imgsz_override) if imgsz_override else cfg["imgsz"]
+        eff_batch = int(batch_override) if batch_override else cfg["batch"]
         args.update(
             data=str(data),
-            imgsz=cfg["imgsz"],
-            batch=cfg["batch"],
+            imgsz=eff_imgsz,
+            batch=eff_batch,
             device=device,
             project=str(TRAIN_DIR),
             name=run_name,
@@ -411,16 +500,20 @@ def main() -> None:
             args["resume"] = True
         elif epochs:
             args["epochs"] = int(epochs)
+        if workers_override is not None:
+            args["workers"] = int(workers_override)
 
         log("=" * 70)
         log(f"[{run_name}] {cfg['note']}")
-        log(f"  weight={resolved} imgsz={cfg['imgsz']} batch={cfg['batch']} "
+        log(f"  weight={resolved} imgsz={eff_imgsz} batch={eff_batch} "
+            f"workers={args.get('workers')} "
             f"epochs={args['epochs']} device={device} resume={resuming} "
             f"seed={args.get('seed')} cls_pw={args.get('cls_pw')}")
         log("=" * 70)
 
-        rec = {"run": run_name, "weight": resolved, "imgsz": cfg["imgsz"],
-               "batch": cfg["batch"], "epochs": args["epochs"], "note": cfg["note"],
+        rec = {"run": run_name, "weight": resolved, "imgsz": eff_imgsz,
+               "batch": eff_batch, "workers": args.get("workers"),
+               "epochs": args["epochs"], "note": cfg["note"],
                "seed": args.get("seed"), "status": "pending"}
         t0 = time.time()
         try:

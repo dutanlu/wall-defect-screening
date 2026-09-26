@@ -1,0 +1,49 @@
+{
+ "modality": "ir",
+ "epochs": 100,
+ "imgsz": 512,
+ "batch": 8,
+ "seed": 0,
+ "conf": 0.25,
+ "train_minutes": 22.25,
+ "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\_public_datasets\\bfdd\\_runs\\ir\\weights\\best.pt",
+ "run_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\_public_datasets\\bfdd\\_runs\\ir",
+ "iou": {
+  "n_images": 152,
+  "per_class": {
+   "v1": {
+    "iou": 9.109359684889029e-06,
+    "gt_px": 548883,
+    "pred_boxes": 1
+   },
+   "v2": {
+    "iou": 0.0,
+    "gt_px": 414101,
+    "pred_boxes": 0
+   },
+   "v3": {
+    "iou": 0.07464066834903368,
+    "gt_px": 174759,
+    "pred_boxes": 35
+   },
+   "v4": {
+    "iou": 0.20590358797299996,
+    "gt_px": 781138,
+    "pred_boxes": 11
+   },
+   "v5": {
+    "iou": 0.04793689155427723,
+    "gt_px": 1453649,
+    "pred_boxes": 10
+   }
+  }
+ },
+ "val_seg_maps_per_class": [
+  3.2952400215749728e-06,
+  3.125e-05,
+  0.01311484396749433,
+  0.003499149093364641,
+  0.0005647833577369736
+ ],
+ "note": "yolo11n-seg 从零训练；IoU 由本项目自算（预测掩膜并集 vs 真值掩膜），因为预登记判据写的是 IoU 而非 mAP。val_seg_maps 仅作旁证。"
+}

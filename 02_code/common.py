@@ -412,6 +412,49 @@ def resolve_weight(name: str) -> str:
     return name
 
 
+def default_weight(prefer: str = "v11s640") -> str:
+    """
+    返回「当前环境下确实存在」的主力权重路径。
+
+    为什么需要这个函数（2026-09-25 实测踩坑）：
+      `batch_screen.py` / `video_screen.py` 原先各自硬写
+          RESULT_DIR / "train" / "v11s640" / "weights" / "best.pt"
+      在**源工程**里能用（那个目录确实存在），但在**交付包**里必然失败：
+      交付包按 `_copy_delivery_pack.py` 的口径**排除训练工作目录**
+      （`results/train/*/weights/` 属训练副产物），而成品权重被扁平化复制成
+      `weights/v11s640_best.pt`。于是「包内开箱即用」直接被打破，
+      且因为历次只在源工程里测入口，**4 轮审查都没发现**（见记忆 §1.5b）。
+
+    设计：按优先级给一串候选，返回**第一个真实存在**的；全都不存在时
+    返回优先级最高那一条（调用方据此报「请先训练 / 用 --model 指定」），
+    而不是返回一个看似合理却永远不存在的路径。
+    """
+    preferred = WEIGHTS_DIR / f"{prefer}_best.pt"
+    candidates = [
+        # ① 交付语义明确的成品目录（包内、源内都存在）
+        preferred,
+        # ② 训练工作目录（仅源工程/刚训练完时有）
+        Path(str(RESULT_DIR)) / "train" / prefer / "weights" / "best.pt",
+        # ③ 主力兜底
+        WEIGHTS_DIR / "v11s640_best.pt",
+        Path(str(RESULT_DIR)) / "train" / "v11s640" / "weights" / "best.pt",
+        # ④ 其余已训练配置
+        WEIGHTS_DIR / "v8s640_best.pt",
+        Path(str(RESULT_DIR)) / "train" / "v8s640" / "weights" / "best.pt",
+        WEIGHTS_DIR / "v8n640_best.pt",
+        Path(str(RESULT_DIR)) / "train" / "v8n640" / "weights" / "best.pt",
+    ]
+    for c in candidates:
+        if c.exists():
+            return str(c)
+    # 终极兜底：weights/ 下任意 *_best.pt
+    for c in sorted(WEIGHTS_DIR.glob("*_best.pt")):
+        return str(c)
+    for c in sorted(Path(str(RESULT_DIR)).glob("*/weights/best.pt")):
+        return str(c)
+    return str(preferred)
+
+
 def write_dataset_yaml(path, train: str, val: str, test: str | None = None,
                        names: dict | None = None, root: str | None = None) -> None:
     """

@@ -1,0 +1,62 @@
+{
+  "model": "D:/pythonstudy 备份/创新题/外墙缺陷筛查/03_weights/v11s640_best.pt",
+  "device": "0",
+  "config": {
+    "conf": "0.25",
+    "imgsz": "640",
+    "calib_px": "8400",
+    "env": "二类环境（露天/潮湿）",
+    "rectify": false,
+    "upscale": 1.0
+  },
+  "repeat_per_image": 3,
+  "n_images": 1,
+  "note": "每张图恰好贡献「最后一圈」的分层耗时，故求和/图片数即单图均值。已预热；第 1 圈不计入。GPU 计时经 cuda.synchronize 包夹。",
+  "stage_ms_per_image": {
+    "load": 113.7,
+    "rectify": 0.0,
+    "predict_ultralytics": 13.08,
+    "calibrate": 0.01,
+    "interpret": 0.06,
+    "measure": 267.22,
+    "grade": 0.04,
+    "quality_gate": 252.01,
+    "abstain": 0.09,
+    "draw": 21.47,
+    "save": 23.16
+  },
+  "end_to_end_ms_per_image_sum": 690.82,
+  "end_to_end_wall_clock_p50_ms": 668.74,
+  "consistency_ratio": 1.033,
+  "per_image": [
+    {
+      "image": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\unified\\rebar_structural\\images\\images\\sc_1a7e86db-9.png",
+      "status": "ok",
+      "size": [
+        3968,
+        2976
+      ],
+      "orig_size": [
+        3968,
+        2976
+      ],
+      "upscale": 1.0,
+      "megapixels": 11.81,
+      "n_detections": 1,
+      "end_to_end_ms_median": 668.74,
+      "end_to_end_runs": 2,
+      "segments_ms": {
+        "load": 113.696,
+        "predict_ultralytics": 13.081,
+        "calibrate": 0.013,
+        "interpret": 0.056,
+        "measure": 267.221,
+        "grade": 0.035,
+        "quality_gate": 252.006,
+        "abstain": 0.09,
+        "draw": 21.466,
+        "save": 23.158
+      }
+    }
+  ]
+}

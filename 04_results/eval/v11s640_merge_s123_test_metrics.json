@@ -1,0 +1,93 @@
+{
+  "run": "v11s640_merge_s123",
+  "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge_s123\\weights\\best.pt",
+  "weights_mb": 18.33,
+  "split": "test",
+  "imgsz": 640,
+  "overall": {
+    "metrics/precision(B)": 0.73596,
+    "metrics/recall(B)": 0.64907,
+    "metrics/mAP50(B)": 0.70007,
+    "metrics/mAP50-95(B)": 0.42536,
+    "fitness": 0.42536
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class": "crack",
+      "class_cn": "裂缝",
+      "precision": 0.806,
+      "recall": 0.7069,
+      "ap50": 0.7289,
+      "ap50_95": 0.3428,
+      "instances": 58,
+      "images": 22
+    },
+    {
+      "class_id": 1,
+      "class": "spalling",
+      "class_cn": "剥落缺失",
+      "precision": 0.6412,
+      "recall": 0.7065,
+      "ap50": 0.7119,
+      "ap50_95": 0.3588,
+      "instances": 43,
+      "images": 17
+    },
+    {
+      "class_id": 2,
+      "class": "efflorescence",
+      "class_cn": "泛碱渗水",
+      "precision": 0.7632,
+      "recall": 0.819,
+      "ap50": 0.8447,
+      "ap50_95": 0.6435,
+      "instances": 116,
+      "images": 36
+    },
+    {
+      "class_id": 3,
+      "class": "exposed_rebar",
+      "class_cn": "露筋",
+      "precision": 0.6466,
+      "recall": 0.3401,
+      "ap50": 0.4059,
+      "ap50_95": 0.2249,
+      "instances": 147,
+      "images": 46
+    },
+    {
+      "class_id": 4,
+      "class": "rust",
+      "class_cn": "锈迹",
+      "precision": 0.8726,
+      "recall": 0.6617,
+      "ap50": 0.7402,
+      "ap50_95": 0.5549,
+      "instances": 1149,
+      "images": 120
+    },
+    {
+      "class_id": 5,
+      "class": "delamination",
+      "class_cn": "空鼓分层",
+      "precision": 0.7033,
+      "recall": 0.6324,
+      "ap50": 0.6949,
+      "ap50_95": 0.3913,
+      "instances": 68,
+      "images": 52
+    },
+    {
+      "class_id": 6,
+      "class": "moss",
+      "class_cn": "苔藓附着",
+      "precision": 0.7188,
+      "recall": 0.6769,
+      "ap50": 0.7739,
+      "ap50_95": 0.4614,
+      "instances": 65,
+      "images": 10
+    }
+  ]
+}

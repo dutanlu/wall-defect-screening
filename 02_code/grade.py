@@ -240,6 +240,206 @@ def grade_all(measurements: list[Measurement], env_class: str = ENV_CLASSES[1],
     return out
 
 
+# =====================================================================
+# 弃权（abstention）到输出层的**共享**实现
+# ---------------------------------------------------------------------
+# 背景（2026-09-25 发现并修复）：
+#   「拒答必须传染到输出层」这条设计原本**只写在 `06_deploy/app.py` 的
+#   展示路径里** —— 若某类目标不可判读，就把该条 severity 降为
+#   `unjudgeable`、重写 reason、并在重新汇总风险时排除它。
+#   但 `pipeline.run_one()` 直接 `building_risk_level(grade_all(...))`，
+#   **完全没有这道闸**。于是 CLI / video_screen / batch_screen 三个入口
+#   拿到的都是「未弃权」的分级，可能出现：
+#       标定兜底给出 GSD≈67mm/px（图像并非该距离所拍）
+#       → 一条裂缝被量成「宽 401.79mm」
+#       → grade_crack 判 danger（超限 1000 倍）
+#       → building_risk_level 报 **C（局部危房）**
+#   而同一张图的 `interpretability.crack_0.3mm` 明明是 `insufficient`。
+#   **自相矛盾的输出比不输出更危险**，且报告 §2.3 已把弃权列为设计亮点
+#   ⇒ 该判定必须在**单一共享实现**里做，不能让展示层与 API 层各有一套。
+#
+#   本组函数即该共享实现：`app.py` 与 `pipeline.py` 必须都调用它。
+# =====================================================================
+
+# =====================================================================
+# ★★ 2026-09-25 修正：露筋 / 锈迹**不再**归入线状类
+# =====================================================================
+# 原因（实测，见 logs/_REBAR_LINECLASS_FIX_20260925.md）：
+#   原 `LINE_CLASSES = ("crack", "exposed_rebar", "rust")` 把露筋与锈迹
+#   也按「裂缝 0.3mm」判据把关。实测（人造良好标定 GSD≈0.0525 mm/px，
+#   抽样 60 张）：
+#       blob_10mm  达到 measurement 的：60/60
+#       crack_0.3mm 达到 measurement 的：0/269
+#       ⇒ **三类线状类 100% 弃权**，而块状类弃权率仅 29%~67%
+#   ⇒ 露筋/锈迹的**分级结论是死代码**（永远 unjudgeable）。
+#
+# 为什么改按块状（10mm）判据是对的：
+#   1. **量纲匹配**：露筋是厘米级暴露钢筋、锈迹是成片锈蚀区，
+#      其有意义的尺寸**不是发丝级宽度**；用 0.3mm 去卡它是量纲不匹配。
+#   2. **可达性**：改后它们在良好标定下能落入「可判 / 部分可判」。
+#   3. **不放松安全**：10mm 仍是分辨率可达的严门槛；
+#      **弃权的三条判据（图像质量 / 可判读性 / 窗口越界）一条不减** ——
+#      改的只是「拿哪把尺子量」，不是「要不要拒答」。
+#
+# ⚠️ 本常量同时被 `pipeline.py::_advise_for()` 用来选「补拍建议的目标尺寸」，
+#    两处语义一致（都是「该类按哪把尺子判」），改这一处即同时生效。
+# ⚠️ 仅保留 crack：裂缝的 0.3mm 是**规范（GB 50010 等）明确要求**的判据，
+#    语义正确，必须保留。
+
+# 线状类：由「裂缝 0.3mm」判据把关（目标尺寸按宽度算）
+LINE_CLASSES = ("crack",)
+
+# 块状类：由「10mm」判据把关（目标尺寸按短边/直径算）
+BLOB_CLASSES = ("spalling", "efflorescence", "exposed_rebar", "rust",
+                "delamination", "moss")
+
+# ⚠️⚠️ 不要与本模块的 LINE_CLASSES 混为一谈，也不要「为了对齐」去改另一处：
+#
+#   `measure.py` 里另有一个 **同名字面量** 的 `line_like`
+#       line_like = cls_name in ("crack", "exposed_rebar", "rust")
+#   它决定的是 **测量算法**（是否用黑帽 + 骨架化去提取细长结构），
+#   而本模块的 LINE_CLASSES 决定的是 **判读门槛**（0.3mm 还是 10mm）。
+#   两者是**两个独立的问题**，答案本就不同：
+#     · 露筋**测量**时确实该走线状算法（要它的长度与宽度，骨架化合理）
+#     · 露筋**判读**时不该用 0.3mm 门槛（其尺寸是厘米级，量纲不匹配）
+#   ⇒ `measure.py::line_like` **保持原样（三类）**，不要跟着本常量一起改。
+#   （若有人把它们「对齐」，要么露筋测量退化，要么露筋判读重新变成死代码。）
+
+
+def classify_unjudgeable(measurements: list[Measurement],
+                         interp_crack,
+                         interp_blob,
+                         quality=None) -> list[bool]:
+    """对每条测量给出「是否应弃权（尺寸不可判读）」的布尔标记。
+
+    参数
+    ----
+    measurements : list[Measurement]
+        与 grades **同序**的测量对象（grade_all 的输出顺序与输入一致）。
+    interp_crack : Interpretability
+        `assess_interpretability(calib, 0.30)` 的结果。
+    interp_blob : Interpretability
+        `assess_interpretability(calib, 10.0)` 的结果。
+    quality : ImageQuality | None
+        `assess_image_quality(img)` 结果。为 None 时不做图像质量否决。
+
+    判据（三条任一成立即弃权）
+    --------------------------
+    1. **图像质量不达标**（几何合格 != 图像可用，见 logs/_IMAGE_QUALITY_GATE.md）；
+    2. **该类的可判读性不达 measurement 级**（按线状/块状分别判，不搞一刀切）；
+    3. **测量窗口越界**（`window_ok=False`：低于 3px 或超出 ROI 可靠上界 ks−1）。
+
+    返回
+    ----
+    list[bool]，与 measurements 等长、同序。
+    """
+    quality_blocked = quality is not None and not bool(getattr(quality, "ok", True))
+    crack_bad = quality_blocked or (interp_crack.level != "measurement")
+    blob_bad = quality_blocked or (interp_blob.level != "measurement")
+
+    flags: list[bool] = []
+    for m in measurements:
+        bad = crack_bad if m.cls_name in LINE_CLASSES else blob_bad
+        if not bool(getattr(m, "window_ok", True)):
+            bad = True
+        flags.append(bool(bad))
+    return flags
+
+
+def apply_abstention(grades: list[DefectGrade],
+                     measurements: list[Measurement],
+                     flags: list[bool],
+                     calib=None,
+                     quality=None,
+                     advise_fn=None) -> tuple[dict, int]:
+    """按 flags 把不可判读条目的定量结论作废，并重新汇总风险等级。
+
+    作废动作（与 app.py 逐字一致的语义）：
+      - `severity` → `"unjudgeable"`，`exceeded` → False；
+      - **`reason` 整条重写**（否则「裂缝宽 230mm > 限值 0.20mm」这种荒唐
+        数字仍会从文本里漏出去，使用者照样会据此决策）；
+      - 填入 `confidence_note` 说明作废原因；
+      - 可选追加「补拍建议」（`advise_fn`，纯增强项，异常不得影响主流程）。
+
+    重新汇总：
+      - 只把**未弃权**的条目喂给 `building_risk_level`；
+      - **全部条目都弃权时输出 `U` 而非 `A`** —— 对筛查工具而言
+        「判不了」和「没问题」是两回事，把前者说成后者是最危险的误报。
+
+    返回
+    ----
+    (risk_dict, n_abstained)
+    """
+    n = min(len(grades), len(flags))
+    n_void = 0
+    for i in range(n):
+        g = grades[i]
+        m = measurements[i] if i < len(measurements) else None
+        if not flags[i]:
+            continue
+        n_void += 1
+        prev = g.severity
+        g.severity = "unjudgeable"
+        g.exceeded = False
+        cls_name = getattr(m, "cls_name", g.cls_name) if m is not None else g.cls_name
+        try:
+            from common import CLASS_CN
+        except Exception:                     # noqa: BLE001
+            CLASS_CN = {}
+        conf = float(getattr(m, "__dict__", {}).get("conf", 0.0)) if m is not None else 0.0
+        g.reason = (f"仅在图像中检出「{CLASS_CN.get(cls_name, cls_name)}」"
+                    f"疑似存在（置信度 {conf:.2f}）；尺寸与分级均无法判定")
+        _why = None
+        # ★ 记录「本次原因」是否属于**具体可归因**的情形（窗口越界 / 质量不合格）。
+        #   为什么需要这个布尔量：原 app.py 内联实现里，「【本次具体原因】」是
+        #   **条件追加**的 —— 只在 `_win_bad or _quality_blocked` 时加。
+        #   而「仅因该类目标达不到毫米级判读门槛」这种**常规**情形并不追加
+        #   （因为正文前半句已经说了同样的话，再加一遍是冗余）。
+        #   2026-09-25 把 app.py 改为委托本函数时，用
+        #   `logs/_verify_app_delegation.py` 逐字段比对才发现：
+        #   本函数原先**无条件**追加 ⇒ 比旧界面更啰嗦 ⇒ 会改变界面渲染文本
+        #   （进而使已录的实机运行视频过期，纪律 #20）。
+        #   ⇒ 现按原语义恢复为条件追加。
+        _specific = False
+        if quality is not None and not bool(getattr(quality, "ok", True)):
+            _why = "图像质量不达标（" + str(getattr(quality, "note", "")) + "）"
+            _specific = True
+        elif m is not None and not bool(getattr(m, "window_ok", True)):
+            _why = str(getattr(m, "window_note", "") or "测量窗口越界")
+            _specific = True
+        else:
+            _why = "该类目标达不到毫米级判读门槛"
+        g.reason = g.reason.rstrip("。") + f"（原因：{_why}）"
+        _gsd_txt = (f"当前 GSD={calib.mm_per_px:.2f} mm/px 下，"
+                    if calib is not None else "")
+        g.confidence_note = (
+            f"本条尺寸结论已作废：{_gsd_txt}"
+            f"该类目标达不到毫米级判读门槛（原判 {prev} 不可信）。"
+            f"仅保留「疑似存在」提示，建议靠近复拍后再定级。"
+            + (f" 【本次具体原因】{_why}。" if _specific else "")
+        )
+        if advise_fn is not None:
+            try:
+                extra = advise_fn(cls_name)
+                if extra:
+                    g.confidence_note += " " + extra
+            except Exception:                 # noqa: BLE001
+                pass                          # 建议为增强项，异常不得影响主流程
+
+    effective = [g for g in grades if g.severity != "unjudgeable"]
+    if effective:
+        risk = building_risk_level(effective)
+    else:
+        risk = building_risk_level([])
+        risk["level"] = "U"
+        risk["level_desc"] = ("当前图像质量/分辨率不足以支撑任何定量判定，"
+                              "无法给出危险性等级。")
+        risk["need_professional_inspection"] = True
+    risk["n_unjudgeable"] = n_void
+    risk["abstained"] = bool(n_void)
+    return risk, n_void
+
+
 def building_risk_level(grades: list[DefectGrade]) -> dict:
     """
     由缺陷集合推出房屋危险性等级（对齐 JGJ 125-2016 的 A/B/C/D 思路）。

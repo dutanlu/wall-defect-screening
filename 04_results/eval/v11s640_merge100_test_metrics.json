@@ -1,0 +1,93 @@
+{
+  "run": "v11s640_merge100",
+  "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\04_results\\train\\v11s640_merge100\\weights\\best.pt",
+  "weights_mb": 18.33,
+  "split": "test",
+  "imgsz": 640,
+  "overall": {
+    "metrics/precision(B)": 0.78278,
+    "metrics/recall(B)": 0.65385,
+    "metrics/mAP50(B)": 0.71862,
+    "metrics/mAP50-95(B)": 0.43577,
+    "fitness": 0.43577
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class": "crack",
+      "class_cn": "裂缝",
+      "precision": 0.8201,
+      "recall": 0.629,
+      "ap50": 0.6897,
+      "ap50_95": 0.3205,
+      "instances": 58,
+      "images": 22
+    },
+    {
+      "class_id": 1,
+      "class": "spalling",
+      "class_cn": "剥落缺失",
+      "precision": 0.6985,
+      "recall": 0.7004,
+      "ap50": 0.7934,
+      "ap50_95": 0.4185,
+      "instances": 43,
+      "images": 17
+    },
+    {
+      "class_id": 2,
+      "class": "efflorescence",
+      "class_cn": "泛碱渗水",
+      "precision": 0.7823,
+      "recall": 0.8056,
+      "ap50": 0.8558,
+      "ap50_95": 0.6647,
+      "instances": 116,
+      "images": 36
+    },
+    {
+      "class_id": 3,
+      "class": "exposed_rebar",
+      "class_cn": "露筋",
+      "precision": 0.6822,
+      "recall": 0.3505,
+      "ap50": 0.3889,
+      "ap50_95": 0.1991,
+      "instances": 147,
+      "images": 46
+    },
+    {
+      "class_id": 4,
+      "class": "rust",
+      "class_cn": "锈迹",
+      "precision": 0.8884,
+      "recall": 0.6606,
+      "ap50": 0.7484,
+      "ap50_95": 0.557,
+      "instances": 1149,
+      "images": 120
+    },
+    {
+      "class_id": 5,
+      "class": "delamination",
+      "class_cn": "空鼓分层",
+      "precision": 0.795,
+      "recall": 0.6618,
+      "ap50": 0.6969,
+      "ap50_95": 0.4039,
+      "instances": 68,
+      "images": 52
+    },
+    {
+      "class_id": 6,
+      "class": "moss",
+      "class_cn": "苔藓附着",
+      "precision": 0.8129,
+      "recall": 0.7692,
+      "ap50": 0.8572,
+      "ap50_95": 0.4867,
+      "instances": 65,
+      "images": 10
+    }
+  ]
+}
