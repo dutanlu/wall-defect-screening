@@ -41,4 +41,8 @@
 | ks_cur | 0.0163 |
 | window_ok | 0.0000 |
 
+## 模型产物（可复算）
+
+- `logs/_a_abstainer/abstainer_models.joblib`（159081 B）—— 含 lr/gb 模型 + 标准化 mu/sd + 特征名；供 OOD 复算使用
+
 > 注意：真值为「共识真值」（cur 与 F1 一致），非绝对真值；特征已剔除全部 F1 列以防标签泄漏。

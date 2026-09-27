@@ -276,6 +276,49 @@ def main() -> int:
             importances={f: round(float(v), 4)
                          for f, v in zip(FEATS, gb.feature_importances_)},
         )
+
+        # ---------- ★ 模型持久化（2026-09-27 新增）----------
+        # 动机：原报告只存了 importances / coef，**没有树结构** ⇒ 无法把弃权器
+        #       拿到「域外(OOD)数据」上复算分数，导致 I1 结论里那条「学习式弃权器
+        #       原理上含 conf 特征、可能捕捉到置信度塌陷」始终无法实测。
+        # 做法：把 fit 好的模型 + 复算所需的全部附属量（特征名、标准化 mu/sd、
+        #       随机种子、训练集规模）一并 dump。
+        #       ⚠️ 必须连 mu/sd 一起存：线性路的 predict 依赖标准化，
+        #       只存模型会得到与训练时不一致的分数（静默错）。
+        # 兼容：joblib 不可用时退回 pickle（同语义），都失败则仅告警、不影响主结论。
+        _af = OUT_DIR / "abstainer_models.joblib"
+        _payload = dict(
+            features=FEATS,
+            seed=args.seed,
+            mu=mu.tolist(),
+            sd=sd.tolist(),
+            n_train=len(tr),
+            n_train_pos=int((ytr == 1).sum()),
+            lr=lr,
+            gb=gb,
+        )
+        _saved = None
+        try:
+            import joblib
+            joblib.dump(_payload, _af)
+            _saved = _af.name
+        except Exception as e_jl:
+            try:
+                import pickle
+                with open(_af, "wb") as fh:
+                    pickle.dump(_payload, fh)
+                _saved = _af.name
+            except Exception as e_pk:
+                print(f"⚠️ 模型持久化失败（joblib: {e_jl}；pickle: {e_pk}）⇒ 仅影响后续 OOD 复算")
+        if _saved:
+            results["_model_artifact"] = dict(
+                path=str(_af.relative_to(ROOT)).replace("\\", "/"),
+                bytes=_af.stat().st_size,
+                note="含 lr/gb 模型 + 标准化 mu/sd + 特征名；供 OOD 复算使用",
+            )
+            print(f"\n★ 已持久化弃权器模型 → {results['_model_artifact']['path']} "
+                  f"({results['_model_artifact']['bytes']} B)")
+
         have_sklearn = True
     except ImportError:
         have_sklearn = False
@@ -299,6 +342,11 @@ def main() -> int:
         r = results[k]
         errs = " ".join(f"{e[2]:>5.3f}" for e in r["rc"])
         print(f"{name_map[k]:30s} {r['auroc']:>8.4f}   {errs}")
+
+    # ★ 持久化产物单独打印（它不是「路」，没有 auroc 字段，不能进上面的对决表）
+    if "_model_artifact" in results:
+        _a = results["_model_artifact"]
+        print(f"{'（模型产物）':30s} {'—':>8s}   {_a['path']}  {_a['bytes']} B")
 
     # ---------- 结论 ----------
     print()
@@ -403,6 +451,12 @@ def _render_md(rep: dict, name_map: dict) -> str:
         for f, v in sorted(rep["results"]["P3_learned_gbdt"]["importances"].items(),
                            key=lambda x: -x[1]):
             L.append(f"| {f} | {v:.4f} |")
+        L.append("")
+    if rep["results"].get("_model_artifact"):
+        _a = rep["results"]["_model_artifact"]
+        L.append("## 模型产物（可复算）")
+        L.append("")
+        L.append(f"- `{_a['path']}`（{_a['bytes']} B）—— {_a['note']}")
         L.append("")
     L.append(f"> 注意：{rep['caveat']}")
     L.append("")
