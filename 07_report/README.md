@@ -103,17 +103,45 @@ Web UI 内已加三个入口（同一套参数区，三种输入）：
 | 📷 上传照片 | `06_deploy/app.py` → 页签「上传照片」 | 原有行为，逐字节不变 |
 | 🎬 上传视频 | `06_deploy/app.py` → 页签「上传视频」 | 抽帧后逐帧走**与照片完全相同**的链路，再跨帧取中位数 |
 | 📱 手机实时（逐张） | `06_deploy/app.py` → 页签「手机实时」 | 手机浏览器**拍一张→自动识别一张**（兼容性最好） |
-| 📡 连续实时流 | **`06_deploy/live_stream.py`**（独立进程） | **真·连续 MJPEG**，手机端看到实时叠加的检测框 |
+| 📡 连续实时流 | **`06_deploy/live_stream.py`**（独立进程） | **真·连续 MJPEG**，服务端读视频源，手机端看实时叠加框 |
+| **手机当摄像头（连续）** | **`06_deploy/phone_live.py`**（独立进程） | **手机推帧 → 电脑识别 → 结果回传手机**，无需装 App |
+
+> **本机实测无摄像头**（`cv2.VideoCapture(0..3)` 全部打不开，且本机 OpenCV 的
+> ffmpeg 未编入 `libavdevice`）⇒ `live_stream.py` 的默认源在这台机器上跑不起来。
+> 因此新增 `phone_live.py`：把**手机**当采集端，不依赖电脑摄像头。
 
 手机访问 Web UI 需要绑定局域网：
 
 ```
-D:\下载\python.exe app.py --host=0.0.0.0            # 端口 7860
-D:\下载\python.exe live_stream.py --host=0.0.0.0 --port=7861   # 连续流
+D:\下载\python.exe app.py --host=0.0.0.0              # 照片/视频/逐张拍照，端口 7860
+D:\下载\python.exe live_stream.py --host=0.0.0.0 --port=7861   # 连续流（需视频源）
+D:\下载\python.exe phone_live.py  --host=0.0.0.0 --port=7862   # 手机当摄像头（http 本机可测）
+D:\下载\python.exe phone_live.py  --host=0.0.0.0 --port=7863 --ssl  # ★ 手机实拍必须用这个
 ```
 
-然后用手机浏览器打开 `http://<电脑局域网IP>:7860`（或 `:7861`）。
-查本机 IP：`ipconfig | findstr IPv4`；打不开通常是 Windows 防火墙拦截端口。
+然后用手机浏览器打开 `http://<电脑局域网IP>:7860`（或 `:7861` / `:7862`）。
+查本机 IP：`ipconfig | findstr IPv4`。
+
+> **★ 手机实拍必须走 HTTPS（2026-09-27 实测）**：
+> 浏览器规定 **`getUserMedia()` 只在 `https://` 或 `localhost` 下可用**。
+> 用 `http://192.168.x.x:7862` 打开时 `navigator.mediaDevices` 是 `undefined`，
+> 页面会报「**浏览器不支持摄像头（需 https 或 localhost）**」——
+> 这不是代码 bug，是浏览器的安全上下文策略。
+> 解决办法：`phone_live.py --ssl`（端口 7863），首次访问点「高级 → 继续访问」接受自签证书即可。
+> 自签证书用 `logs/_make_selfsigned_cert.py` 生成，**SAN 内已含本机局域网 IP**
+> （现代浏览器不认 CN，只认 SAN）。
+>
+> **⚠️ 手机上不要用 7860 那个页签的「摄像头」**：Gradio 的
+> `gr.Image(sources=["webcam"])` 在移动端浏览器不受支持，会报 `image.no_webcam_support`。
+> 手机拍照请走 7863（`phone_live.py`）。
+
+> **⚠️ 手机打不开时的排查顺序（2026-09-27 实测更正）**：
+> **先查绑定、再查防火墙。**
+> 用 `netstat -ano | findstr :7860` 看 `LocalAddress` ——
+> 是 `127.0.0.1` 就说明只绑了本机（**这才是最常见原因**），
+> 加 `--host=0.0.0.0` 重启即可；是 `0.0.0.0` 才轮到查防火墙。
+> 本机实测：Windows 防火墙**已有** Python 的入站放行规则
+> （`D:\下载\python.exe`、TCP/UDP、全端口、Public 档），**通常无需手动添加**。
 
 > **能力边界（必须与照片模式一并理解）**：实时流**不提高**毫米级判读能力
 > ——判读门槛由 GSD 决定，与输入是照片/视频/实时流无关；
@@ -123,6 +151,37 @@ D:\下载\python.exe live_stream.py --host=0.0.0.0 --port=7861   # 连续流
 > **不代表已在实拍上验证**（与 `video_screen.py` 同一口径）。
 >
 > 两个入口建议**只开一个**：本机内存 16.88 GB，同时加载两个模型副本会明显挤占。
+
+#### 无人机实时识别（`09_uav_realtime/`，2026-09-27 新增）
+
+独立实验目录，**只读复用** `02_code/pipeline.py::run_one`，不改动任何既有文件。
+与 `video_screen.py`（事后分析型）目的不同：本目录关心 **FPS / 端到端延迟 / 断线重连**。
+
+```
+cd "D:/pythonstudy 备份/创新题/外墙缺陷筛查/09_uav_realtime"
+D:\下载\python.exe -X utf8 rt_verify.py --device=cpu --max-frames=8 --warmup=2   # 自检（43 项断言）
+D:\下载\python.exe -X utf8 rt_infer.py  --source=synthetic --device=cuda:0 --max-frames=80 --target-fps=0
+```
+
+**实测结论（详见 `logs/_UAV_RT_结论.md` 与报告 §9.5）**：
+
+| 设备 | 单帧推理 p50 | 吞吐 FPS | 端到端 P90 | 能否实时 |
+|---|---|---|---|---|
+| CPU | ~550 ms | ~0.43 | 710 ms | ❌ |
+| **GPU** | **65 ms** | **16.07** | **132 ms** | ✅ |
+
+⇒ **GPU 约 19× 加速**；交付/演示必须用 GPU。瓶颈在模型推理（取帧仅 2.7 ms），不在解码。
+
+> **⛔ 真实无人机图传接入尚未打通**：`uav_probe.py` 实测当前连的是家用路由器
+> （SSID `HONOR-5102SO`）而非 `WIFI_____xxx` 无人机热点 ⇒ 9 个候选端口零收包，
+> 且脚本在确认连上热点前**不发任何数据包**（安全设计）。属**设备侧未就绪，非软件缺陷**。
+> 保底路径：只要有**一段无人机录回的 mp4**，填 `rt_config.yaml` 的 `reclip.uri` 即可跑，
+> 结论立刻从「合成」升级为「实拍」。
+
+> **边界声明**：上述性能数字来自**工程内合成视频**与**本机回环**，
+> 只证明实时管线与指标口径可用，**不得据此声称已完成外墙实拍实时验证**。
+> 该声明由 `rt_metrics_*.json` 的 `caveat` 字段**自动携带**，`rt_verify.py` 会**断言其存在**
+> —— 即「不得过度声称」被**机器强制**，不靠自觉。
 
 ### 答辩 PPT（提交物 ①）
 
@@ -210,13 +269,23 @@ D:\下载\python.exe live_stream.py --host=0.0.0.0 --port=7861   # 连续流
 │   ├── quant/                  FP32+INT8 ONNX + 量化报告
 │   └── vis/                    可视化标注图
 ├── 05_quantify_grade/          ★ 国标分级专项（判据清单，机器可读 + 可追溯）
-├── 06_deploy/app.py            Web 演示应用（Gradio）
+├── 06_deploy/                  Web 演示（Gradio 主界面 + 实时流 + 手机推流）
+│   ├── app.py                  主界面：图片 / 视频 / 逐张 三个页签
+│   ├── live_stream.py          MJPEG 连续实时流服务（本机摄像头/RTSP）
+│   ├── phone_live.py           ★ 手机当摄像头推流（支持 --ssl 自签 HTTPS）
+│   └── _cert/                  自签证书（含 LAN IP 的 SAN；仅本地用）
 ├── 07_report/                  本目录：报告文档
 ├── 08_photo_collector/site/    ★ 网友照片收集站（已云端发布）
 │   ├── index.html              单页应用：登录/注册 + 上传
 │   ├── app.js                  页面逻辑
 │   ├── cloud.js                云服务接入层（Auth/Database/Storage）
 │   └── config.js               publicConfig（可公开，无密钥）
+├── 09_uav_realtime/            ★ 无人机实时识别实验（独立目录，只读复用 02_code）
+│   ├── rt_config.yaml          唯一配置面（4 种源预设 + 采样 + 阈值）
+│   ├── rt_infer.py             主程序：取帧→节流→run_one→叠框→分层计时→落盘
+│   ├── rt_verify.py            自检（43 项断言，失败即非零退出码）
+│   ├── uav_probe.py            无人机图传接入探测（安全：连上前不发包）
+│   └── uav_loopback_test.py    回环端到端自测（不需要无人机）
 └── logs/                       运行日志
 ```
 

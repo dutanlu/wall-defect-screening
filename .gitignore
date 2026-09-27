@@ -68,7 +68,18 @@ logs/_MEMORY_retired_sections.md
 # 验证输出图（中间产物，可用 02_code/_verify_rectify.py 重跑生成）
 02_code/_verify_out/
 
-# 临时文件
+# ---------- 09_uav_realtime：只留代码与配置，运行产物不入库 ----------
+# 理由同 04_results/train/：out_frames/out_video 是**重跑即可再生**的产物，
+# 且 mp4 体积达数 MB；logs/ 下是逐帧指标 JSON + 本机绝对路径探针文本。
+# ⇒ 入库的只有：*.py / rt_config.yaml / README.md（+ _test_video 合成素材）。
+09_uav_realtime/logs/
+09_uav_realtime/out_frames/
+09_uav_realtime/out_video/
+# 合成视频（3.1 MB）：其余素材全部不入库，这里也不破例
+#   （交付包另有一份，见 logs/_copy_delivery_pack.py 的【9】段）
+09_uav_realtime/_test_video/
+
+# ---------- 临时文件 ----------
 _grun.txt
 
 # ---------- 演示视频（大文件，独立存放）----------

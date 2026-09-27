@@ -1,0 +1,165 @@
+# ============================================================================
+# rt_config.yaml —— 无人机外墙缺陷「实时识别」实验配置（唯一配置面）
+# ============================================================================
+# 归属：09_uav_realtime/ 独立实验目录。本文件不参与 02_code/ 任何既有入口，
+#       也不会被 pipeline.py / video_screen.py 读取。
+#
+# 用法：
+#   python rt_infer.py --config=rt_config.yaml --source=<preset名>
+#   命令行 --source 可覆盖 source.preset；其余键只从本文件读。
+#
+# 口径纪律（重要）：
+#   本模块不做自己的检测/分级逻辑，一律把 infer.* 转成 args 字典后交给
+#   pipeline.run_one(image=frame)。因此本文件的 conf / imgsz / 标定参数
+#   必须与主链路同名同义，不得另创一套名字。
+# ============================================================================
+
+source:
+  # 视频源类型预设。命令行 --source=<key> 指定用哪一个。
+  # 四种预设对应四种接入方式，切换只需改 --source，不改代码。
+  preset: synthetic          # 默认跑合成视频（工程内唯一可用的动态素材）
+
+  presets:
+
+    # ---- A) 合成视频：管线连通性与性能基准，不声称实拍验证 ----
+    # ★ uri 写多个候选（用 | 分隔），按顺序取**第一个真实存在**的；
+    #   这样同一份配置在「源目录」与「交付包」两种布局下都能跑：
+    #     源目录：<root>/logs/_test_video/...
+    #     交付包：<root>/uav_realtime/_test_video/...
+    synthetic:
+      kind: file
+      uri: "../logs/_test_video/synthetic_wall_walk.mp4 | ./_test_video/synthetic_wall_walk.mp4"
+      note: "合成视频 1280x1280@30fps/40帧，仅证明管线跑通，非实拍"
+
+    # ---- B) 无人机录回的视频文件：真实素材、可离线复跑 ----
+    reclip:
+      kind: file
+      uri: ""                # 填你的无人机录回 mp4 绝对路径或相对本目录的路径
+      note: "无人机录回视频文件；为空时本预设会明确报错而不静默跳过"
+
+    # ---- C) 无人机 WiFi 私有图传（★ 本机实际机型就是这个）----
+    # 来源：随机说明书 = `WiFi_CAM` App + `WIFI_____xxx` 热点，红灯闪烁等待连接。
+    # ⇒ 它**不是** RTSP、也不是标准 IP 摄像头，而是 UDP 私有协议：
+    #    - 视频流：UDP 8080（MJPEG）  ← 待 uav_probe.py 实测确认
+    #    - 控制  ：UDP 8090（十六进制指令）
+    #    - 上电默认在 2.4GHz 遥控器模式，需先发 2 字节魔数 42 76 切 App 模式
+    #      （同族机型逆向经验，本机需实测确认）
+    # ★ 用法：先跑 `uav_probe.py` 实测出端口，再回来填 port。
+    uav_wifi:
+      kind: wifi_fpv
+      port: 8080              # 待实测确认（uav_probe.py 会给出有数据的端口）
+      drone_ip: "192.168.4.1" # 连上热点后通常是网关；uav_probe 会实测
+      stream_type: auto       # auto / mjpeg / h264 —— 接收端自动识别
+      width: 640              # H.264 解码需要正确分辨率；MJPEG 可忽略
+      height: 480
+      send_magic: true        # 发 2 字节模式魔数触发推流（不含任何飞行指令）
+      assumed_fps: 30.0       # 实时流常报不出 fps，用这个算跳帧步长
+      note: "无人机 WiFi 图传；先用 uav_probe.py 实测端口再填 port"
+
+    # ---- D) 无人机 RTSP（本机机型**不支持**，保留给其它机型）----
+    rtsp:
+      kind: stream
+      uri: ""                # 若有支持 RTSP 的机型，填 rtsp://... 即可
+      note: "RTSP 实时流；本机 WiFi_CAM 机型不适用，留空避免误用"
+
+    # ---- E) 本机 USB 摄像头 / 采集卡（保底方案）----
+    camera:
+      kind: device
+      uri: "0"               # 设备号字符串；采集卡通常也是 0 或 1
+      note: "OpenCV VideoCapture 设备号；手机投屏/采集卡接无人机时用这个"
+
+  # 实时流的重连与缓冲（仅 kind=stream 生效）
+  stream:
+    open_timeout_sec: 10.0   # 打开超时
+    read_timeout_sec: 5.0    # 单次读帧超时
+    max_reconnect: 5         # 断开后最大重连次数；设为 0 表示不重连
+    reconnect_wait_sec: 1.0  # 每次重连前等待
+    buffer_size: 1           # 只留最新帧，避免越读越延迟（实时性的关键）
+    transport: "tcp"         # tcp / udp；国标场景 tcp 更稳
+
+capture:
+  # 分辨率与帧率请求。留空/0 表示不强制，用源自带参数。
+  width: 0                   # 请求宽度，如 1280；0 = 不设
+  height: 0                  # 请求高度，如 720；0 = 不设
+  request_fps: 0             # 请求采集帧率，如 30；0 = 不设
+
+  # ★ 采样节流：无人机常 30fps 而模型跑不到 30fps，故不逐帧必推理。
+  #   target_fps = 期望的「实际推理帧率」。0 表示逐帧全跑（不跳帧）。
+  #   实现：按源 fps 算 stride = round(src_fps / target_fps)，取帧序号 % stride == 0 的帧送推理。
+  target_fps: 10.0
+
+  # 终止条件（任一先到即停）。实时流没有总帧数，必须靠这两个收口。
+  max_frames: 300            # 最多「推理」多少帧（不含跳过的帧）；0 = 不限
+  duration_sec: 60.0         # 最长运行秒数；0 = 不限
+
+  # 丢弃前 N 帧做预热 —— 与 bench_pipeline.py 同一纪律：
+  # 首圈含 CUDA 上下文/显存分配/cudnn autotune，不丢会污染统计。
+  warmup_frames: 30
+
+infer:
+  # ↓↓↓ 以下键名必须与 pipeline.run_one 的 args 消费口径完全一致 ↓↓↓
+
+  conf: 0.25                 # 置信度阈值（主链路默认 0.25）
+  imgsz: 640                 # 推理分辨率。640 为主力口径；896 仅作对照档
+  device: "cuda:0"           # cuda:0 / cpu / 0。GPU 与 CPU 结果应一致但速度差异大
+  model: ""                  # 权重路径；留空则用 common.default_weight() 的 v11s640
+  half: false                # 半精度；注意 bench 已有结论：本机 FP16 反而慢 2.3x，默认关
+
+  # 标定参数（与 pipeline 同名同义）。
+  # ★ 标定链的兜底是「相机参数法」，而它会校验 distance>0 且 focal>0，
+  #   给 0 会直接抛 ValueError 让整个实验崩掉（已实测）。
+  #   故这里**必须有正的默认值**。外墙巡检常见：距墙 15~25 m、主摄 24mm。
+  #   若有标定物，改填 calib_object_px / calib_object_mm 更可信（优先级更高）。
+  distance: 20.0             # 拍摄距离（米）★ 必须 > 0
+  focal: 24.0                # 等效 35mm 焦距（mm）★ 必须 > 0
+  calib_object_px: 0.0       # 标定物像素宽度（>0 时优先用标定物法，最可信）
+  calib_object_mm: 210.0     # 标定物实际毫米宽度（A4 短边 210mm）
+  calib_object_name: "A4短边210mm"   # 标定物名称（仅用于记录）
+  calib_brick: false         # 是否用砖缝周期法（需画面里有砖缝结构）
+
+  # 斜拍正射校正。★ 实时场景默认关：校正本身耗时且会改变几何，
+  #   video_screen 的实测提示逐帧独立校正会引入标定抖动。
+  rectify: false
+
+  # GB 50010 环境类别，影响裂缝宽度限值。
+  # ★ 必须逐字使用 grade.ENV_CLASSES 里的三个合法值之一，写错会**静默**
+  #   落到兜底限值（不是报错）—— 这是本工程真实踩过的「参数静默失效」类坑：
+  #     "一类环境（室内干燥）"
+  #     "二类环境（露天/潮湿）"     ← 外墙场景用这个
+  #     "三类环境（干湿交替/海风）"
+  env_class: "二类环境（露天/潮湿）"
+  jgj125: true               # 是否启用 JGJ 125 危险点两级判据
+
+  quantize: false            # 是否走 ONNX/FP16 量化模型（需 model 指向 .onnx）
+
+output:
+  root: "."                  # 输出根（相对本目录）
+  frames_dir: "out_frames"   # 标注帧截图目录
+  video_dir: "out_video"     # 带框回放 mp4 目录
+  logs_dir: "logs"           # 文本日志目录
+
+  # 标注帧抽存：每 N 个「已推理帧」存一张截图。0 = 不存。
+  save_frame_every: 5
+  # 存图上限，防止长时间运行撑爆磁盘。0 = 不限。
+  max_saved_frames: 200
+
+  # ★ 带框回放 mp4：把叠加后的帧写成视频，便于肉眼复核。
+  save_video: true
+  video_fps: 10.0            # 回放帧率。若跳帧采样，这里设 target_fps 最自然
+  video_fourcc: "mp4v"       # mp4v / avc1 / XVID
+
+  # 结构化记录
+  save_json: true            # 逐帧指标 + 分位统计
+  save_log: true             # 文本日志（人可读）
+
+  # 可视化叠加内容开关
+  draw_boxes: true           # 检测框
+  draw_labels: true          # 类别中文名 + 置信度
+  draw_metrics_hud: true     # 左上角实时 HUD：帧号/FPS/延迟
+
+metrics:
+  # 分位统计口径。实时性看长尾，不能只报均值。
+  percentiles: [50, 90, 99]
+  # 判定阈值（仅用于在结果 JSON 里给出 pass/fail 结论，不改任何行为）
+  realtime_fps_pass: 15.0    # 处理 FPS ≥ 此值判「实时可交互」
+  e2e_latency_pass_ms: 200.0 # 端到端延迟 ≤ 此值判「可实时反馈」
