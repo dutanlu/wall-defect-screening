@@ -24,16 +24,30 @@
 4. **不虚构**：本脚本**不**做 SLAM/正射拼接/多图几何配准。若一个立面的
    多张照片来自不同拍摄距离，GSD 不一致是必然的，脚本如实报出来而不是
    偷偷用平均值糊过去。
+5. **★ 分布级 OOD 门（2026-09-27 新增）**：批量筛查**天然**是「一批同源图」
+   ⇒ 正好是报告 §7.16.6 那个**批级**判据 `p_hit` 的适用场景。
+   动机：报告 §7.16.4 实测到「系统知道自己**几何上**什么时候不该给结论，
+   但不知道**模型层面**什么时候不该给」—— 在跨源 OOD 数据上，几何合格 +
+   图像清晰时，系统仍会输出风险等级，而该结论建立在近乎失效的检测之上。
+   ⇒ 本脚本在**入口**加一道**分布级**门：统计整批图的
+   `p_hit = (crack 检出中 conf ≥ C_HIT 的比例)`，低于阈值就**拒绝出结论**。
+
+   ⚠️ **为什么必须单独跑一次低阈值检测**：主链路是以 `--conf`（默认 0.25）
+   调的，若直接用主链路的检出算 `p_hit`，则**分子 = 分母 ⇒ p_hit 恒为 1**，
+   门**数学上退化为常数、静默失效**（本轮实测踩到过）。
+   ⇒ 门的**分母**必须来自一次**更低 conf floor**（默认 0.05）的检测。
 
 用法
 ----
     python 02_code/batch_screen.py --dir=<图片目录> [--json=out.json]
         [--conf=0.25] [--imgsz=640] [--distance=20] [--focal=24]
         [--device=cpu] [--model=<权重>] [--facade=<名称>]
+        [--ood-gate=1] [--ood-threshold=0.5957] [--ood-conf-floor=0.05]
+        [--no-ood-gate]
 
 输出
 ----
-- 控制台：逐图一行 + 建筑级汇总。
+- 控制台：逐图一行 + 建筑级汇总 + 分布级 OOD 门判读。
 - JSON：`<EVAL_DIR>/batch_screen_results.json`（或 --json 指定）。
 """
 
@@ -47,6 +61,16 @@ from common import (EVAL_DIR, RESULT_DIR, argv_flag, default_weight, dump_json,
                     log, resolve_weight)
 
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tif", ".tiff"}
+
+# ---------- 分布级 OOD 门（报告 §7.16.6）----------
+# 判据：p_hit = （某类检出中 conf ≥ C_HIT 的个数）/（该类检出总数）
+#   分母在 **conf floor**（默认 0.05）上统计 —— 见文件头「为什么必须单独跑一次」。
+OOD_C_HIT = 0.25            # 达标阈值（与报告 §7.16.4 的测量窗口一致）
+OOD_CONF_FLOOR = 0.05       # 分母的采样下界（必须严格 < C_HIT）
+# 默认阈值取报告 §7.16.6 实测的 V3 bootstrap 5% 分位（crack 类，285 图）。
+# ★ 这是**当时那一批数据**的保守下界；换数据/换类别必须重定（见 _ood_gate 的 warning）。
+OOD_THRESHOLD_DEFAULT = 0.5957
+OOD_CLASS_DEFAULT = "crack"   # 报告实测用的类别（class 0）
 
 
 def list_images(folder: str | Path) -> list[Path]:
@@ -68,6 +92,93 @@ def _gsd_of(rec: dict) -> float | None:
     except (TypeError, ValueError):
         return None
     return v if v > 0 else None
+
+
+def _ood_gate(p_hit: float | None, n_total: int, threshold: float,
+              c_hit: float, floor: float, cls: str) -> dict:
+    """分布级 OOD 门（纯函数，便于单测）。
+
+    判据（报告 §7.16.6）：
+        门 = 「p_hit < threshold ⇒ 拒绝该批出结论」
+    返回 dict，含 fire（是否触发）/ verdict（文字）/ 以及复算所需的全部门槛。
+
+    ⚠️ 三条必须随结论声明的边界（写进返回的 caveat，也写进控制台）：
+      ① 阈值来自**另一批数据**（V3 285 图）的 bootstrap 5% 分位 ⇒
+         误触发率 5% 是**同批自估、偏乐观**；换数据须重定；
+      ② 这是**批级**判据：它只覆盖「一批同源图」的入口筛查，
+         **不覆盖单图兜底**（单图 p_hit 分母可为 0~1，无意义）；
+      ③ 分母必须在 floor 上统计，否则 p_hit 恒为 1（见文件头）。
+    """
+    out = {
+        "cls": cls, "c_hit": c_hit, "conf_floor": floor,
+        "threshold": threshold, "n_detections_at_floor": int(n_total),
+        "p_hit": (round(float(p_hit), 4) if p_hit is not None else None),
+        "fire": None, "verdict": "",
+        "note": ("p_hit = 该类检出中 conf≥c_hit 的比例；分母在 conf_floor 上统计"
+                 "（不可在 c_hit 上统计，否则恒为 1）。"),
+        "caveat": ("阈值取自 V3 285 图的 bootstrap 5% 分位 ⇒ 误触发率系同批自估、偏乐观，"
+                   "换数据/换类别须重定；本门为**批级**判据，不覆盖单图兜底。"),
+    }
+    if p_hit is None or n_total <= 0:
+        out["verdict"] = f"未计算（该批在 conf≥{floor} 下没有 {cls} 检出）"
+        out["fire"] = None
+        return out
+    if n_total < 10:
+        # 样本太少时门本身不可靠 —— 如实声明，不硬给一个 fire 值。
+        out["fire"] = None
+        out["verdict"] = (f"⚠️ 样本不足（该批仅 {n_total} 个 {cls} 检出，<10）"
+                          f"⇒ 门不可靠，**不下判定**")
+        return out
+    fire = bool(p_hit < threshold)
+    out["fire"] = fire
+    if fire:
+        out["verdict"] = (f"⛔ **触发**：p_hit {p_hit:.4f} < 阈值 {threshold:.4f}"
+                          f" ⇒ 该批的检测响应明显弱于域内基线，"
+                          f"**拒绝据此批出危险性结论**（疑似分布外数据 / 拍摄条件异常）")
+    else:
+        out["verdict"] = (f"✅ 未触发：p_hit {p_hit:.4f} ≥ 阈值 {threshold:.4f}"
+                          f" ⇒ 该批检测响应与域内基线相当，可继续出结论")
+    return out
+
+
+def compute_ood_p_hit(model, images: list, floor: float, c_hit: float,
+                      cls: str = OOD_CLASS_DEFAULT, imgsz: int = 640) -> dict:
+    """跑一次**低阈值**检测，只为统计分布级判据 p_hit。
+
+    为什么单独跑：主链路以 `--conf`（0.25）调模型，其检出**全部** ≥0.25 ⇒
+    直接拿主链路检出算 p_hit 会把分子=分母、恒为 1（门静默退化）。
+    ⇒ 必须在**更低的 floor**（默认 0.05）上重跑，得到真实分母。
+
+    返回 dict：{n_total, n_hit, p_hit}；读图失败的图跳过并计数。
+    """
+    n_total = 0
+    n_hit = 0
+    n_read_fail = 0
+    from common import imread_u
+    for p in images:
+        img = imread_u(p)
+        if img is None:
+            n_read_fail += 1
+            continue
+        res = model.predict(img, conf=float(floor), imgsz=int(imgsz), verbose=False)
+        if not res:
+            continue
+        r0 = res[0]
+        if r0.boxes is None or len(r0.boxes) == 0:
+            continue
+        clsid = r0.boxes.cls.cpu().numpy().astype(int)
+        confs = r0.boxes.conf.cpu().numpy()
+        from common import CLASSES
+        for i in range(len(clsid)):
+            name = CLASSES[clsid[i]] if clsid[i] < len(CLASSES) else str(clsid[i])
+            if cls and name != cls:
+                continue
+            n_total += 1
+            if float(confs[i]) >= float(c_hit):
+                n_hit += 1
+    p_hit = (n_hit / n_total) if n_total > 0 else None
+    return {"n_total": n_total, "n_hit": n_hit, "p_hit": p_hit,
+            "n_read_fail": n_read_fail}
 
 
 def summarize_batch(records: list[dict], facade: str = "") -> dict:
@@ -282,6 +393,41 @@ def main() -> None:
 
     summary = summarize_batch(records, facade=facade)
 
+    # ---------- ★ 分布级 OOD 门（报告 §7.16.6）----------
+    # 默认开。`--no-ood-gate` 关；`--ood-gate=0` 同义。
+    gate_on = True
+    if "--no-ood-gate" in sys.argv[1:]:
+        gate_on = False
+    _og = str(argv_flag("ood-gate", "1")).strip().lower()
+    if _og in ("0", "false", "no", "off", "none"):
+        gate_on = False
+
+    ood_block: dict | None = None
+    if gate_on:
+        try:
+            floor = float(argv_flag("ood-conf-floor", str(OOD_CONF_FLOOR)))
+            c_hit = float(argv_flag("ood-c-hit", str(OOD_C_HIT)))
+            thr = float(argv_flag("ood-threshold", str(OOD_THRESHOLD_DEFAULT)))
+            cls = str(argv_flag("ood-class", OOD_CLASS_DEFAULT) or OOD_CLASS_DEFAULT)
+            imgsz = int(args.get("imgsz", 640))
+            if floor >= c_hit:
+                log(f"⚠️ --ood-conf-floor({floor}) ≥ c_hit({c_hit}) ⇒ p_hit 会退化，"
+                    f"已强制用 {OOD_CONF_FLOOR}")
+                floor = OOD_CONF_FLOOR
+            log(f"分布级 OOD 门：在 conf≥{floor} 上重跑一次检测以统计 p_hit"
+                f"（阈值 {thr}，类别 {cls}）…")
+            raw = compute_ood_p_hit(model, imgs, floor, c_hit, cls, imgsz)
+            ood_block = _ood_gate(raw["p_hit"], raw["n_total"], thr, c_hit, floor, cls)
+            ood_block["n_hit"] = raw["n_hit"]
+            if raw.get("n_read_fail"):
+                ood_block["n_read_fail"] = raw["n_read_fail"]
+        except Exception as e:      # noqa: BLE001
+            # 不静默吞：门算不出来时如实报错，且**不**谎报「未触发」。
+            log(f"⚠️ OOD 门计算失败（{type(e).__name__}: {e}）⇒ 本轮跳过门判定")
+            ood_block = {"fire": None,
+                         "verdict": f"未计算（异常：{type(e).__name__}）"}
+        summary["ood_gate"] = ood_block
+
     log("=" * 64)
     log(f"建筑级汇总（{summary['n_ok']}/{summary['n_images']} 张成功）")
     log(f"  缺陷实例合计: {summary['n_defects_total']}")
@@ -303,6 +449,23 @@ def main() -> None:
         log(f"  ⚠️ 其中 {summary['n_unjudgeable']} 条因不可判读已作废、"
             f"未参与等级判定（拒答机制生效）")
     log("  ⚠️ 本结论为筛查层面的风险排序，不构成法定鉴定。")
+
+    # ---------- 分布级 OOD 门结果 ----------
+    og = summary.get("ood_gate")
+    if og:
+        log("-" * 64)
+        log("分布级 OOD 门（报告 §7.16.6）")
+        if og.get("p_hit") is not None:
+            log(f"  类别 {og.get('cls')}：{og.get('n_hit')}/{og.get('n_detections_at_floor')} "
+                f"个检出达到 conf≥{og.get('c_hit')} ⇒ p_hit = {og.get('p_hit')}"
+                f"（阈值 {og.get('threshold')}）")
+        log(f"  {og.get('verdict')}")
+        if og.get("fire") is True:
+            # 门触发时，把上面那个风险等级**明确标为不可采信** —— 这正是本门的目的。
+            log("  ⇒ **上面的建筑级风险等级请勿采信**：它建立在检测响应已明显塌陷的批次上。"
+                "建议先排查拍摄条件/数据来源（是否分布外），或改由人工/专业鉴定。")
+        if og.get("caveat"):
+            log(f"  边界：{og['caveat']}")
 
     out_json = Path(save_json) if save_json else (
         EVAL_DIR / "batch_screen_results.json")
