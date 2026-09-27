@@ -1,0 +1,67 @@
+{
+ "modality": "rgbir",
+ "channel_order": "BGRA = [B, G, R, IR_gray]",
+ "init": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\logs\\_yolo11n-seg.pt + first-conv inflation(mode=mean)",
+ "inflate_info": {
+  "inflated": true,
+  "in_channels": 4,
+  "mode": "mean",
+  "out_channels": 16,
+  "pretrained_weight_preserved": "ch0-2 逐元素拷贝",
+  "new_channel_init": "mean",
+  "src_shape": [
+   16,
+   3,
+   3,
+   3
+  ],
+  "dst_shape": [
+   16,
+   4,
+   3,
+   3
+  ]
+ },
+ "epochs": 80,
+ "epochs_landed": 80,
+ "imgsz": 512,
+ "batch": 8,
+ "seed": 0,
+ "workers": 0,
+ "conf": 0.25,
+ "train_minutes": 73.06,
+ "weights": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\_public_datasets\\bfdd\\_runs\\rgbir\\weights\\best.pt",
+ "run_dir": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\raw\\_public_datasets\\bfdd\\_runs\\rgbir",
+ "iou": {
+  "n_images": 152,
+  "channel_read_ok": 4,
+  "per_class": {
+   "v1": {
+    "iou": 0.07929281767955801,
+    "gt_px": 548883,
+    "pred_boxes": 483
+   },
+   "v2": {
+    "iou": 0.18200314898878248,
+    "gt_px": 414101,
+    "pred_boxes": 75
+   },
+   "v3": {
+    "iou": 0.1904592824045307,
+    "gt_px": 174759,
+    "pred_boxes": 104
+   },
+   "v4": {
+    "iou": 0.6741960784313725,
+    "gt_px": 781138,
+    "pred_boxes": 195
+   },
+   "v5": {
+    "iou": 0.41002041899437963,
+    "gt_px": 1453649,
+    "pred_boxes": 356
+   }
+  }
+ },
+ "note": "真 4 通道 [R,G,B,IR]；首层由 3 通道预训练权重膨胀而来（前 3 通道逐元素保留，第 4 通道按 mode 初始化）。IoU 与 _p1_train_probe.py 同一实现（预测掩膜并集 vs 真值掩膜）。"
+}
