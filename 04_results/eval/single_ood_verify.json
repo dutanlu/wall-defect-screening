@@ -1,0 +1,1311 @@
+{
+  "purpose": "验证单图 OOD 兜底判据能否分开 V3(域内) 与 BFDD(跨源)",
+  "weights": "03_weights\\v11s640_best.pt",
+  "n_per_side": 60,
+  "v3": {
+    "label": "V3",
+    "n_images": 60,
+    "n_read_fail": 0,
+    "level_dist": {
+      "0": 52,
+      "1": 7,
+      "2": 1
+    },
+    "frac_level_ge1": 0.13333333333333333,
+    "frac_level_2": 0.016666666666666666,
+    "frac_zero_det": 0.0,
+    "n_with_det": 60,
+    "conf_med_mean_of_images": 0.3887313577346504
+  },
+  "bfdd": {
+    "label": "BFDD",
+    "n_images": 60,
+    "n_read_fail": 0,
+    "level_dist": {
+      "0": 12,
+      "1": 24,
+      "2": 24
+    },
+    "frac_level_ge1": 0.8,
+    "frac_level_2": 0.4,
+    "frac_zero_det": 0.15,
+    "n_with_det": 51,
+    "conf_med_mean_of_images": 0.13216119661342865
+  },
+  "verdict": {
+    "main_criterion_delta_pp": 66.66666666666667,
+    "strong_criterion_delta_pp": 38.333333333333336,
+    "zero_det_delta_pp": 15.0,
+    "main_works": true,
+    "strong_works": true
+  },
+  "note": "预登记判据：level≥1 差 > 30pp 判主判据成立；level==2 差 > 20pp 判强判据成立。若两侧无差异 ⇒ 如实写「单图判据不成立」，不调参硬凑。",
+  "v3_rows": [
+    {
+      "file": "greybrick-yolo__1039.jpg",
+      "level": 0,
+      "all_n": 10,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8517797589302063,
+      "conf_med": 0.6920929551124573,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__1406.jpg",
+      "level": 0,
+      "all_n": 16,
+      "n_det": 2,
+      "p_hit_local": 0.0,
+      "conf_max": 0.8722494840621948,
+      "conf_med": 0.2410392165184021,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__2150.jpg",
+      "level": 0,
+      "all_n": 12,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8889791965484619,
+      "conf_med": 0.3295377194881439,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__2413.jpg",
+      "level": 0,
+      "all_n": 16,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8138427734375,
+      "conf_med": 0.3052355796098709,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__2421.jpg",
+      "level": 0,
+      "all_n": 14,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8943164944648743,
+      "conf_med": 0.23927529156208038,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__2534.jpg",
+      "level": 0,
+      "all_n": 8,
+      "n_det": 4,
+      "p_hit_local": 0.75,
+      "conf_max": 0.8370866775512695,
+      "conf_med": 0.2894202694296837,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__32.jpg",
+      "level": 1,
+      "all_n": 6,
+      "n_det": 6,
+      "p_hit_local": 0.3333333333333333,
+      "conf_max": 0.6368340849876404,
+      "conf_med": 0.18134527653455734,
+      "votes": [
+        "p_hit_local 0.3333 < 0.5957 (n=6)（弱票）"
+      ]
+    },
+    {
+      "file": "greybrick-yolo__521.jpg",
+      "level": 0,
+      "all_n": 17,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8728837370872498,
+      "conf_med": 0.40135666728019714,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__527.jpg",
+      "level": 0,
+      "all_n": 8,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8792760372161865,
+      "conf_med": 0.4697282984852791,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__57.jpg",
+      "level": 0,
+      "all_n": 1,
+      "n_det": 1,
+      "p_hit_local": 1.0,
+      "conf_max": 0.8158026337623596,
+      "conf_med": 0.8158026337623596,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__682.jpg",
+      "level": 0,
+      "all_n": 7,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7419338226318359,
+      "conf_med": 0.24350135028362274,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__741.jpg",
+      "level": 0,
+      "all_n": 6,
+      "n_det": 1,
+      "p_hit_local": 0.0,
+      "conf_max": 0.8781023025512695,
+      "conf_med": 0.8206159472465515,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__B0069.jpg",
+      "level": 0,
+      "all_n": 5,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9134472608566284,
+      "conf_med": 0.48020097613334656,
+      "votes": []
+    },
+    {
+      "file": "greybrick-yolo__B0149.jpg",
+      "level": 0,
+      "all_n": 5,
+      "n_det": 2,
+      "p_hit_local": 1.0,
+      "conf_max": 0.7927956581115723,
+      "conf_med": 0.17323029041290283,
+      "votes": []
+    },
+    {
+      "file": "hrcds_yolo_exposed_rebar__hrcds_train_0228.jpg",
+      "level": 0,
+      "all_n": 37,
+      "n_det": 1,
+      "p_hit_local": 0.0,
+      "conf_max": 0.8080654144287109,
+      "conf_med": 0.1831853836774826,
+      "votes": []
+    },
+    {
+      "file": "hrcds_yolo_exposed_rebar__hrcds_train_0286.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6808274388313293,
+      "conf_med": 0.3327353149652481,
+      "votes": []
+    },
+    {
+      "file": "hrcds_yolo_exposed_rebar__hrcds_train_0353.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8596440553665161,
+      "conf_med": 0.2741662859916687,
+      "votes": []
+    },
+    {
+      "file": "hrcds_yolo_exposed_rebar__hrcds_train_0772.jpg",
+      "level": 0,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8396714329719543,
+      "conf_med": 0.7379769682884216,
+      "votes": []
+    },
+    {
+      "file": "hrcds_yolo_exposed_rebar__hrcds_train_0879.jpg",
+      "level": 1,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8165738582611084,
+      "conf_med": 0.09499545395374298,
+      "votes": [
+        "conf_med 0.0950 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "rebar_structural__sc_1a7e86db-9.png",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 2,
+      "p_hit_local": 0.5,
+      "conf_max": 0.26926442980766296,
+      "conf_med": 0.12085982412099838,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_-1276-_jpg.rf.1a7fff2e86bb181f4073cc029df031cc.jpg",
+      "level": 2,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.10769505053758621,
+      "conf_med": 0.07512489706277847,
+      "votes": [
+        "conf_med 0.0751 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000006_jpg.rf.872c2b2eb44bccd69692569c1e2472f1.jpg",
+      "level": 0,
+      "all_n": 8,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9259492754936218,
+      "conf_med": 0.9178538024425507,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000015_jpg.rf.6e45780d7cba3880cbebf1b2a414ddf7.jpg",
+      "level": 1,
+      "all_n": 77,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.45497485995292664,
+      "conf_med": 0.08666742593050003,
+      "votes": [
+        "conf_med 0.0867 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000018_jpg.rf.6d43ec022f7620a3987d610e73d89f01.jpg",
+      "level": 0,
+      "all_n": 15,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9288365244865417,
+      "conf_med": 0.7609466314315796,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000027_jpg.rf.3d3378cfebb72075ea726109a15de6dd.jpg",
+      "level": 0,
+      "all_n": 18,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9178628325462341,
+      "conf_med": 0.8779171407222748,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000034_jpg.rf.ce7b7544f812e0ca336e25cfe5288358.jpg",
+      "level": 0,
+      "all_n": 18,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9344291687011719,
+      "conf_med": 0.8954424262046814,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000184_jpg.rf.abf1f7fbe5c14f255184acfa7e91ec22.jpg",
+      "level": 0,
+      "all_n": 25,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9284853339195251,
+      "conf_med": 0.8749373555183411,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000190_jpg.rf.51a383829f863750419b831de1cf0747.jpg",
+      "level": 0,
+      "all_n": 31,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9147927165031433,
+      "conf_med": 0.8410182595252991,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000197_jpg.rf.9208f16e0a35aa810947a8e935fa3b57.jpg",
+      "level": 0,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9259713888168335,
+      "conf_med": 0.9199998378753662,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000233_jpg.rf.2a9a7ebcb46857947659fbbdffd708e2.jpg",
+      "level": 1,
+      "all_n": 29,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7499926090240479,
+      "conf_med": 0.08104648441076279,
+      "votes": [
+        "conf_med 0.0810 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00032_jpg.rf.8eece7f46b94dc1336d49bfd2ae3497e.jpg",
+      "level": 0,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8262714147567749,
+      "conf_med": 0.4438451435416937,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000347_jpg.rf.a1202a73d53aa6b0cab50bf534d49e99.jpg",
+      "level": 0,
+      "all_n": 26,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9377400279045105,
+      "conf_med": 0.8723239004611969,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000378_jpg.rf.0c258ea389e32b17d8a4a6fb73d89ae5.jpg",
+      "level": 0,
+      "all_n": 12,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9304437041282654,
+      "conf_med": 0.705633133649826,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000395_jpg.rf.a9c5f4514c222395dc9d6f52dc2f9165.jpg",
+      "level": 1,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.2234349548816681,
+      "conf_med": 0.1085721030831337,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_000568_jpg.rf.ad315cfb15e4073b45d40e773fe6ed4e.jpg",
+      "level": 0,
+      "all_n": 34,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9238328337669373,
+      "conf_med": 0.32227644324302673,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00078_jpg.rf.73f359d8718457ef08c167328e0d02ff.jpg",
+      "level": 1,
+      "all_n": 9,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6265340447425842,
+      "conf_med": 0.06921110302209854,
+      "votes": [
+        "conf_med 0.0692 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00104_jpg.rf.96196c0a7b6b9a68a3a9f91f5bac14da.jpg",
+      "level": 0,
+      "all_n": 6,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6292392015457153,
+      "conf_med": 0.21118587255477905,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_001202_jpg.rf.8a2a3f51fb3e8e1e1122ba2106e66d2d.jpg",
+      "level": 0,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.41925573348999023,
+      "conf_med": 0.3861944079399109,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_001229_jpg.rf.8ea848df62dd745c735f874be4932867.jpg",
+      "level": 0,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7764296531677246,
+      "conf_med": 0.7764296531677246,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00219_jpg.rf.fb5eec3de0ada612c5075b78f20cd2fa.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7851495742797852,
+      "conf_med": 0.19801915436983109,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00411_jpg.rf.a74652d3c1aabbde917bb37b358b78ea.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8445860743522644,
+      "conf_med": 0.3323594778776169,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00483_jpg.rf.3bed6fc5c5af011eb88d710823c2ed0e.jpg",
+      "level": 1,
+      "all_n": 7,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.663949728012085,
+      "conf_med": 0.09892375767230988,
+      "votes": [
+        "conf_med 0.0989 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_00803_jpg.rf.d63e02bb18b0557ad8bec32ec7a3f113.jpg",
+      "level": 0,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6345659494400024,
+      "conf_med": 0.6345659494400024,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_CL11_jpg.rf.d4a9bfa25650be41ddba95435610a08e.jpg",
+      "level": 0,
+      "all_n": 7,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7408703565597534,
+      "conf_med": 0.1884390264749527,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_CL20_jpg.rf.42aa92a9626d616059c8d709c6bb5824.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6082926988601685,
+      "conf_med": 0.1224445067346096,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_CL26_jpg.rf.abaff9dae58b65a498d2b0270bd0c4b7.jpg",
+      "level": 0,
+      "all_n": 7,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8382909297943115,
+      "conf_med": 0.24282176792621613,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_CM31_jpg.rf.33020088c3086b3116b117d7a0a0f184.jpg",
+      "level": 0,
+      "all_n": 40,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8827534317970276,
+      "conf_med": 0.35886602103710175,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_CM45_jpg.rf.32fba92dc2ccaa189497fa9551295670.jpg",
+      "level": 0,
+      "all_n": 9,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8369922041893005,
+      "conf_med": 0.16956105828285217,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_IMG_3628_JPG_jpg.rf.8b76dc066b486bc46f3d5fe3ee8c7eec.jpg",
+      "level": 0,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.3120218515396118,
+      "conf_med": 0.16692352294921875,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_L15_jpg.rf.8d2c59033792983f66d7c7ca0566106e.jpg",
+      "level": 0,
+      "all_n": 16,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.747925341129303,
+      "conf_med": 0.12770136818289757,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_L18_jpg.rf.079a9c0614e056b9a6dcb2bf387111bc.jpg",
+      "level": 0,
+      "all_n": 11,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7707787156105042,
+      "conf_med": 0.5810222625732422,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_L29_jpg.rf.b04c85296d65337e07e0bd798cf6d084.jpg",
+      "level": 0,
+      "all_n": 16,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.646724283695221,
+      "conf_med": 0.13637884706258774,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_L34_jpg.rf.c6f97d0fa48030ea96ec444dafc24b7b.jpg",
+      "level": 0,
+      "all_n": 22,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6672899723052979,
+      "conf_med": 0.11258665099740028,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_L7_jpg.rf.d627f76bc5a1a319f8be1e0dad0562b9.jpg",
+      "level": 0,
+      "all_n": 36,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8514487743377686,
+      "conf_med": 0.14575349539518356,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_rust-1_jpg.rf.e2f3030d6390a5e1f341aa617d4eca09.jpg",
+      "level": 0,
+      "all_n": 20,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.9178829193115234,
+      "conf_med": 0.8557711541652679,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_rust-4_jpg.rf.899a69207200e90cd05268eaca9778fe.jpg",
+      "level": 0,
+      "all_n": 93,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8973815441131592,
+      "conf_med": 0.48132118582725525,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_S19_jpg.rf.ea5c1063a4d2a19c7af7b5acec73567a.jpg",
+      "level": 0,
+      "all_n": 5,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.42338961362838745,
+      "conf_med": 0.20463666319847107,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_S23_jpg.rf.5a828010f1bfbd162687c355507cd442.jpg",
+      "level": 0,
+      "all_n": 20,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8629963994026184,
+      "conf_med": 0.18490707501769066,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_S2_jpg.rf.194e9309b5bc71c6811af56ad509dd5e.jpg",
+      "level": 0,
+      "all_n": 8,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.8130784034729004,
+      "conf_med": 0.10940903797745705,
+      "votes": []
+    },
+    {
+      "file": "urban_yolo_rust_delam__urban_train_S5_jpg.rf.67823b2455597a843277074dbad97658.jpg",
+      "level": 0,
+      "all_n": 13,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7813865542411804,
+      "conf_med": 0.21854175627231598,
+      "votes": []
+    }
+  ],
+  "bfdd_rows": [
+    {
+      "file": "DJI_20250624184211_0001.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184214_0002.jpg",
+      "level": 1,
+      "all_n": 5,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.17427600920200348,
+      "conf_med": 0.12170813977718353,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184242_0008.jpg",
+      "level": 1,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.19818122684955597,
+      "conf_med": 0.16451764106750488,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184250_0010.jpg",
+      "level": 2,
+      "all_n": 4,
+      "n_det": 1,
+      "p_hit_local": 0.0,
+      "conf_max": 0.1328081488609314,
+      "conf_med": 0.0851682610809803,
+      "votes": [
+        "conf_med 0.0852 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184257_0012.jpg",
+      "level": 2,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.0880260020494461,
+      "conf_med": 0.07990343123674393,
+      "votes": [
+        "conf_med 0.0799 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184301_0013.jpg",
+      "level": 0,
+      "all_n": 2,
+      "n_det": 2,
+      "p_hit_local": 0.5,
+      "conf_max": 0.4279259145259857,
+      "conf_med": 0.2557661086320877,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184321_0020.jpg",
+      "level": 2,
+      "all_n": 6,
+      "n_det": 5,
+      "p_hit_local": 0.0,
+      "conf_max": 0.09621366113424301,
+      "conf_med": 0.07838238775730133,
+      "votes": [
+        "conf_med 0.0784 < 0.1（弱票）",
+        "p_hit_local 0.0000 < 0.5957 (n=5)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184347_0026.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184353_0027.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184356_0028.jpg",
+      "level": 1,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.19302485883235931,
+      "conf_med": 0.12691433355212212,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184427_0033.jpg",
+      "level": 0,
+      "all_n": 5,
+      "n_det": 2,
+      "p_hit_local": 0.5,
+      "conf_max": 0.3131954073905945,
+      "conf_med": 0.1421259194612503,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184436_0035.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.36423832178115845,
+      "conf_med": 0.1569315791130066,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184443_0037.jpg",
+      "level": 0,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.7458829283714294,
+      "conf_med": 0.10787439346313477,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184452_0039.jpg",
+      "level": 0,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.2981961965560913,
+      "conf_med": 0.2981961965560913,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184506_0042.jpg",
+      "level": 2,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.1086428239941597,
+      "conf_med": 0.07988659664988518,
+      "votes": [
+        "conf_med 0.0799 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184509_0043.jpg",
+      "level": 2,
+      "all_n": 7,
+      "n_det": 6,
+      "p_hit_local": 0.0,
+      "conf_max": 0.203449085354805,
+      "conf_med": 0.06089918315410614,
+      "votes": [
+        "conf_med 0.0609 < 0.1（弱票）",
+        "p_hit_local 0.0000 < 0.5957 (n=6)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184514_0044.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.22118496894836426,
+      "conf_med": 0.22118496894836426,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184626_0053.jpg",
+      "level": 2,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.24569100141525269,
+      "conf_med": 0.08165442198514938,
+      "votes": [
+        "conf_med 0.0817 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184637_0057.jpg",
+      "level": 1,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.22677253186702728,
+      "conf_med": 0.14093619585037231,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184641_0058.jpg",
+      "level": 2,
+      "all_n": 9,
+      "n_det": 2,
+      "p_hit_local": 0.0,
+      "conf_max": 0.14937904477119446,
+      "conf_med": 0.08370842784643173,
+      "votes": [
+        "conf_med 0.0837 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184703_0064.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184713_0066.jpg",
+      "level": 2,
+      "all_n": 6,
+      "n_det": 1,
+      "p_hit_local": 0.0,
+      "conf_max": 0.18045224249362946,
+      "conf_med": 0.08547543361783028,
+      "votes": [
+        "conf_med 0.0855 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184718_0067.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.17997346818447113,
+      "conf_med": 0.17997346818447113,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184732_0070.jpg",
+      "level": 0,
+      "all_n": 5,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.2686793804168701,
+      "conf_med": 0.1375901699066162,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184745_0074.jpg",
+      "level": 1,
+      "all_n": 7,
+      "n_det": 1,
+      "p_hit_local": 0.0,
+      "conf_max": 0.5938494205474854,
+      "conf_med": 0.09706786274909973,
+      "votes": [
+        "conf_med 0.0971 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184754_0076.jpg",
+      "level": 1,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.16905927658081055,
+      "conf_med": 0.12594859302043915,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184833_0081.jpg",
+      "level": 2,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.0851236954331398,
+      "conf_med": 0.0851236954331398,
+      "votes": [
+        "conf_med 0.0851 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184840_0082.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.11780782788991928,
+      "conf_med": 0.11780782788991928,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184844_0083.jpg",
+      "level": 0,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.3167884349822998,
+      "conf_med": 0.3167884349822998,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184848_0084.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184851_0085.jpg",
+      "level": 1,
+      "all_n": 2,
+      "n_det": 1,
+      "p_hit_local": 0.0,
+      "conf_max": 0.1263124942779541,
+      "conf_med": 0.10110701248049736,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184905_0088.jpg",
+      "level": 2,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.06456827372312546,
+      "conf_med": 0.06456827372312546,
+      "votes": [
+        "conf_med 0.0646 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624184908_0089.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184927_0094.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.12659308314323425,
+      "conf_med": 0.12659308314323425,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184930_0095.jpg",
+      "level": 0,
+      "all_n": 3,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.2515385150909424,
+      "conf_med": 0.12006769329309464,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184941_0096.jpg",
+      "level": 1,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.22805660963058472,
+      "conf_med": 0.1826740726828575,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624184943_0097.jpg",
+      "level": 2,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.08971516042947769,
+      "conf_med": 0.08971516042947769,
+      "votes": [
+        "conf_med 0.0897 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624185022_0102.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624185031_0104.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.14251329004764557,
+      "conf_med": 0.14251329004764557,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624185049_0107.jpg",
+      "level": 0,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.4549618661403656,
+      "conf_med": 0.1885882392525673,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624185103_0109.jpg",
+      "level": 0,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.3488304316997528,
+      "conf_med": 0.20201154053211212,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624185106_0110.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.21841326355934143,
+      "conf_med": 0.21841326355934143,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624185109_0111.jpg",
+      "level": 1,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.36516302824020386,
+      "conf_med": 0.0881456695497036,
+      "votes": [
+        "conf_med 0.0881 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250624185123_0114.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250624185154_0120.jpg",
+      "level": 2,
+      "all_n": 0,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": null,
+      "conf_med": null,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250625180954_0028.jpg",
+      "level": 0,
+      "all_n": 7,
+      "n_det": 2,
+      "p_hit_local": 0.0,
+      "conf_max": 0.29025891423225403,
+      "conf_med": 0.1910460740327835,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250625181016_0030.jpg",
+      "level": 1,
+      "all_n": 6,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6845185160636902,
+      "conf_med": 0.08320486918091774,
+      "votes": [
+        "conf_med 0.0832 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250625181030_0032.jpg",
+      "level": 1,
+      "all_n": 5,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.20500431954860687,
+      "conf_med": 0.17135024070739746,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250625181154_0041.jpg",
+      "level": 1,
+      "all_n": 1,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.18287691473960876,
+      "conf_med": 0.18287691473960876,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250625182301_0092.jpg",
+      "level": 2,
+      "all_n": 31,
+      "n_det": 27,
+      "p_hit_local": 0.0,
+      "conf_max": 0.32778722047805786,
+      "conf_med": 0.08639867603778839,
+      "votes": [
+        "conf_med 0.0864 < 0.1（弱票）",
+        "p_hit_local 0.0000 < 0.5957 (n=27)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250625182311_0094.jpg",
+      "level": 1,
+      "all_n": 20,
+      "n_det": 19,
+      "p_hit_local": 0.05263157894736842,
+      "conf_max": 0.27707651257514954,
+      "conf_med": 0.13656174391508102,
+      "votes": [
+        "p_hit_local 0.0526 < 0.5957 (n=19)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250625183858_0002.jpg",
+      "level": 0,
+      "all_n": 7,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.5306150913238525,
+      "conf_med": 0.1553422510623932,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250625183925_0007.jpg",
+      "level": 1,
+      "all_n": 2,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.13698366284370422,
+      "conf_med": 0.11265901103615761,
+      "votes": []
+    },
+    {
+      "file": "DJI_20250625185848_0055.jpg",
+      "level": 1,
+      "all_n": 11,
+      "n_det": 4,
+      "p_hit_local": 0.0,
+      "conf_max": 0.4202292859554291,
+      "conf_med": 0.10359656065702438,
+      "votes": [
+        "p_hit_local 0.0000 < 0.5957 (n=4)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250625185855_0056.jpg",
+      "level": 1,
+      "all_n": 9,
+      "n_det": 4,
+      "p_hit_local": 0.25,
+      "conf_max": 0.3439328074455261,
+      "conf_med": 0.12241450697183609,
+      "votes": [
+        "p_hit_local 0.2500 < 0.5957 (n=4)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250625185858_0057.jpg",
+      "level": 2,
+      "all_n": 6,
+      "n_det": 6,
+      "p_hit_local": 0.0,
+      "conf_max": 0.2046791911125183,
+      "conf_med": 0.11908885091543198,
+      "votes": [
+        "p_hit_local 0.0000 < 0.5957 (n=6)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250625185914_0061.jpg",
+      "level": 2,
+      "all_n": 16,
+      "n_det": 8,
+      "p_hit_local": 0.125,
+      "conf_max": 0.28905588388442993,
+      "conf_med": 0.09388401359319687,
+      "votes": [
+        "conf_med 0.0939 < 0.1（弱票）",
+        "p_hit_local 0.1250 < 0.5957 (n=8)（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250626182350_0025.jpg",
+      "level": 1,
+      "all_n": 13,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.6251199245452881,
+      "conf_med": 0.0875227078795433,
+      "votes": [
+        "conf_med 0.0875 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250626184213_0117.jpg",
+      "level": 1,
+      "all_n": 4,
+      "n_det": 0,
+      "p_hit_local": null,
+      "conf_max": 0.28497350215911865,
+      "conf_med": 0.06746375188231468,
+      "votes": [
+        "conf_med 0.0675 < 0.1（弱票）"
+      ]
+    },
+    {
+      "file": "DJI_20250626184224_0120.jpg",
+      "level": 2,
+      "all_n": 4,
+      "n_det": 2,
+      "p_hit_local": 0.0,
+      "conf_max": 0.11450649052858353,
+      "conf_med": 0.07087988406419754,
+      "votes": [
+        "conf_med 0.0709 < 0.1（弱票）"
+      ]
+    }
+  ]
+}

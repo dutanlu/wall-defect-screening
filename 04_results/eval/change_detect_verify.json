@@ -1,0 +1,90 @@
+{
+  "ok": true,
+  "policy": {
+    "max_dhash_hamming": 10,
+    "min_inlier_ratio": 0.3,
+    "min_iou_match": 0.3,
+    "min_rel_width_change": 0.2,
+    "gsd_measurable_max": 0.1,
+    "is_prediction": false,
+    "requires_timepoints": 3
+  },
+  "cases": {
+    "A": {
+      "n_t1": 1,
+      "n_t2": 1,
+      "n_paired": 1,
+      "n_new": 0,
+      "n_gone": 0,
+      "n_widened": 1,
+      "n_narrowed": 0,
+      "n_no_change": 0,
+      "measurable": true,
+      "changes": [
+        {
+          "t1_bbox": [
+            300,
+            150,
+            304,
+            330
+          ],
+          "t2_bbox": [
+            300,
+            150,
+            310,
+            330
+          ],
+          "iou": 0.4,
+          "cls_t1": "crack",
+          "cls_t2": "crack",
+          "width_mm_t1": 0.4,
+          "width_mm_t2": 0.65,
+          "width_key_t1": "width_max_mm",
+          "width_key_t2": "width_max_mm",
+          "measurable": true,
+          "delta_mm": 0.25,
+          "rel_change": 0.625,
+          "verdict": "增宽 0.250 mm（+62%）"
+        }
+      ],
+      "new_defects": [],
+      "gone_defects": [],
+      "is_prediction": false,
+      "requires_timepoints": 3,
+      "note": "本结果只描述 T1→T2 的**已发生**变化，不含速率、不含外推、不含失效时间。要谈「演化」需 ≥ 3 个时间点。",
+      "pair_ok": true,
+      "pair_reason": "结构距离 2 ≤ 上界 10，判定为可配对的同一立面区域",
+      "evidence": {
+        "dhash_h1": 11145192073587955626,
+        "dhash_h2": 11145183277562042282,
+        "dhash_hamming": 2
+      },
+      "summary": "**T1 → T2 变化检测**（配对成立：结构距离 2 ≤ 上界 10，判定为可配对的同一立面区域）\n\n| 项 | 值 |\n|---|---|\n| T1 缺陷数 | 1 |\n| T2 缺陷数 | 1 |\n| 成功配对 | 1 |\n| 新增 | 0 |\n| 消失 | 0 |\n| 增宽 | 1 |\n| 变窄 | 0 |\n| 无明显变化 | 0 |\n| 毫米可判读 | 是 |\n\n> 本结果只描述 T1→T2 的**已发生**变化，不含速率、不含外推、不含失效时间。要谈「演化」需 ≥ 3 个时间点。"
+    },
+    "B": {
+      "pair_ok": true,
+      "evidence": {
+        "dhash_h1": 11145187710035662762,
+        "dhash_h2": 11145187710035662762,
+        "dhash_hamming": 0
+      }
+    },
+    "C": {
+      "pair_ok": false,
+      "evidence": {
+        "dhash_h1": 11145187710035662762,
+        "dhash_h2": 12297825808926095018,
+        "dhash_hamming": 16
+      },
+      "changes": null
+    },
+    "D": {
+      "pair_ok": false,
+      "evidence": {
+        "dhash_h1": 11145187710035662762,
+        "dhash_h2": 7505293138069034244,
+        "dhash_hamming": 28
+      }
+    }
+  }
+}

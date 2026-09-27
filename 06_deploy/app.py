@@ -108,11 +108,22 @@ def _find_default_weight() -> Path | None:
 
 
 def get_model(weight_path: str | None = None):
-    """惰性加载并缓存 YOLO 模型。"""
+    """惰性加载并缓存 YOLO 模型。
+
+    ★ 2026-09-27：`weight_path` 为 **空串/纯空白** 时也必须回落到默认权重。
+    此前只判 `is None`，而 Gradio 的 `gr.Textbox` 在**被清空后**提交的是 `""`
+    而不是 `None`；`analyze_video` 又直接把这串透传给 `get_model`
+    ⇒ `YOLO("")` 不报错，但**静默构造出一个 task=detect 的空模型**
+    （日志只有一行 `Unable to automatically guess model task`），
+    随后 `model.predict` 才崩 ⇒ 表面现象是「视频入口必失败」，
+    而真正的入口 `analyze`（单图）因为历史上写了 `weight_path or None` 而幸免。
+    现在把「空即默认」这条规则收口到**本函数**（单一实现），
+    调用方不再各自 `or None`，避免再次漂移。
+    """
     global _MODEL, _MODEL_PATH
     from ultralytics import YOLO
 
-    if weight_path is None:
+    if weight_path is None or not str(weight_path).strip():
         w = _find_default_weight()
         if w is None:
             raise FileNotFoundError(
@@ -534,6 +545,205 @@ def analyze(image_rgb: np.ndarray,
     }
 
     return vis_rgb, render_markdown(payload), _dumps(payload)
+
+
+# --------------------------------------------------------------------------
+# ★ 2026-09-27 新增：**视频**分析（复用 02_code/video_screen.py 的抽帧 + 跨帧聚合）
+# --------------------------------------------------------------------------
+def analyze_video(video_path: str,
+                  calib_mode: str,
+                  calib_object_px: float,
+                  calib_object_mm: float,
+                  brick_pitch_mm: float,
+                  distance_m: float,
+                  focal_mm: float,
+                  env_class: str,
+                  conf_thr: float,
+                  weight_path: str,
+                  rectify_mode: str = "关闭（正对拍摄）",
+                  jgj125_parts: list | None = None,
+                  every_sec: float = 1.0,
+                  max_frames: int = 24):
+    """**视频**入口：抽帧 → 复用单图链路 → 跨帧聚合。
+
+    返回 (代表帧标注图, 结论文档, 原始 JSON)。
+
+    ★ 为什么**不另写一套**算法：逐帧走的是**与单图完全相同**的 `pipeline.run_one`
+      （含全部弃权/判读机制），本函数只负责「抽帧 → 逐帧调用 → 聚合」，
+      聚合逻辑直接 `import video_screen`，**不复制代码**。
+      ⇒ 「视频模式的能力边界」与照片模式**逐条一致**，不会出现两套口径。
+
+    ★ 必须随结论声明的边界（与 CLI 版一致，见报告 §11.8）：
+      ① 视频**不提高**毫米级判读能力 —— 判读门槛由 GSD 决定，与输入是照片还是视频无关；
+      ② 视频的增益是**时间冗余**（逐缺陷取跨帧中位数，压低随机误差）；
+      ③ 逐帧独立标定**不稳定**（实测极差可达 42%）⇒ 逐帧毫米值**不可单独采信**，
+         脚本会输出 calibration_stability 诊断；
+      ④ 本工程内**无真实外墙巡检视频** ⇒ 链路可用性**已自检**，但
+         **不代表已在实拍上验证**。
+    """
+    if not video_path:
+        return None, "### ⛔ 未收到视频\n\n请先上传一段视频（或改用「上传照片」）。", "{}"
+
+    vp = Path(video_path)
+    if not vp.exists():
+        return None, f"### ⛔ 视频文件不存在\n\n`{video_path}`", "{}"
+
+    try:
+        # 复用共享实现：抽帧/聚合/汇总全部来自 video_screen，不复制
+        import video_screen as vs
+        from pipeline import run_one
+
+        model = get_model(weight_path)
+
+        # 参数名与 video_screen CLI 对齐（复用同一套键）
+        args = {
+            "conf": float(conf_thr),
+            "imgsz": "640",
+            "every_sec": float(every_sec),
+            "max_frames": int(max_frames),
+            "distance": float(distance_m),
+            "focal": float(focal_mm),
+            "calib_object_px": (float(calib_object_px)
+                                if float(calib_object_px or 0) > 0 else ""),
+            "calib_object_mm": float(calib_object_mm),
+            "calib_object_name": "A4短边210mm",
+            "calib_brick": (str(calib_mode).startswith("砖缝") ),
+            "brick_pitch_mm": float(brick_pitch_mm),
+            "env": env_class,
+            "env_class": env_class,
+            # 视频入口的逐帧输出目录（不污染单图 vis 目录）
+            "out": str(VIS_DIR / f"video_{vp.stem}"),
+        }
+        if jgj125_parts:
+            args["jgj125"] = ",".join(jgj125_parts)
+        # 斜拍校正：只在非「关闭」时开启（与单图入口口径一致）
+        args["rectify"] = not str(rectify_mode).startswith("关闭")
+
+        ensure_dirs(Path(args["out"]))
+        rec = vs.run_video(vp, model, args, run_one)
+    except Exception:
+        return None, ("### ⛔ 视频处理失败\n\n```\n%s\n```"
+                      % traceback.format_exc()), "{}"
+
+    # ---- 代表帧：取「检出最多」的一帧作为标注图（有则显示，无则回 None）----
+    vis_rgb = None
+    best = None
+    for f in (rec.get("frames") or []):
+        n = f.get("n_detections") or 0
+        if best is None or n > (best.get("n_detections") or 0):
+            best = f
+    if best and best.get("annotated"):
+        try:
+            import cv2
+            from common import imread_u
+            img = imread_u(best["annotated"])
+            if img is not None:
+                vis_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        except Exception:                      # noqa: BLE001
+            vis_rgb = None
+
+    md = _render_video_markdown(rec, vp.name, vis_rgb is not None, best)
+    return vis_rgb, md, _dumps(_video_payload(rec, vp.name))
+
+
+def _video_payload(rec: dict, name: str) -> dict:
+    """把 run_video 的结果裁剪成适合界面 JSON 面板的载荷（去掉大字段）。"""
+    return {
+        "mode": "video",
+        "file": name,
+        "status": rec.get("status"),
+        "video_meta": rec.get("video"),
+        "args": rec.get("args"),
+        "summary": rec.get("summary"),
+        "tracks": rec.get("tracks"),
+        "frames": [{k: v for k, v in f.items() if k != "annotated"}
+                   for f in (rec.get("frames") or [])],
+        "boundary": {
+            "note": ("视频不提高毫米级判读能力；增益为跨帧时间冗余。"
+                     "逐帧标定不稳定，逐帧毫米值不可单独采信。"),
+            "verified": False,
+            "verified_note": ("链路已自检，但本工程内**无真实外墙巡检视频** ⇒ "
+                              "不代表已在实拍上验证。"),
+        },
+    }
+
+
+def _render_video_markdown(rec: dict, name: str, has_vis: bool,
+                           best_frame: dict | None) -> str:
+    """把视频结果渲染成结论文档（Markdown）。"""
+    L: list[str] = []
+    A = L.append
+    st = rec.get("status")
+    meta = rec.get("video") or {}
+    summ = rec.get("summary") or {}
+
+    A("## 视频筛查结果")
+    A("")
+    if st != "ok":
+        A("### ⛔ 视频未能处理")
+        A("")
+        A("原因：`%s`" % (rec.get("reason") or st))
+        return "\n".join(L)
+
+    A("> `%s` · %s×%s · %s fps · %.1f s · 抽帧 %d 张"
+      % (name, meta.get("width"), meta.get("height"), meta.get("fps"),
+         float(meta.get("duration_sec") or 0),
+         len(rec.get("frames") or [])))
+    A("")
+    n_tracks = summ.get("n_tracks", 0)
+    n_multi = summ.get("n_tracks_multi_frame", 0)
+    A("### 聚合结论")
+    A("")
+    A("| 项 | 值 |")
+    A("|---|---|")
+    A("| 缺陷轨迹总数 | **%d** |" % n_tracks)
+    A("| 其中跨多帧稳定出现 | **%d** |" % n_multi)
+    A("| 抽帧数 | %d |" % len(rec.get("frames") or []))
+    if has_vis:
+        A("| 上方标注图 | 取自**检出最多**的一帧 |")
+    A("")
+
+    # 标定稳定性（必须显著呈现：实测会有大抖动）
+    cs = summ.get("calibration_stability") or {}
+    if cs.get("gsd_values"):
+        A("### 尺度标定稳定性")
+        A("")
+        A("| 项 | 值 |")
+        A("|---|---|")
+        A("| 逐帧 GSD | %s |" % ", ".join(str(x) for x in cs["gsd_values"]))
+        A("| 中位 GSD | %s mm/px |" % cs.get("gsd_median"))
+        A("| 极差 | **%s%%** |" % cs.get("gsd_rel_spread_pct"))
+        A("")
+        if not cs.get("stable", True):
+            A("> ⚠️ **%s**" % cs.get("warning", ""))
+            A(">")
+            A("> ⇒ **逐帧毫米值不可单独采信**，只应看跨帧中位数。")
+            A("")
+
+    if summ.get("inconsistent_tracks"):
+        A("### ⚠️ 帧间离散度偏大的缺陷")
+        A("")
+        A("以下 %d 处缺陷在不同帧之间测量值差异过大，"
+          "**不建议采信单帧数值**：" % len(summ["inconsistent_tracks"]))
+        A("")
+        for t in summ["inconsistent_tracks"][:10]:
+            A("- `%s`：帧间离散度 %.1f%%"
+              % (t.get("cls_name") or t.get("cls"), t.get("cv_pct") or 0))
+        A("")
+
+    A("---")
+    A("")
+    A("### ⚠️ 视频模式的能力边界（必须与照片模式一并理解）")
+    A("")
+    A("1. **不提高毫米级判读能力** —— 判读门槛由 GSD 决定，"
+      "与输入是照片还是视频**无关**。")
+    A("2. **增益是时间冗余** —— 逐缺陷取跨帧中位数，降低随机误差。")
+    A("3. **逐帧标定不稳定**（实测极差可达 42%）⇒ 逐帧毫米值**不可单独采信**。")
+    A("4. **本工程内无真实外墙巡检视频** ⇒ 链路可用性**已自检**，"
+      "但**不代表已在实拍上验证**。")
+    A("")
+    A("> 逐帧走的是**与单图完全相同**的链路（含全部弃权/判读机制）。")
+    return "\n".join(L)
 
 
 def _dumps(obj) -> str:
@@ -1142,7 +1352,91 @@ def build_ui():
 
         with gr.Row():
             with gr.Column(scale=1):
-                img_in = gr.Image(label="上传外墙照片", type="numpy")
+                # ★ 2026-09-27：图片 / 视频 双入口（用 Tabs 分流，参数区共用）
+                with gr.Tabs():
+                    with gr.Tab("📷 上传照片"):
+                        img_in = gr.Image(label="上传外墙照片", type="numpy")
+                    with gr.Tab("🎬 上传视频"):
+                        vid_in = gr.Video(
+                            label="上传巡检视频（手机拍摄/无人机均可）",
+                            sources=["upload"],
+                            format=None,
+                        )
+                        gr.Markdown(
+                            "> **视频怎么用**：系统按固定间隔**抽帧**，"
+                            "每帧走**与照片完全相同**的链路，再按缺陷**跨帧取中位数**聚合。\n"
+                            ">\n"
+                            "> ⚠️ 视频**不提高**毫米级判读能力（那由 GSD 决定）；"
+                            "它的价值是**时间冗余**。\n"
+                            "> ⚠️ 逐帧标定不稳定，**逐帧毫米值不可单独采信**。"
+                        )
+                        with gr.Row():
+                            vid_every = gr.Slider(
+                                0.2, 5.0, value=1.0, step=0.1,
+                                label="抽帧间隔（秒）",
+                                info="越大越快，但时间冗余越少。默认 1.0 秒一帧。")
+                            vid_max = gr.Slider(
+                                6, 120, value=24, step=6,
+                                label="最大抽帧数",
+                                info="上限。长视频尤其要设，否则会很慢。")
+                    with gr.Tab("📡 连续实时流"):
+                        # ★ 2026-09-27 新增：真·连续视频流（MJPEG over HTTP）。
+                        # 上一条「📱 手机实时」是**逐张拍照**；本页签指向一个
+                        # **独立的流服务**（06_deploy/live_stream.py），
+                        # 手机浏览器打开后是**连续画面 + 实时叠加识别结果**。
+                        gr.Markdown(
+                            "> **📡 连续实时流（真·边拍边识别）**\n"
+                            ">\n"
+                            "> 与上一个页签的区别：`📱 手机实时` 是**点一下快门传一张**"
+                            "（兼容性最好）；本页签是**连续 MJPEG 视频流**，"
+                            "手机端能看到**实时叠加的检测框**。\n"
+                            ">\n"
+                            "> **它不在本页面里，需要另开一个进程**（避免与本 Web UI "
+                            "争抢显存/内存，也避免两个模型副本）：\n"
+                            ">\n"
+                            "> ```\n"
+                            "> D:\\下载\\python.exe 06_deploy\\live_stream.py --host=0.0.0.0 --port=7861\n"
+                            "> ```\n"
+                            ">\n"
+                            "> 然后在**手机浏览器**打开 `http://<电脑局域网IP>:7861`。\n"
+                            "> 默认视频源是本机摄像头（`--source=0`）；也可指向视频文件或"
+                            "已有 MJPEG 流。\n"
+                            ">\n"
+                            "> ⚠️ **边界**：实时流**不提高**毫米级判读能力（仍由 GSD 决定）；"
+                            "价值是**即时反馈**。逐帧毫米值**不可单独采信**。"
+                            "本工程内**无真实巡检实拍** ⇒ 链路已在合成流上自检，"
+                            "**不代表已在实拍上验证**。"
+                        )
+                    with gr.Tab("📱 手机实时"):
+                        cam_in = gr.Image(
+                            label="手机 / 本机摄像头（拍一张 → 自动识别）",
+                            sources=["webcam"],
+                            type="numpy",
+                        )
+                        gr.Markdown(
+                            "> **📱 手机实时传输怎么用**：\n"
+                            ">\n"
+                            "> 1. 让**手机与电脑连同一个 WiFi**；\n"
+                            "> 2. 电脑端启动时加 `--host=0.0.0.0`（见下方启动命令）；\n"
+                            "> 3. 手机浏览器打开 **电脑的局域网 IP**（如 `http://192.168.1.5:7860`）；\n"
+                            "> 4. 在本页签点「拍照」，画面实时传回电脑**并在服务器端识别**。\n"
+                            ">\n"
+                            "> ⚠️ **边界（必须说清）**：浏览器摄像头是**逐张拍照**回传，"
+                            "**不是**连续视频流 —— 即「手机当无线取景器 + 一次识别一张」。\n"
+                            "> 真正的**连续实时视频流**见下方「实时视频流」一节。"
+                        )
+                        with gr.Accordion("🌐 怎么拿到手机要打开的那个网址", open=False):
+                            gr.Markdown(
+                                "在本机终端执行以下命令拿到局域网 IP：\n"
+                                "```\n"
+                                "ipconfig | findstr IPv4\n"
+                                "```\n"
+                                "然后把 `http://<那个IP>:7860` 输进手机浏览器。\n"
+                                "\n"
+                                "⚠️ 若手机打不开，通常是 **Windows 防火墙**拦了 7860 端口：\n"
+                                "控制面板 → Windows Defender 防火墙 → 允许应用通过防火墙 → "
+                                "勾选 Python。"
+                            )
                 with gr.Accordion("尺度标定（决定能不能测毫米）", open=True):
                     gr.Markdown(
                         "**下面三种标定方式只用一种。** 只有你选中的那种，才用得上它对应的"
@@ -1218,6 +1512,7 @@ def build_ui():
                                          label="检测置信度阈值")
                     weight_path = gr.Textbox(value=default_w_str, label="模型权重路径")
                 btn = gr.Button("开始分析", variant="primary", size="lg")
+                btn_vid = gr.Button("开始分析（视频）", variant="secondary", size="lg")
 
             with gr.Column(scale=1):
                 img_out = gr.Image(label="标注结果")
@@ -1230,11 +1525,31 @@ def build_ui():
         #    历史上这里曾把末尾四项写成 jgj125_parts/conf_thr/weight_path/rectify_mode，
         #    导致 weight_path 收到 0.25、rectify_mode 收到权重路径字符串（每张图被误触发正射校正）。
         #    改动本行前请先跑 logs/_verify_app_inputs.py 的签名对齐断言。
+        SHARED = [calib_mode, calib_object_px, calib_object_mm,
+                  brick_pitch_mm, distance_m, focal_mm, env_class,
+                  conf_thr, weight_path, rectify_mode, jgj125_parts]
+
+        # ---- ① 照片入口（原有行为，逐字节不变）----
         btn.click(
             fn=analyze,
-            inputs=[img_in, calib_mode, calib_object_px, calib_object_mm,
-                    brick_pitch_mm, distance_m, focal_mm, env_class,
-                    conf_thr, weight_path, rectify_mode, jgj125_parts],
+            inputs=[img_in] + SHARED,
+            outputs=[img_out, md_out, json_out],
+        )
+
+        # ---- ② 视频入口（★ 新增）----
+        # ⚠️ analyze_video 的形参顺序 = video_path + SHARED + every_sec + max_frames
+        btn_vid.click(
+            fn=analyze_video,
+            inputs=[vid_in] + SHARED + [vid_every, vid_max],
+            outputs=[img_out, md_out, json_out],
+        )
+
+        # ---- ③ 手机/摄像头「拍照即识别」入口（★ 新增）----
+        # 手机端拍照后自动触发分析（不需要再点按钮）；
+        # 本机摄像头同理。用的是**同一个** analyze()，口径完全一致。
+        cam_in.change(
+            fn=analyze,
+            inputs=[cam_in] + SHARED,
             outputs=[img_out, md_out, json_out],
         )
 
@@ -1264,6 +1579,14 @@ def main() -> None:
 
     port = int(_arg("port", "7860"))
     share = "--share" in sys.argv[1:]
+    # ★ 2026-09-27：手机访问需要绑定到 0.0.0.0（局域网可达）。
+    #   默认仍是 127.0.0.1（安全，只本机），加了 --host=0.0.0.0 才对外。
+    host = _arg("host", "127.0.0.1")
+    # Gradio 默认会拦掉非 localhost 的请求（防 SSRF/CSRF），
+    # 手机访问必须显式放行局域网来源。
+    allow_origins = None
+    if host not in ("127.0.0.1", "localhost"):
+        allow_origins = ["*"]
 
     ensure_dirs(VIS_DIR)
     w = _find_default_weight()
@@ -1279,17 +1602,24 @@ def main() -> None:
 
     demo = build_ui()
     _blocks_kwargs, launch_style = _theme_and_style(gr)
-    log(f"启动 Web 界面: http://127.0.0.1:{port}")
+    log(f"启动 Web 界面: http://{host}:{port}")
+    if host not in ("127.0.0.1", "localhost"):
+        log("📱 手机/其它设备访问：把下面的 IP 换成**本机局域网 IP**后输进手机浏览器")
+        log("   查本机 IP：  ipconfig | findstr IPv4")
+        log("   ⚠️ 若手机打不开，检查 Windows 防火墙是否放行了 Python / %d 端口" % port)
     log(f"视觉主题传参位置: {'launch()（Gradio 6+）' if launch_style else 'Blocks()（Gradio 5-）'}")
+
+    launch_kw = dict(server_name=host, server_port=port, share=share,
+                     show_error=True)
+    if allow_origins:
+        launch_kw["allowed_paths"] = None
     try:
-        demo.launch(server_name="127.0.0.1", server_port=port, share=share,
-                    show_error=True, **launch_style)
+        demo.launch(**launch_kw, **launch_style)
     except TypeError:
         # 万一某个版本的 launch() 不接受这些参数，退回到无主题启动，
         # 而不是让整个演示起不来。宁可朴素，不可打不开。
         log("!! launch() 不接受主题参数，改用默认外观启动")
-        demo.launch(server_name="127.0.0.1", server_port=port, share=share,
-                    show_error=True)
+        demo.launch(**launch_kw)
     except Exception:
         log("启动失败:")
         log(traceback.format_exc())
