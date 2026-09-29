@@ -115,7 +115,7 @@ class Track:
         """产出聚合结论：中位数 + 离散度 + 一致性判定。"""
         def med(xs: list[float]) -> float:
             xs = [x for x in xs if x == x and abs(x) < 1e12]   # 去 NaN/inf
-            return round(statistics.fmean(xs), 3) if xs else 0.0
+            return round(statistics.median(xs), 3) if xs else 0.0
 
         def cv(xs: list[float]) -> float:
             xs = [x for x in xs if x == x and abs(x) < 1e12]

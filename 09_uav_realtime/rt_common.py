@@ -55,6 +55,7 @@ else:
 from common import (  # noqa: E402
     CLASSES,
     CLASS_CN,
+    CLASS_COLORS,
     imwrite_u,
     log,
     default_weight,
@@ -385,12 +386,6 @@ def draw_cn_overlay(bgr: np.ndarray, texts: list[tuple[str, tuple[int, int, int]
 
 # 与 pipeline.py 完全相同的 7 类色板（BGR）。★ 新增类别必须同步这里，
 # 否则 .get 会静默回退成裂缝红 —— 6→7 类扩容时真实漏过一次。
-CLASS_COLORS = {
-    "crack": (0, 0, 255), "spalling": (0, 140, 255),
-    "efflorescence": (180, 120, 0), "exposed_rebar": (255, 0, 180),
-    "rust": (0, 100, 255), "delamination": (0, 200, 100),
-    "moss": (60, 180, 75),
-}
 
 
 def class_color(cls_name: str):

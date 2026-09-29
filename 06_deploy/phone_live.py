@@ -936,6 +936,9 @@ def build_app(args: dict, *, interval_ms: int = DEFAULT_INTERVAL_MS,
           **不要**改成 `body: bytes = Body(...)`（同样会被注解字符串化坑）。
         """
         body = await request.body()
+        # 2026-09-29 安全加固（#7）：帧大小上限（DoS 防护）。JPEG 帧远小于 2MB。
+        if len(body) > 2 * 1024 * 1024:
+            return JSONResponse({"ok": False, "msg": "帧过大"}, status_code=413)
         if not body:
             return JSONResponse({"ok": False, "msg": "空帧"}, status_code=400)
         cid = analyzer.norm_client(client)
@@ -1062,19 +1065,19 @@ def main() -> int:
     from common import default_weight
     w = default_weight("v11s640")
     base = _HERE.parent
-    args = {
-        "calib_mode": "相机参数估算（最粗）",
-        "calib_object_px": 0.0,
-        "calib_object_mm": 210.0,
-        "brick_pitch_mm": 250.0,
-        "distance_m": 20.0,
-        "focal_mm": 24.0,
-        "env_class": "二类环境（露天/潮湿）",
-        "conf_thr": 0.25,
-        "weight_path": str(w) if w else "",
-        "rectify_mode": "关闭（正对拍摄）",
-        "jgj125_parts": None,
-    }
+    from deploy_args import build_run_one_args
+    # ★ 2026-09-29（#4）：args 键名统一走 deploy_args.build_run_one_args（修 11 键错 7）。
+    args = build_run_one_args(
+        calib_mode="相机参数估算（最粗）",
+        calib_object_px=0.0, calib_object_mm=210.0,
+        brick_pitch_mm=250.0,
+        distance_m=20.0, focal_mm=24.0,
+        env_class="二类环境（露天/潮湿）",
+        conf_thr=0.25,
+        rectify_mode="关闭（正对拍摄）",
+        jgj125_parts=None,
+    )
+    args["weight_path"] = str(w) if w else ""
 
     scheme = "https" if use_ssl else "http"
     print("=" * 72)

@@ -43,6 +43,7 @@ import numpy as np
 
 from common import (
     CLASSES,
+    CLASS_COLORS,
     EVAL_DIR,
     RESULT_DIR,
     VIS_DIR,
@@ -299,12 +300,7 @@ def run_one(image_path: Path, model, args: dict, image=None) -> dict:
     # 泛碱蓝、锈迹深橙），便于报告里一眼分辨。
     # ⚠️ 每新增一类必须同步补这里，否则 .get 会静默回退成裂缝红，
     #    导致报告配图把苔藓画成裂缝 —— 6→7 类扩容时已实际漏过一次。
-    colors = {
-        "crack": (0, 0, 255), "spalling": (0, 140, 255),
-        "efflorescence": (180, 120, 0), "exposed_rebar": (255, 0, 180),
-        "rust": (0, 100, 255), "delamination": (0, 200, 100),
-        "moss": (60, 180, 75),          # 苔藓：绿色系（生物附着）
-    }
+    colors = CLASS_COLORS
     for m in measurements:
         sev = "ok"
         for g in grades:
@@ -418,7 +414,7 @@ def compare_pair(img1_path, img2_path, model, args: dict | None = None) -> dict:
     def _dets(r: dict) -> list:
         out = []
         for m in r.get("measurements", []):
-            d = {"bbox_xyxy": list(m["bbox_xyxy"]), "cls": m.get("cls_name")}
+            d = {"bbox_xyxy": list(m["bbox_xyxy"]), "cls_name": m.get("cls_name")}
             for k in ("width_max_mm", "width_mean_mm"):
                 if m.get(k) is not None:
                     d[k] = m[k]

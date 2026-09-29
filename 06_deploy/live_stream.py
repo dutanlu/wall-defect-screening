@@ -301,20 +301,23 @@ def _load_default_args() -> dict:
     所以任何口径变更都必须改 `pipeline`/`common`，不能在本文件分叉。
     """
     from common import default_weight
+    from deploy_args import build_run_one_args
     w = default_weight("v11s640")
-    return {
-        "calib_mode": "相机参数估算（最粗）",
-        "calib_object_px": 0.0,
-        "calib_object_mm": 210.0,
-        "brick_pitch_mm": 250.0,
-        "distance_m": 20.0,
-        "focal_mm": 24.0,
-        "env_class": "二类环境（露天/潮湿）",
-        "conf_thr": 0.25,
-        "weight_path": str(w) if w else "",
-        "rectify_mode": "关闭（正对拍摄）",
-        "jgj125_parts": None,
-    }
+    # ★ 2026-09-29（#4）：args 键名统一走 deploy_args.build_run_one_args ——
+    #   此前这里用 analyze() 的形参名（distance_m/focal_mm/env_class/conf_thr/rectify_mode/jgj125_parts）
+    #   喂 run_one，11 键错 7（jgj125 恒失效）。统一映射后有白名单校验，不再静默落空。
+    args = build_run_one_args(
+        calib_mode="相机参数估算（最粗）",
+        calib_object_px=0.0, calib_object_mm=210.0,
+        brick_pitch_mm=250.0,
+        distance_m=20.0, focal_mm=24.0,
+        env_class="二类环境（露天/潮湿）",
+        conf_thr=0.25,
+        rectify_mode="关闭（正对拍摄）",
+        jgj125_parts=None,
+    )
+    args["weight_path"] = str(w) if w else ""   # 模型路径单独携带（run_one 忽略多余键）
+    return args
 
 
 def draw_overlay(bgr, res: dict, *, latency_ms: float, fps: float,
@@ -342,6 +345,7 @@ def draw_overlay(bgr, res: dict, *, latency_ms: float, fps: float,
                          interpolation=cv2.INTER_AREA)
 
     meas = (res or {}).get("measurements") or []
+    from common import CLASS_COLORS  # 2026-09-29 调色板收口（#8）：按类上色
     n = 0
     for m in meas:
         xyxy = m.get("bbox_xyxy")
@@ -351,10 +355,11 @@ def draw_overlay(bgr, res: dict, *, latency_ms: float, fps: float,
         name = m.get("cls_name") or "?"
         conf = m.get("conf")
         lbl = "%s %.2f" % (name, conf) if isinstance(conf, (int, float)) else str(name)
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+        _col = CLASS_COLORS.get(name, (0, 0, 255))
+        cv2.rectangle(img, (x1, y1), (x2, y2), _col, 2)
         (tw, th), _ = cv2.getTextSize(lbl, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
         cv2.rectangle(img, (x1, max(0, y1 - th - 6)), (x1 + tw + 4, y1),
-                      (0, 0, 255), -1)
+                      _col, -1)
         cv2.putText(img, lbl, (x1 + 2, max(10, y1 - 4)),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1,
                     cv2.LINE_AA)

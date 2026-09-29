@@ -110,6 +110,16 @@ CLASSES: list[str] = [
     "moss",           # 苔藓 / 生物附着  ← 2026-09-20 新增
 ]
 CLASS_TO_ID: dict[str, int] = {c: i for i, c in enumerate(CLASSES)}
+
+# 7 类缺陷的可视化调色板（BGR），全工程**单一真源**。
+# pipeline / app / rt_common / live_stream 一律引用这里 —— 新增类别只改这一处
+#（6→7 类扩容时曾因多处拷贝漏改过一次）。
+CLASS_COLORS: dict[str, tuple[int, int, int]] = {
+    "crack": (0, 0, 255), "spalling": (0, 140, 255),
+    "efflorescence": (180, 120, 0), "exposed_rebar": (255, 0, 180),
+    "rust": (0, 100, 255), "delamination": (0, 200, 100),
+    "moss": (60, 180, 75),
+}
 CLASS_CN: dict[str, str] = {
     "crack": "裂缝",
     "spalling": "剥落缺失",

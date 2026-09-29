@@ -57,6 +57,7 @@ import numpy as np                                    # noqa: E402
 from common import (                                  # noqa: E402
     CLASS_CN,
     CLASSES,
+    CLASS_COLORS,
     TRAIN_DIR,
     VIS_DIR,
     WEIGHTS_DIR,
@@ -137,6 +138,12 @@ def get_model(weight_path: str | None = None):
     if _MODEL is not None and _MODEL_PATH == weight_path:
         return _MODEL
 
+    # 2026-09-29 安全加固（#7）：权重路径只允许工程根内，
+    # 防 --share / 0.0.0.0 下远程访客让服务端加载任意路径（torch.load 反序列化面）。
+    try:
+        Path(weight_path).resolve().relative_to(DEPLOY_DIR.parent)
+    except ValueError:
+        raise ValueError("权重路径必须在工程根内：%s" % weight_path)
     log(f"加载模型: {weight_path}")
     _MODEL = YOLO(weight_path)
     _MODEL_PATH = weight_path
@@ -246,6 +253,9 @@ def decide_next_step(px_on: float, px_hi: float | None) -> dict:
             "domain": "合成域参数化边界"}
 
 
+from deploy_args import jgj125_to_ids as _jgj125_to_ids  # noqa: E402  # 2026-09-29 归位 deploy_args（#4）
+
+
 def analyze(image_rgb: np.ndarray,
             calib_mode: str,
             calib_object_px: float,
@@ -296,6 +306,14 @@ def analyze(image_rgb: np.ndarray,
 
     # Gradio 给的是 RGB，管线内部统一 BGR
     img = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
+    # 2026-09-29 安全加固（#7）：病态超大图直接拒绝（防单请求 OOM）。
+    #   阈值 200MP：普通手机照片（≤48MP）远小于此，只有病态大图才触发。
+    _MAX_PX = 200_000_000
+    if img.shape[0] * img.shape[1] > _MAX_PX:
+        return None, ("### ⛔ 图像过大\n\n分辨率 **%d×%d**（%.0f MP）超过上限 %d MP。\n\n"
+                      "请用小尺寸/裁剪后的照片。"
+                      % (img.shape[1], img.shape[0], img.shape[0] * img.shape[1] / 1e6,
+                         _MAX_PX / 1e6)), "{}"
     h, w = img.shape[:2]
 
     # ---- 0) 可选：斜拍正射校正 ----
@@ -472,12 +490,7 @@ def analyze(image_rgb: np.ndarray,
     # risk 直接复用，不再在本地重算一遍（避免第二处口径）。
 
     # ---- 6) 画图 ----
-    colors = {
-        "crack": (0, 0, 255), "spalling": (0, 140, 255),
-        "efflorescence": (180, 120, 0), "exposed_rebar": (255, 0, 180),
-        "rust": (0, 100, 255), "delamination": (0, 200, 100),
-        "moss": (60, 180, 75),
-    }
+    colors = CLASS_COLORS
     vis = img.copy()
     for m in measurements:
         sev = "ok"
@@ -634,7 +647,7 @@ def analyze_video(video_path: str,
                                  % (vp.stem, uuid.uuid4().hex[:8]))),
         }
         if jgj125_parts:
-            args["jgj125"] = ",".join(jgj125_parts)
+            args["jgj125"] = ",".join(_jgj125_to_ids(jgj125_parts))
         # 斜拍校正：只在非「关闭」时开启（与单图入口口径一致）
         args["rectify"] = not str(rectify_mode).startswith("关闭")
 
@@ -750,8 +763,13 @@ def batch_analyze(src_mode: str,
         if not raw:
             return _fail("### ⛔ 未填目录\n\n请填写**运行本服务这台电脑**上的图片目录绝对路径。")
         p = Path(raw)
-        if not p.exists():
-            return _fail("### ⛔ 目录不存在\n\n`%s`\n\n"
+        # 2026-09-29 安全加固（#7）：服务端路径只允许工程根内，
+        #   防 --share / 0.0.0.0 下远程访客枚举服务器任意目录。
+        try:
+            p.resolve().relative_to(DEPLOY_DIR.parent)
+        except ValueError:
+            return _fail("### ⛔ 路径越界\n\n只允许**本工程目录内**的图片目录。\n\n`%s`" % raw)
+        if not p.exists():            return _fail("### ⛔ 目录不存在\n\n`%s`\n\n"
                          "⚠️ 这里填的是**运行本服务这台电脑**上的路径；"
                          "若图片在你自己电脑上，请改用「浏览器上传」。" % raw)
         if not p.is_dir():

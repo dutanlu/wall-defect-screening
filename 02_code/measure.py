@@ -114,9 +114,13 @@ def segment_defect(roi: np.ndarray, cls_name: str) -> tuple[np.ndarray, str]:
         # 块状：用「与局部中值之差的绝对值」作响应，
         # 中值滤波核取短边 1/8，能突出成片异常区域
         ks = max(9, (min(roi.shape[:2]) // 8) | 1)
-        med = cv2.medianBlur(enh, min(ks, 31) if ks <= 31 else 31)
+        # ★ 核被 OpenCV 静默截断到 31 ⇒ 记录必须用**实际使用的核**，否则
+        #   下游 m.ks（从 method 串正则取出）会比真实核大，
+        #   window_ok 的上界 ks−1 就会失真（2026-09-29 审查 H3 修复）。
+        ks_used = min(ks, 31)
+        med = cv2.medianBlur(enh, ks_used)
         resp = cv2.absdiff(enh, med)
-        method = f"meddev{ks}+otsu"
+        method = f"meddev{ks_used}+otsu"
 
     # Otsu 全局阈值：自动定位响应分布的分离点
     resp_n = cv2.normalize(resp, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)

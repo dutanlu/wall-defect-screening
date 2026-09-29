@@ -121,6 +121,10 @@ desktop.ini
 .workbuddy/
 .genie
 
+# ---------- 自签名 HTTPS 证书（私钥绝不入库；由 logs/_make_selfsigned_cert.py 现场生成）----------
+*.pem
+_cert/
+
 # ---------- 多种子方差统计：三种子跑齐前是占位产物 ----------
 # _multiseed_variance.py 会逐次覆盖它。只有 seeds 里 123/2024 都为非 null 时
 # 才是有意义的结论文件，届时再手动 `git add -f` 纳入。
