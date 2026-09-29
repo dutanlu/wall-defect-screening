@@ -19,12 +19,18 @@ measure.py —— 缺陷几何量化（YOLO 之后的那一半：OpenCV 负责�
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, asdict
 
 import cv2
 import numpy as np
 
 from gsd import Calibration, MIN_RELIABLE_PX
+
+# ★ 2026-09-28：分割方法名 → 形态学核尺寸 ks 的**单一来源**。
+#   空掩膜早退路径与主路径**必须共用**它，否则两处会各自漂移
+#   （原实现把正则内联在主路径里，导致早退路径根本拿不到 ks）。
+_KS_RE = re.compile(r"(?:blackhat|meddev)(\d+)")
 
 
 @dataclass
@@ -55,7 +61,7 @@ class Measurement:
     #   实测（logs/_RISK_COVERAGE.md）：单侧判据下 risk 达 **60.7%**，
     #   补上上界后降到 **29.2%**。故把可用性判定**逐实例**记下来、交给上层拒答。
     ks: int = 0                    # 本实例实际使用的形态学核尺寸
-    window_ok: bool = True         # 尺寸是否落在可靠区间 [MIN_RELIABLE_PX, ks−1]
+    window_ok: bool = False        # 尺寸是否落在可靠区间；默认 False——任何漏赋值处不得静默"合格"
     window_note: str = ""          # 越界原因（供界面/JSON 直接展示）
 
     def to_dict(self) -> dict:
@@ -568,8 +574,22 @@ def measure_instance(image: np.ndarray, bbox_xyxy, cls_name: str,
     roi = image[y1:y2, x1:x2]
     mask, method = segment_defect(roi, cls_name)
     if cv2.countNonZero(mask) == 0:
+        # ★ 2026-09-28 修（真 Bug）：空掩膜是**彻底失败**，必须与其它越界情形一样被拦。
+        #   原先这里直接构造 Measurement ⇒ `ks`/`window_ok` 取 dataclass 默认值
+        #   （`ks=0`、**`window_ok=True`=「几何合格」**），而下面的 window_ok 自检块
+        #   （含 `_px<=0 ⇒ window_ok=False` 那条）因本行提前 return 而**不可达**
+        #   ⇒ 作者意图与实现对不上。
+        #   实测后果：真实数据 6/292 个块状实例是空掩膜、6/6 被报成
+        #   `window_ok=True`/`note=''`；而 grade 用 area_ratio=0 定级 ⇒
+        #   `spalling`/`efflorescence` 得到 `severity="ok"`，且 grade.py 的
+        #   弃权判据因 window_ok=True 不触发 ⇒ 「测不了」被当成「没问题」
+        #   ——正是 §9 声明的最危险误报。
+        _mk0 = _KS_RE.search(method or "")
         return Measurement(cls_name=cls_name, bbox_xyxy=(x1, y1, x2, y2),
-                           method=method + "(empty)")
+                           method=method + "(empty)",
+                           ks=(int(_mk0.group(1)) if _mk0 else 0),
+                           window_ok=False,
+                           window_note="分割未得到任何前景（空掩膜）")
 
     mmpp = calib.mm_per_px
     m = Measurement(cls_name=cls_name, bbox_xyxy=(x1, y1, x2, y2), method=method)
@@ -596,8 +616,8 @@ def measure_instance(image: np.ndarray, bbox_xyxy, cls_name: str,
     # ---- 测量窗口可用性自检（2026-09-23 新增；同日经功能实测修正）----------
     # ks 直接来自分割方法名（`blackhat{ks}+otsu` / `meddev{ks}+otsu`），
     # 因此**不必改动任何分割逻辑**就能拿到像素上界。
-    import re as _re
-    _mk = _re.search(r"(?:blackhat|meddev)(\d+)", m.method or "")
+    # ★ 正则已提为模块级 `_KS_RE`（与空掩膜早退路径**共用同一来源**，避免两处漂移）。
+    _mk = _KS_RE.search(m.method or "")
     m.ks = int(_mk.group(1)) if _mk else 0
     _px = float(m.width_max_px if cls_name in ("crack", "exposed_rebar", "rust")
                 else m.equiv_diameter_px)

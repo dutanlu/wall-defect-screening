@@ -64,13 +64,32 @@ import time
 import threading
 import traceback
 from pathlib import Path
+# ★ 必须**模块级**导入：本文件有 `from __future__ import annotations`，
+#   于是注解全是字符串，FastAPI 会在**模块命名空间**里 eval 它们
+#   （`str | None` 能解析，但 `Optional[str]` 需要 `Optional` 可见）。
+#   ⚠️ 函数内 import 会让部分版本 FastAPI 解析失败 ⇒ 路由返 422。
+from typing import Optional
 
 # ---------------------------------------------------------------------------
 # 路径：允许从任意 cwd 直接跑本脚本
 # ---------------------------------------------------------------------------
 _HERE = Path(__file__).resolve().parent
 _ROOT = _HERE.parent
-for _p in (str(_ROOT / "02_code"), str(_HERE)):
+# ★★ 两套目录布局都要兼容（2026-09-27 踩到，与 phone_live.py 同因）：
+#   源目录 : `<root>/06_deploy/live_stream.py`  → 代码在 `<root>/02_code/`
+#   交付包 : `<pack>/deploy/live_stream.py`     → 代码在 `<pack>/code/`
+#   （交付包重命名了目录，见 `logs/_copy_delivery_pack.py`。）
+#   ⇒ 只写 `_ROOT / "02_code"` 会让**包内启动 ModuleNotFoundError**，
+#     而 `_pack_vs_src.py` 的 md5 一致性核对**看不见**这个问题。
+_CAND_CODE_DIRS = ("02_code", "code")
+_CODE_DIR = None
+for _n in _CAND_CODE_DIRS:
+    if (_ROOT / _n).is_dir():
+        _CODE_DIR = _ROOT / _n
+        break
+if _CODE_DIR is None:
+    _CODE_DIR = _ROOT / _CAND_CODE_DIRS[0]
+for _p in (str(_CODE_DIR), str(_HERE)):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
@@ -84,7 +103,20 @@ class StreamState:
     为什么需要它：MJPEG 的每个 HTTP 客户端请求都要独立持续读同一份
     最新画面（多个手机/多个标签页会并发），所以不能是「一读就消费」的队列，
     必须是**可重复读**的「最新值」。用双缓冲 + 锁实现。
+
+    ★ `fps` 是**滑动窗口**（2026-09-27 修）：
+      旧实现是 `self._frames / (time.time() - self._t0)`，而 `_t0` 只在
+      `reset()` 时更新 ⇒ 那是**从启动至今的累计平均**。后果（真机实测证据）：
+      录屏里 HUD 长期显示 **`0.01 帧/秒`**，而端到端真值是 3.333 fps
+      —— 低报约 300 倍，且几乎不动。
+      累计平均会把「当前是否卡顿」这个信息完全抹掉：卡过一分钟之后，
+      后面恢复了数字也爬不回来。
+      ⇒ 改为记录最近 `_WINDOW_S` 秒内的 `(t, seq)` 采样，用首末差分算瞬时值。
+        这样既反映当前状态，又天然平滑掉单帧抖动。
     """
+
+    _WINDOW_S = 3.0          # 滑动窗口长度（秒）
+    _MAX_SAMPLES = 256       # 采样上限（约 24fps × 3s 的 3 倍余量）
 
     def __init__(self) -> None:
         self._lock = threading.Lock()
@@ -93,6 +125,7 @@ class StreamState:
         self._info: dict = {}
         self._t0 = time.time()
         self._frames = 0
+        self._samples: list[tuple[float, int]] = []   # [(t, seq), ...]
 
     def put(self, jpeg: bytes, info: dict) -> None:
         with self._lock:
@@ -100,6 +133,12 @@ class StreamState:
             self._seq += 1
             self._info = info
             self._frames += 1
+            now = time.time()
+            self._samples.append((now, self._seq))
+            # 丢弃窗口外的旧样本（保内存恒定）
+            cut = now - self._WINDOW_S
+            if len(self._samples) > self._MAX_SAMPLES:
+                self._samples = [s for s in self._samples if s[0] >= cut]
 
     def get(self) -> tuple[bytes | None, int, dict]:
         with self._lock:
@@ -107,8 +146,33 @@ class StreamState:
 
     @property
     def fps(self) -> float:
-        dt = time.time() - self._t0
-        return (self._frames / dt) if dt > 0 else 0.0
+        """最近 `_WINDOW_S` 秒的滑动平均帧率（**不是**累计平均）。
+
+        ★ 边界：若窗口内样本不足两点，**看最后一帧距今多久** ——
+          已超过窗口 ⇒ 说明链路停了，返回 0（而不是拿两个旧样本硬算）。
+          （这个 bug 是自测抓出来的：停帧 3.2s 后旧实现仍返回 39.21。）
+        """
+        with self._lock:
+            if len(self._samples) < 2:
+                return 0.0
+            now = time.time()
+            cut = now - self._WINDOW_S
+            win = [s for s in self._samples if s[0] >= cut]
+            if len(win) < 2:
+                # 最后一帧已超出窗口 ⇒ 视为停帧
+                if now - self._samples[-1][0] > self._WINDOW_S:
+                    return 0.0
+                win = self._samples[-2:]        # 刚开始跑，样本还少
+            dt = win[-1][0] - win[0][0]
+            dseq = win[-1][1] - win[0][1]
+            return (dseq / dt) if dt > 0 else 0.0
+
+    @property
+    def fps_total(self) -> float:
+        """累计平均帧率（自启动至今）—— 与 `fps` 口径不同，**仅供对照**。"""
+        with self._lock:
+            dt = time.time() - self._t0
+            return (self._frames / dt) if dt > 0 else 0.0
 
     def reset(self) -> None:
         with self._lock:
@@ -117,9 +181,101 @@ class StreamState:
             self._info = {}
             self._t0 = time.time()
             self._frames = 0
+            self._samples = []
 
 
-STATE = StreamState()
+class StateRegistry:
+    """每路一个 `StreamState`；**不传 client_id 的旧调用落「默认路」**。
+
+    ★ 为什么需要它（这是**修缺陷**，不是加功能）：
+      改造前只有一个 `StreamState`，它的 `_jpeg` 只有**一个**槽。
+      多台手机（或多个标签页）同时推流时，A 的帧与 B 的帧会**交替写进同一槽**
+      ⇒ 每个观看端看到的都是**混合了别人的画面**。这不是「变慢」，是
+      **结果错乱**，会让人看错结论。
+      根因是「状态只写了一份」，与算力无关。
+
+    ★ 为什么必须保留「默认路」（键 = `""`）：
+      `phone_live.py` 有 `from live_stream import STATE, ...`；旧手机页 JS 也
+      不带任何 client 参数。保留默认路 ⇒ **旧调用逐字节等价、改造零破坏**。
+
+    ★ `max_clients` 的口径（写清楚，避免歧义）：
+      它只数**具名路**（不含默认路）。默认路**永远存在**。
+      `max_clients=4` ⇒ 最多 4 个具名客户端 + 1 条默认路 = 5 个状态槽。
+      这个上限是**安全阀**，不是算力结论 —— 真正的并发路数由实测决定。
+
+    ★ 超限时**降级到默认路**并**计数**（`n_degraded`，经 `/status` 暴露）：
+      不新建槽、不抛异常、**也不静默** —— 让「有人被降级了」看得见。
+    """
+
+    DEFAULT = ""                       # 兼容键：旧调用（不传 id）落这一路
+
+    def __init__(self, max_clients: int = 4) -> None:
+        self._lock = threading.Lock()
+        self._states: dict[str, StreamState] = {self.DEFAULT: StreamState()}
+        self.max_clients = int(max_clients)
+        self.n_degraded = 0            # 超限降级次数（可见，不静默）
+
+    def _key(self, client_id) -> str:
+        """归一 client_id：None/空串/纯空白 ⇒ 默认路。"""
+        return (str(client_id).strip() if client_id else "") or self.DEFAULT
+
+    def get_state(self, client_id=None) -> StreamState:
+        k = self._key(client_id)
+        if k == self.DEFAULT:
+            return self._states[self.DEFAULT]
+        with self._lock:
+            st = self._states.get(k)
+            if st is not None:
+                return st
+            # 具名路已满 ⇒ 降级到默认路（计数，不静默）
+            if (len(self._states) - 1) >= self.max_clients:
+                self.n_degraded += 1
+                return self._states[self.DEFAULT]
+            st = StreamState()
+            self._states[k] = st
+            return st
+
+    def clients(self) -> list[str]:
+        """当前所有路的键（含默认路，默认路显示为 `"<default>"`）。"""
+        with self._lock:
+            keys = sorted(self._states)
+        return ["<default>" if k == self.DEFAULT else k for k in keys]
+
+    def per_client(self) -> dict:
+        """逐路统计（供 `/status` 暴露；默认路以 `"<default>"` 为键）。"""
+        with self._lock:
+            items = list(self._states.items())
+        out = {}
+        for k, st in items:
+            jpeg, seq, _ = st.get()
+            out["<default>" if k == self.DEFAULT else k] = {
+                "seq": seq,
+                "fps": round(st.fps, 2),
+                "has_frame": jpeg is not None,
+            }
+        return out
+
+
+# ★ 安全阀取 4（= 最多 4 个具名客户端）。默认路不计入。
+REG = StateRegistry(max_clients=4)
+
+
+class _DefaultStateProxy:
+    """把 `STATE.<任意属性>` 转发到**默认路**的 `StreamState`。
+
+    ★ 为什么用代理而不是 `STATE = REG.get_state(None)`：
+      后者在**导入时**把默认路对象焊死；代理则每次访问都重新取，
+      将来 REG 重建/换实现也能跟上。
+      且 `.get()` / `.put()` / `.fps` / `.reset()` 的**调用写法与原来完全一致**
+      ⇒ `phone_live.py` 与 `live_stream.py` 自己的既有代码**一行都不用改**。
+    """
+
+    def __getattr__(self, name):
+        return getattr(REG.get_state(None), name)
+
+
+# ★ 兼容层：旧代码 `from live_stream import STATE` 拿到的就是它。
+STATE = _DefaultStateProxy()
 
 
 # ---------------------------------------------------------------------------
@@ -387,31 +543,45 @@ def build_app(source: str, args: dict, *, infer_every: int = 1,
         return HTMLResponse(_PAGE)
 
     @app.get("/status")
-    def status():
-        _, seq, _info = STATE.get()
+    def status(client: Optional[str] = None):
+        # ★ 只加不删：原有 5 个字段（source/seq/fps/has_frame/analyzer_error）
+        #   保持原样，新增字段一律**追加** ⇒ 旧前端（只读已知键）不受影响。
+        st = REG.get_state(client)
+        _, seq, _info = st.get()
         return JSONResponse({
             "source": source,
             "seq": seq,
-            "fps": round(STATE.fps, 2),
-            "has_frame": STATE.get()[0] is not None,
+            "fps": round(st.fps, 2),
+            "has_frame": st.get()[0] is not None,
             "analyzer_error": analyzer.last_error,
+            # ---- 以下为 2026-09-27 多路改造**新增** ----
+            "client": (str(client) if client else "<default>"),
+            "clients": REG.clients(),
+            "per_client": REG.per_client(),
+            "n_degraded": REG.n_degraded,
+            "max_clients": REG.max_clients,
         })
 
     @app.get("/snapshot")
-    def snapshot():
-        jpeg, _, _ = STATE.get()
+    def snapshot(client: Optional[str] = None):
+        # ★ 与 /stream 同样接 ?client=，否则会出现
+        #   「/stream?client=A 是 A 的画面、/snapshot 却是默认路」的不一致。
+        jpeg, _, _ = REG.get_state(client).get()
         if jpeg is None:
             return JSONResponse({"ok": False, "msg": "还没有帧"}, status_code=503)
         from fastapi.responses import Response
         return Response(jpeg, media_type="image/jpeg")
 
     @app.get("/stream")
-    def stream():
+    def stream(client: Optional[str] = None):
+        # ★ 每路读**自己**的状态槽（缺省 = 默认路，旧 URL 照常可用）。
+        _st = REG.get_state(client)
+
         def gen():
             last = -1
             idle = 0.0
             while True:
-                jpeg, seq, _ = STATE.get()
+                jpeg, seq, _ = _st.get()
                 if jpeg is not None and seq != last:
                     last = seq
                     idle = 0.0
@@ -434,11 +604,8 @@ def build_app(source: str, args: dict, *, infer_every: int = 1,
 
 def main() -> int:
     def _arg(name, default):
-        prefix = f"--{name}="
-        for a in sys.argv[1:]:
-            if a.startswith(prefix):
-                return a[len(prefix):]
-        return default
+        from common import argv_flag   # 2026-09-28：裸 flag 统一走 common.argv_flag（单一真源）
+        return argv_flag(name, default)
 
     host = _arg("host", "127.0.0.1")
     port = int(_arg("port", "7861"))

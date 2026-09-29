@@ -1,0 +1,27 @@
+{
+  "pass": 4,
+  "total": 4,
+  "verdict": "PASS",
+  "checks": [
+    {
+      "name": "★ 镜像页 <img> 真的解码出画面（naturalWidth>0）",
+      "ok": true,
+      "detail": "{'disp': 'block', 'nw': 960, 'nh': 960, 'w': 900, 'h': 900}"
+    },
+    {
+      "name": "镜像页画面有非零显示尺寸",
+      "ok": true,
+      "detail": "(900, 900)"
+    },
+    {
+      "name": "★ 镜像页画面非纯黑（均值 > 30）",
+      "ok": true,
+      "detail": "143.20822916666575"
+    },
+    {
+      "name": "★ 手机页那一路 MJPEG 在浏览器可解码",
+      "ok": true,
+      "detail": "{'ok': True, 'nw': 960, 'nh': 960}"
+    }
+  ]
+}

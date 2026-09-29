@@ -1,0 +1,2070 @@
+{
+  "model": "D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\03_weights\\v11s640_best.pt",
+  "args": {
+    "conf": "0.25",
+    "imgsz": "640",
+    "distance": "20",
+    "focal": "24",
+    "calib_object_px": null,
+    "calib_object_mm": "210",
+    "calib_object_name": "A4短边210mm",
+    "calib_brick": false,
+    "brick_pitch_mm": "250",
+    "env": "二类环境（露天/潮湿）",
+    "env_class": "二类环境（露天/潮湿）",
+    "jgj125": "",
+    "rectify": false
+  },
+  "summary": {
+    "facade": "",
+    "n_images": 285,
+    "n_ok": 285,
+    "n_failed": 0,
+    "failed_images": [],
+    "n_defects_total": 1584,
+    "per_class": {
+      "efflorescence": 130,
+      "crack": 63,
+      "spalling": 55,
+      "moss": 84,
+      "exposed_rebar": 129,
+      "rust": 1045,
+      "delamination": 78
+    },
+    "gsd": {
+      "n": 285,
+      "median_mm_per_px": 46.875,
+      "min_mm_per_px": 7.56048,
+      "max_mm_per_px": 66.96429,
+      "rel_spread_pct": 126.7,
+      "stable": false,
+      "warning": "跨图标定尺度离散度 126.7% 偏大：这些照片很可能来自不同拍摄距离/不同镜头。此时「毫米级」定量结论只在单图内可比，跨图聚合的尺寸统计不可直接比较；建议按拍摄距离分批，或改用同一距离采集。"
+    },
+    "risk": {
+      "level": "U",
+      "level_desc": "本批所有检出条目均因不可判读而作废，无法给出危险性等级。",
+      "n_defects": 1584,
+      "n_danger": 0,
+      "n_attention": 0,
+      "n_moisture_hints": 84,
+      "structural_defects": 1500,
+      "need_professional_inspection": true,
+      "disclaimer": "本等级为图像筛查层面的风险排序结果，依据 GB 50010-2010 与 JGJ 125-2016 的判据做粗略对齐，不构成法定鉴定结论。达到 B/C 级应转由具备资质的专业机构进场鉴定。",
+      "n_unjudgeable": 1584,
+      "n_abstained_images": 270,
+      "abstained": true
+    },
+    "n_unjudgeable": 1584,
+    "abstained": true,
+    "images": [
+      {
+        "image": "greybrick-yolo__1039.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1043.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1174.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1180.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1190.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__122.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__124.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1406.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1436.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1440.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1746.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1747.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1750.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__1752.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__198.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__20.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2073.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2093.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2095.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2123.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2150.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2162.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2236.jpg",
+        "status": "ok",
+        "n_measurements": 11,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2286.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2289.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__23.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2315.jpg",
+        "status": "ok",
+        "n_measurements": 13,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2323.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2334.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2343.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2410.jpg",
+        "status": "ok",
+        "n_measurements": 10,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2413.jpg",
+        "status": "ok",
+        "n_measurements": 10,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2421.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2425.jpg",
+        "status": "ok",
+        "n_measurements": 17,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2426.jpg",
+        "status": "ok",
+        "n_measurements": 15,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2494.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2522.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2534.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2541.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2542.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__2549.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__32.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__419.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__464.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__494.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__500.jpg",
+        "status": "ok",
+        "n_measurements": 11,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__521.jpg",
+        "status": "ok",
+        "n_measurements": 10,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__527.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__57.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__609.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__682.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__741.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0025.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0039.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0043.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0069.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0084.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0102.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0104.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0126.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0144.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0146.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0147.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0149.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "greybrick-yolo__B0153.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 66.96429,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0020.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0032.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0049.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0099.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0114.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0225.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0228.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0286.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0323.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0350.jpg",
+        "status": "ok",
+        "n_measurements": 10,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0353.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0356.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0381.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0410.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0538.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0563.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0567.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0569.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0578.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0602.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0603.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0631.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0632.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0642.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0654.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0670.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0704.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0706.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0715.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0717.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0729.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0733.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0772.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0788.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0811.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0812.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0822.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0833.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0864.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0879.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0883.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0886.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0929.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0935.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0950.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "hrcds_yolo_exposed_rebar__hrcds_train_0977.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 27.77778,
+        "risk_level": "U"
+      },
+      {
+        "image": "rebar_structural__sc_1a7e86db-9.png",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 7.56048,
+        "risk_level": "U"
+      },
+      {
+        "image": "rebar_structural__sc_9c695679-22.png",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 26.08696,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_-1276-_jpg.rf.1a7fff2e86bb181f4073cc029df031cc.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_-1341-_jpg.rf.09f2f04622b553fbe129a69b2e4fa185.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_-1947-_jpg.rf.863fe0cf2d5b81a23f8c98348cfcb763.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_-1964-_jpg.rf.2cd4eb45d46059cbb4e113b66bb30bb4.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_-2185-_jpg.rf.fc7fbb844e3cccd5bf9978e3f14b3f07.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_-2217-_jpg.rf.357a2f6a3433086ada520f03f500408b.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000001_jpg.rf.5e3559aedf72b99bc9cfd0f0a849e96b.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000004_jpg.rf.091ed8b664efd103f5da537174b2626c.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000004_jpg.rf.e6c9fca7b0c4ad6e3a5d5738b1ca3dc6.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000006_jpg.rf.872c2b2eb44bccd69692569c1e2472f1.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000007_jpg.rf.9f492eed96ff64e64a1c3d73f851708a.jpg",
+        "status": "ok",
+        "n_measurements": 24,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000015_jpg.rf.6e45780d7cba3880cbebf1b2a414ddf7.jpg",
+        "status": "ok",
+        "n_measurements": 11,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000015_jpg.rf.e50e1359e86a5de57f572658ef0fc309.jpg",
+        "status": "ok",
+        "n_measurements": 23,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000017_jpg.rf.6fca8d12d704fb2cef185ce02c43179c.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000017_jpg.rf.ec801669d62cdd2431735ee94ee3fe64.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000018_jpg.rf.6d43ec022f7620a3987d610e73d89f01.jpg",
+        "status": "ok",
+        "n_measurements": 11,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000021_jpg.rf.458ca6362045d946a4837e2dec47c6c0.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000024_jpg.rf.22e34b24b4e774a0a7a52ca2580ec90b.jpg",
+        "status": "ok",
+        "n_measurements": 12,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000026_jpg.rf.036732be4b6539c928907d031be3d07b.jpg",
+        "status": "ok",
+        "n_measurements": 23,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000027_jpg.rf.3d3378cfebb72075ea726109a15de6dd.jpg",
+        "status": "ok",
+        "n_measurements": 15,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000034_jpg.rf.ce7b7544f812e0ca336e25cfe5288358.jpg",
+        "status": "ok",
+        "n_measurements": 17,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000035_jpg.rf.670337686ef538c72e062b59491889a3.jpg",
+        "status": "ok",
+        "n_measurements": 31,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000078_jpg.rf.b54ca369979285b245c6ebe1679b599a.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00007_jpg.rf.4ee42cd3f65ab32049b20755ee0cbb54.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000143_jpg.rf.ca21d99df6411cfc66a57dcda5cc3bd4.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000144_jpg.rf.6af4561967f0ee756602d17a2e0db5da.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000147_jpg.rf.03127a4831e57b00b739dffaf77746ed.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000152_jpg.rf.6b5c0eecf26523d20783508776e78713.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000179_jpg.rf.0da2595cea2675171f9034e8a694cabe.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000183_jpg.rf.3986dd7675e64e3d9619abef50ddf50a.jpg",
+        "status": "ok",
+        "n_measurements": 13,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000183_jpg.rf.77724231caf43f066a628605fca266f3.jpg",
+        "status": "ok",
+        "n_measurements": 21,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000184_jpg.rf.abf1f7fbe5c14f255184acfa7e91ec22.jpg",
+        "status": "ok",
+        "n_measurements": 20,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000185_jpg.rf.43396bbdecd8962df43393331c151da5.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000187_jpg.rf.dcffe3bb1e0938ccc6a958477b9e86ae.jpg",
+        "status": "ok",
+        "n_measurements": 8,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000190_jpg.rf.51a383829f863750419b831de1cf0747.jpg",
+        "status": "ok",
+        "n_measurements": 22,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000196_jpg.rf.c68e583482dedf5736ec5a737048e799.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000197_jpg.rf.9208f16e0a35aa810947a8e935fa3b57.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000218_jpg.rf.6b0475a2392b991f26287bb8b35e1f83.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000219_jpg.rf.f0336ac32e4b1e3e56e08df9ea1fa45c.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000226_jpg.rf.a3aeca9a44487c3dd03c918a733930c6.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000227_jpg.rf.53115a505dd3391bdaf64585f28c37d5.jpg",
+        "status": "ok",
+        "n_measurements": 18,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000233_jpg.rf.2a9a7ebcb46857947659fbbdffd708e2.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00032_jpg.rf.8eece7f46b94dc1336d49bfd2ae3497e.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000342_jpg.rf.243eca9ca67b700678b253954a9d34fb.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000345_jpg.rf.a9c27273905b637c4f68af8189a205b7.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000347_jpg.rf.a1202a73d53aa6b0cab50bf534d49e99.jpg",
+        "status": "ok",
+        "n_measurements": 20,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000351_jpg.rf.eb0618d1b7b3999ecc58fa19b1c15837.jpg",
+        "status": "ok",
+        "n_measurements": 10,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000352_jpg.rf.22f851f996abaf27b900feac323357e2.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000378_jpg.rf.0c258ea389e32b17d8a4a6fb73d89ae5.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000378_jpg.rf.9131f10b587b84ffdbaf59651215efe4.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000395_jpg.rf.a9c5f4514c222395dc9d6f52dc2f9165.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000435_jpg.rf.106c0f59156dbeb71cd81d9b9dcebd1c.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000550_jpg.rf.d08f6a8b7466c0d27a0036a1e8339d67.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000568_jpg.rf.ad315cfb15e4073b45d40e773fe6ed4e.jpg",
+        "status": "ok",
+        "n_measurements": 19,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_000569_jpg.rf.79706196d16d1fb4c57eddbce0faa544.jpg",
+        "status": "ok",
+        "n_measurements": 11,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00076_jpg.rf.fce78e3c3af52e3add79afa3a87847e4.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00078_jpg.rf.73f359d8718457ef08c167328e0d02ff.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00104_jpg.rf.96196c0a7b6b9a68a3a9f91f5bac14da.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001084_jpg.rf.8d55600557b89c7c76e7a0b365cfc077.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001099_jpg.rf.31d2547244f7b5966fce62b3dbc065ca.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00109_jpg.rf.b4ae91ee3efe1aea3fda5962846844c8.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00112_jpg.rf.a98eee4f9e61131bc145376cf7e880be.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001147_jpg.rf.04a5db70f5832e1a2e53ba5e0beb2f9b.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001151_jpg.rf.f2299b35b28f87d1012f67110c829e05.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001181_jpg.rf.2bfde6bcfa1cc9570349f56185d466a7.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001188_jpg.rf.a7cfd91ee6711b12441921bf19dad92b.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001197_jpg.rf.ce39c79ee4fbd0e2871d7fc1ff00431d.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001201_jpg.rf.d43501676c060875d01c9873e820ec99.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001202_jpg.rf.8a2a3f51fb3e8e1e1122ba2106e66d2d.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001210_jpg.rf.b74bdacc25d4dc60bf43722cd50a8f0f.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001229_jpg.rf.8ea848df62dd745c735f874be4932867.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001272_jpg.rf.368f46b32a10ff1bf3b6f7e6eda22bb3.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001305_jpg.rf.2167b44333e3bf9cc3aa877974ce9864.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001339_jpg.rf.f17c9a5a2b1e3b1fd0eeaefc3a2e2cf5.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001391_jpg.rf.1a314a11be8b7d14ef74a1789bf356c9.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001427_jpg.rf.12c482da729bb44f9c2595976ff64196.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001481_jpg.rf.b5f00141b2b42526d9e55ce6ce888aea.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001523_jpg.rf.2ef7858f463708977e0c792df5bbca38.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001543_jpg.rf.a63932095d19aa1fe5cab8ee30961724.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_001555_jpg.rf.26d43a8eaebf0e4b7713e407b872c412.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00161_jpg.rf.c73af6fe0efa2a4bafbcabdd794742a7.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00171_jpg.rf.f9eecc00335435affca084e98fb2e6e5.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00198_jpg.rf.3d921ddea5d96427a6fc70f56b9a7795.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00207_jpg.rf.e854684ea33e843f582f41f8fc36d50b.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00219_jpg.rf.fb5eec3de0ada612c5075b78f20cd2fa.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00225_jpg.rf.bbf02cdf83185554702398f1d668cf7b.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00244_jpg.rf.4df3ae56cc1895c5177e1d3f8a72dba5.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00278_jpg.rf.84fb941b12e0e48f418ccb519393fddf.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00280_jpg.rf.756995ebecdf37e38c528a21213b562a.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00314_jpg.rf.02fd67b59c3f4334faf98d5c9c49b193.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00335_jpg.rf.a8000268cf329d1ede3082ad779a0d6c.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00411_jpg.rf.a74652d3c1aabbde917bb37b358b78ea.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00425_jpg.rf.8680e35d07718180fcec89be49a1fff2.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00443_jpg.rf.5d1065edc49c1306aac29ac4230234a4.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00483_jpg.rf.3bed6fc5c5af011eb88d710823c2ed0e.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00509_jpg.rf.517e96b19e5360342f73f96125865ad5.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00536_jpg.rf.4b0ff79e40455277ed98679091bb9b65.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00540_jpg.rf.b52765625e48c23a6c4ad341b706c1f8.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00579_jpg.rf.3b70f08d2cd1d0af54bcad866e506f7b.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00587_jpg.rf.d370e506a0def5c400d367979f9a8950.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00592_jpg.rf.b3b2c6b1c5c4029f35cf77ffff3c9e50.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00717_jpg.rf.d9895bb2965da96419bfce2521e914d0.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00803_jpg.rf.d63e02bb18b0557ad8bec32ec7a3f113.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00826_jpg.rf.e30b94d73e65d754c5be9f983cd964d8.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00860_jpg.rf.6ca15b6faf41070d28b6ea42289ca2ae.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00878_jpg.rf.7946e83771e4c370c3160005296274bf.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00924_jpg.rf.ee1afa3581042dd5d5d6f9309ad032f5.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00954_jpg.rf.300ebf52a6ab08dbc436c6c36ad56d88.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_00959_jpg.rf.2f7baa972a48d46daee384dfda7b157e.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL11_jpg.rf.d4a9bfa25650be41ddba95435610a08e.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL16_jpg.rf.d8cd439fcc6f8ac42ea6f7caf8ee76a9.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL17_jpg.rf.007b540af7b62a601bebc3d6ca305f06.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL18_png_jpg.rf.d59a4eda20c2f6ce8e77358aeae700ab.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL20_jpg.rf.42aa92a9626d616059c8d709c6bb5824.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL20_jpg.rf.b17b38247df90ca6f6d9b9e48c4d805d.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL26_jpg.rf.070fee477dd0c3032a1c08fd4ea62357.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL26_jpg.rf.abaff9dae58b65a498d2b0270bd0c4b7.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL27_jpg.rf.c06757325e34ccab80d5ae87c47a2e1d.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL2_jpg.rf.ca03c1531eb9525c1eda8e945c90a04c.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL3_jpg.rf.072fe5939b2ee85ba213c39d251c9b10.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL4_jpg.rf.321f22ce6fc06b237d6fe6f876c86f3b.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CL7_jpg.rf.aec67b4eae7044a3e65f2c738e45f04b.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM10_jpg.rf.22ed87f59a1df372bbaf9ca444929d2d.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM10_jpg.rf.d70af44629fbfcd3b163e4ffe6d58ea1.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM11_jpg.rf.38f2c2c552309eff01c9bdb4c88fd12b.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM14_jpg.rf.8ea604d0dbfdc77d5ba91a7b45029315.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM21_jpg.rf.10a65669982c785dfc9ee2e91af28669.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM27_jpg.rf.eb3a87e48e98ddf473ff6c85df594226.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM31_jpg.rf.33020088c3086b3116b117d7a0a0f184.jpg",
+        "status": "ok",
+        "n_measurements": 24,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM33_jpg.rf.9a761c03830bc93748bc9bddc65fe83d.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM42_jpg.rf.887cafe1a7b6384f7a37e5ab4a7908db.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CM45_jpg.rf.32fba92dc2ccaa189497fa9551295670.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_CS13_jpg.rf.3fc404354da292bda3f56c485cf23788.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_IMG_3573_JPG_jpg.rf.a937eaa2ee8af27c6dbbe84e491dba8a.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_IMG_3626_JPG_jpg.rf.2853801692d30f6db43f56f91272156a.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_IMG_3628_JPG_jpg.rf.8b76dc066b486bc46f3d5fe3ee8c7eec.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L13_jpg.rf.4101960d7de8b5783110e0d304e76610.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L15_jpg.rf.8d2c59033792983f66d7c7ca0566106e.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L15_jpg.rf.f6a48701f112e5c40a2254ae311c2e71.jpg",
+        "status": "ok",
+        "n_measurements": 5,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L18_jpg.rf.079a9c0614e056b9a6dcb2bf387111bc.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L21_jpg.rf.6821af11ff068cbc8cf197ea9873a1ba.jpg",
+        "status": "ok",
+        "n_measurements": 10,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L22_jpg.rf.0dfecbe0b0f6ae26e7708044e30bbc5b.jpg",
+        "status": "ok",
+        "n_measurements": 16,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L22_jpg.rf.d92aef5da5aa45f5a7e7fb32eed7b58d.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L27_jpg.rf.1aa3f661d500f7577428812dc4f9ae46.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L27_jpg.rf.e01e9ff3969119ef9149a9bd4a2aab38.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L29_jpg.rf.b04c85296d65337e07e0bd798cf6d084.jpg",
+        "status": "ok",
+        "n_measurements": 7,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L33_jpg.rf.9237da6e8825c2c7b60dee0f54f27aee.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L34_jpg.rf.c6f97d0fa48030ea96ec444dafc24b7b.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_L7_jpg.rf.d627f76bc5a1a319f8be1e0dad0562b9.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_M12_jpg.rf.d8fbfc1a4439905436b998ba55d5b046.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_M12_jpg.rf.df51ad862491d96fbe181f97b0f04354.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-12_jpg.rf.77aba71218492d78dbcb2bdd3bfd6df9.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-13_jpg.rf.2ca9a6b47c1dacdafba392e68b00d543.jpg",
+        "status": "ok",
+        "n_measurements": 38,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-1_jpg.rf.e2f3030d6390a5e1f341aa617d4eca09.jpg",
+        "status": "ok",
+        "n_measurements": 13,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-23_jpg.rf.d8c12cfb5cbece618bbc82b334aba77c.jpg",
+        "status": "ok",
+        "n_measurements": 45,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-34_jpg.rf.c9d5c5fa6f2e595b7d192ada798ab8f8.jpg",
+        "status": "ok",
+        "n_measurements": 27,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-34_jpg.rf.ca13667dbb171f014abff4aeb85515a0.jpg",
+        "status": "ok",
+        "n_measurements": 1,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-35_jpg.rf.3f6d475cc12063d7000f03775068808f.jpg",
+        "status": "ok",
+        "n_measurements": 17,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-47_jpg.rf.dbea173c8ca048d19656705221cba499.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-4_jpg.rf.899a69207200e90cd05268eaca9778fe.jpg",
+        "status": "ok",
+        "n_measurements": 55,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-54_jpg.rf.5d4f8bbb742e80962152d6436c06bafc.jpg",
+        "status": "ok",
+        "n_measurements": 63,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_rust-55_jpg.rf.9e71500ec00bc4249b360537f835a33c.jpg",
+        "status": "ok",
+        "n_measurements": 31,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S15_jpg.rf.7aa245aedb65c561db64f7d001c4f3f4.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S19_jpg.rf.ea5c1063a4d2a19c7af7b5acec73567a.jpg",
+        "status": "ok",
+        "n_measurements": 2,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S20_jpg.rf.de5a50a03d1ab9e00555fb69fcc0b2c6.jpg",
+        "status": "ok",
+        "n_measurements": 13,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S23_jpg.rf.5a828010f1bfbd162687c355507cd442.jpg",
+        "status": "ok",
+        "n_measurements": 9,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S26_jpg.rf.b3de44f9f4065d4ae3f9bd6baa5587f1.jpg",
+        "status": "ok",
+        "n_measurements": 4,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S2_jpg.rf.194e9309b5bc71c6811af56ad509dd5e.jpg",
+        "status": "ok",
+        "n_measurements": 3,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S4_jpg.rf.2552e3b8fcc99d69497eb78c50f3273f.jpg",
+        "status": "ok",
+        "n_measurements": 0,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S5_jpg.rf.67823b2455597a843277074dbad97658.jpg",
+        "status": "ok",
+        "n_measurements": 6,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S8_jpg.rf.5b78cb634a9c3ceb3841b14700bd7075.jpg",
+        "status": "ok",
+        "n_measurements": 14,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      },
+      {
+        "image": "urban_yolo_rust_delam__urban_train_S8_jpg.rf.8dee561f3dda966dfdad688be40e5e1b.jpg",
+        "status": "ok",
+        "n_measurements": 16,
+        "gsd_mm_per_px": 46.875,
+        "risk_level": "U"
+      }
+    ],
+    "ood_gate": {
+      "cls": "crack",
+      "c_hit": 0.25,
+      "conf_floor": 0.05,
+      "threshold": 0.5957,
+      "n_detections_at_floor": 94,
+      "p_hit": 0.6702,
+      "fire": false,
+      "verdict": "✅ 未触发：p_hit 0.6702 ≥ 阈值 0.5957 ⇒ 该批检测响应与域内基线相当，可继续出结论",
+      "note": "p_hit = 该类检出中 conf≥c_hit 的比例；分母在 conf_floor 上统计（不可在 c_hit 上统计，否则恒为 1）。",
+      "caveat": "阈值取自 V3 285 图的 bootstrap 5% 分位 ⇒ 误触发率系同批自估、偏乐观，换数据/换类别须重定；本门为**批级**判据，不覆盖单图兜底。",
+      "n_hit": 63
+    }
+  }
+}

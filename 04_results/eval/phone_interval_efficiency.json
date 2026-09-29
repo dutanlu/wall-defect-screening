@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "interval": 200,
+      "push_fps": 4.823,
+      "infer_fps": 4.823,
+      "recv_over_infer": 1.0,
+      "waste_pct": 0.0,
+      "useful_ratio": 1.0
+    },
+    {
+      "interval": 150,
+      "push_fps": 6.652,
+      "infer_fps": 6.486,
+      "recv_over_infer": 1.026,
+      "waste_pct": 2.5,
+      "useful_ratio": 0.975
+    },
+    {
+      "interval": 100,
+      "push_fps": 9.664,
+      "infer_fps": 9.664,
+      "recv_over_infer": 1.0,
+      "waste_pct": 0.0,
+      "useful_ratio": 1.0
+    },
+    {
+      "interval": 80,
+      "push_fps": 12.165,
+      "infer_fps": 11.999,
+      "recv_over_infer": 1.014,
+      "waste_pct": 1.4,
+      "useful_ratio": 0.986
+    },
+    {
+      "interval": 66,
+      "push_fps": 14.977,
+      "infer_fps": 14.81,
+      "recv_over_infer": 1.011,
+      "waste_pct": 1.1,
+      "useful_ratio": 0.989
+    },
+    {
+      "interval": 50,
+      "push_fps": 19.827,
+      "infer_fps": 19.661,
+      "recv_over_infer": 1.008,
+      "waste_pct": 0.8,
+      "useful_ratio": 0.992
+    }
+  ]
+}

@@ -74,6 +74,7 @@ from grade import (
 )
 from measure import draw_measurement, measure_instance
 from rectify import rectify as rectify_image
+from single_oom import decide_single, single_image_ood
 
 
 # --------------------------------------------------------------------------
@@ -268,6 +269,30 @@ def run_one(image_path: Path, model, args: dict, image=None) -> dict:
         grades, measurements, _flags, calib=calib, quality=_quality,
         advise_fn=_advise_for)
 
+    # ---- 5c) 单图 OOD 兜底（2026-09-29 接线；默认关，--single-ood 开启）----
+    # 与「可判读性」是两回事：可判读性看 GSD（分辨率够不够），OOD 兜底看
+    # 「模型对这张图还有没有响应」（零检出 / 置信度塌陷）。两者都可能导致
+    # 「不可判读」，但原因与证据不同 ⇒ 分字段记录，不混。
+    # ★ 默认关：开启后每张图会**多跑一次低阈值推理**（single_image_ood 内部
+    #   model.predict(conf=0.05)），单图/批量路径开销约翻倍 ⇒ 是否默认开，
+    #   待实跑权衡后定（video_screen 逐帧场景尤其要权衡）。
+    ood_decision = None
+    if args.get("single_ood"):
+        ood_decision = decide_single(
+            single_image_ood(model, img), n_measurements=len(measurements))
+        _lv = int(ood_decision.get("level", 0))
+        if _lv >= 2:
+            risk["level"] = "U"
+            risk["ood_abstain"] = True
+            _n = "单图 OOD 兜底触发：" + ood_decision["verdict"]
+            risk["note"] = (risk["note"] + "；" + _n) if risk.get("note") else _n
+            log(f"  [OOD 兜底] 作废结论：{ood_decision['verdict']}")
+        elif _lv == 1:
+            risk["ood_warning"] = True
+            _n = "单图 OOD 疑似：" + ood_decision["verdict"]
+            risk["note"] = (risk["note"] + "；" + _n) if risk.get("note") else _n
+            log(f"  [OOD 兜底] 追加警示：{ood_decision['verdict']}")
+
     # ---- 6) 可视化 ----
     vis = img.copy()
     # 7 类调色板（BGR）。颜色选择原则：同类缺陷色相接近（裂缝红、剥落橙、
@@ -302,6 +327,8 @@ def run_one(image_path: Path, model, args: dict, image=None) -> dict:
         f"[{interp_blob.level.upper()}]",
         f"risk level: {risk['level']}",
     ]
+    if ood_decision and int(ood_decision.get("level", 0)) >= 1:
+        banner.append(f"OOD: {ood_decision['verdict'][:48]}")
     for i, t in enumerate(banner):
         y = 22 + i * 22
         cv2.putText(vis, t, (10, y), cv2.FONT_HERSHEY_SIMPLEX, 0.55,
@@ -357,10 +384,62 @@ def run_one(image_path: Path, model, args: dict, image=None) -> dict:
         ],
         "grades": [g.to_dict() for g in grades],
         "risk": risk,
+        # 单图 OOD 兜底（--single-ood 开启时才注入该字段；默认关 = 输出形状不变）
+        **({"single_ood": ood_decision} if args.get("single_ood") else {}),
         # 未开启 --save-annotated 时为 None。**不要**写成不存在的路径 ——
         # 否则下游 JSON 会残留指向空文件的引用（video_screen.py:498 会透传本字段）。
         "annotated": (str(annotated_path) if annotated_path else None),
     }
+def compare_pair(img1_path, img2_path, model, args: dict | None = None) -> dict:
+    """同对象两次拍摄的**变化检测**（方向 3 的可落地部分，2026-09-29 接入后端）。
+
+    把 `change_detect.pair_and_diff` 接到主链路：对两张图各跑一次 `run_one`，
+    取「检测框 + 毫米宽度」喂给 `pair_and_diff`，返回「配对 → 变化」结论。
+
+    · 与主线弃权**同构**：配对不成立时 `changes` 为 None，**不给变化结论**。
+    · 诚实边界：只做「变化检测」，**不输出**扩展速率 / 剩余寿命 / 何时复检
+      （那需要 ≥3 个时间点 + 缺陷机理，本工程没有）。
+
+    ⚠️ 纯后端能力；尚未接 UI（app.py 的「两次巡检对比」入口留作下一步）。
+    """
+    from change_detect import pair_and_diff
+
+    args = args or {}
+    img1 = imread_u(img1_path)
+    img2 = imread_u(img2_path)
+    r1 = run_one(img1_path, model, args, image=img1)
+    r2 = run_one(img2_path, model, args, image=img2)
+    if r1.get("status") != "ok" or r2.get("status") != "ok":
+        return {"pair_ok": False, "pair_reason": "一侧读取/处理失败",
+                "changes": None,
+                "summary": "输入处理失败 ⇒ 按弃权原则不给变化结论。",
+                "is_prediction": False}
+
+    def _dets(r: dict) -> list:
+        out = []
+        for m in r.get("measurements", []):
+            d = {"bbox_xyxy": list(m["bbox_xyxy"]), "cls": m.get("cls_name")}
+            for k in ("width_max_mm", "width_mean_mm"):
+                if m.get(k) is not None:
+                    d[k] = m[k]
+            out.append(d)
+        return out
+
+    return pair_and_diff(img1, img2, _dets(r1), _dets(r2),
+                         gsd_mm_per_px=r1.get("calibration", {}).get("mm_per_px"))
+
+
+def stitch_facade(images: list, out_dir, pitch_mm: float = 250.0, axis: str = "x") -> dict:
+    """整立面拼接（多段照片 → 一张整立面图 + 能力评估）的后端入口。
+
+    薄封装 `stitch_facade.stitch_and_assess`（核心逻辑与 CLI 都在那个模块），
+    供 app.py 的「整立面拼接」入口复用。
+
+    ⚠️ 纯后端能力；尚未接 UI。拼接结果**不改变**单图测量的毫米数与分级口径；
+       某段匹配失败会**明确报出是哪一段**（不静默跳过）。
+    """
+    from stitch_facade import stitch_and_assess
+    return stitch_and_assess(list(images), Path(out_dir), pitch_mm=pitch_mm, axis=axis)
 
 
 def main() -> None:
@@ -389,6 +468,8 @@ def main() -> None:
         # 斜拍正射校正（rectify.py / 报告 §6.5）
         "rectify": _flag("rectify"),
         "rectify_force": (str(argv_flag("rectify", "")).strip().lower() == "force"),
+        # 单图 OOD 兜底（single_oom，2026-09-29 接入；默认关）
+        "single_ood": _flag("single-ood"),
     }
 
     resolved = resolve_weight(model_path)

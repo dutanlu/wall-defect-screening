@@ -32,6 +32,7 @@ if str(_HERE) not in sys.path:
 
 import rt_common as R  # noqa: E402
 import rt_infer  # noqa: E402
+from gsd import ENV_CLASSES  # noqa: E402
 
 
 class Checker:
@@ -82,9 +83,8 @@ def verify(cfg: dict, source_key: str | None,
              "源类型合法", f"kind={src['kind']} preset={src['key']}")
     args = R.build_args(cfg)
     ck.check(Path(args["model"]).exists(), "权重文件存在", args["model"])
-    ck.check(args["env"] in (
-        "一类环境（室内干燥）", "二类环境（露天/潮湿）", "三类环境（干湿交替/海风）"),
-        "环境类别合法（不静默失效）", args["env"])
+    ck.check(args["env"] in ENV_CLASSES,
+             "环境类别合法（不静默失效）", args["env"])
     ck.check(args["imgsz"] > 0 and args["conf"] > 0,
              "imgsz/conf 为正", f"imgsz={args['imgsz']} conf={args['conf']}")
     # 标定链兜底可运行（否则会在视频中途抛 ValueError）

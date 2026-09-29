@@ -1,0 +1,39 @@
+{
+  "rows": [
+    {
+      "interval": 200,
+      "e2e_fps": 4.912,
+      "server_infer_fps": 4.912,
+      "page_fps_mean": 5.388,
+      "dropped": 0
+    },
+    {
+      "interval": 150,
+      "e2e_fps": 6.493,
+      "server_infer_fps": 6.684,
+      "page_fps_mean": 6.787,
+      "dropped": 0
+    },
+    {
+      "interval": 100,
+      "e2e_fps": 9.826,
+      "server_infer_fps": 9.633,
+      "page_fps_mean": 9.875,
+      "dropped": 0
+    },
+    {
+      "interval": 66,
+      "e2e_fps": 14.973,
+      "server_infer_fps": 14.973,
+      "page_fps_mean": 14.738,
+      "dropped": 0
+    },
+    {
+      "interval": 50,
+      "e2e_fps": 19.632,
+      "server_infer_fps": 19.632,
+      "page_fps_mean": 19.787,
+      "dropped": 0
+    }
+  ]
+}

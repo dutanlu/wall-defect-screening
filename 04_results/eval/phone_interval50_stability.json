@@ -1,0 +1,54 @@
+{
+  "clean_window": [
+    {
+      "push_fps": 0.0,
+      "infer_fps": 0.0,
+      "page_fps": 0.0,
+      "recv_over_infer": NaN,
+      "dropped": 1,
+      "dt_s": 6.33
+    },
+    {
+      "push_fps": 18.959,
+      "infer_fps": 12.912,
+      "page_fps": 0.0,
+      "recv_over_infer": 1.468,
+      "dropped": 3,
+      "dt_s": 6.12
+    },
+    {
+      "push_fps": 19.451,
+      "infer_fps": 19.614,
+      "page_fps": 0.0,
+      "recv_over_infer": 0.992,
+      "dropped": 0,
+      "dt_s": 6.12
+    }
+  ],
+  "eval_window": [
+    {
+      "push_fps": 19.511,
+      "infer_fps": 19.511,
+      "page_fps": 19.837,
+      "recv_over_infer": 1.0,
+      "dropped": 0,
+      "dt_s": 6.2
+    },
+    {
+      "push_fps": 19.847,
+      "infer_fps": 19.685,
+      "page_fps": 19.812,
+      "recv_over_infer": 1.008,
+      "dropped": 0,
+      "dt_s": 6.15
+    },
+    {
+      "push_fps": 19.704,
+      "infer_fps": 19.704,
+      "page_fps": 19.65,
+      "recv_over_infer": 1.008,
+      "dropped": 0,
+      "dt_s": 6.19
+    }
+  ]
+}

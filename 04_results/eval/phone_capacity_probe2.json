@@ -1,0 +1,32 @@
+{
+  "instances": [
+    {
+      "n": 1,
+      "delta_reserved_gb": 0.131,
+      "cum_reserved_gb": 0.131,
+      "sys_avail_gb": 0.15,
+      "load": 99,
+      "build_s": 3.4
+    },
+    {
+      "n": 2,
+      "delta_reserved_gb": 0.057,
+      "cum_reserved_gb": 0.164,
+      "sys_avail_gb": 0.14,
+      "load": 99,
+      "build_s": 0.2
+    },
+    {
+      "n": 3,
+      "delta_reserved_gb": 0.096,
+      "cum_reserved_gb": 0.203,
+      "sys_avail_gb": 0.1,
+      "load": 99,
+      "build_s": 0.1
+    }
+  ],
+  "infer_p50_ms": 12.3,
+  "infer_p95_ms": 75.2,
+  "single_instance_fps_cap": 81.2,
+  "sys_total_gb": 15.72
+}

@@ -1,0 +1,65 @@
+{
+  "checks": [
+    {
+      "name": "build_app 默认值 == DEFAULT_INTERVAL_MS",
+      "ok": true,
+      "detail": "build_app=100, 常量=100"
+    },
+    {
+      "name": "DEFAULT_INTERVAL_MS 是 100ms（实测最优）",
+      "ok": true,
+      "detail": "100"
+    },
+    {
+      "name": "稳定推帧时 滑动窗口 ≈ 累计平均",
+      "ok": true,
+      "detail": "滑动 29.68 | 累计 29.68"
+    },
+    {
+      "name": "★ 先慢后快时 滑动窗口 > 累计平均（能反映当前状态）",
+      "ok": true,
+      "detail": "滑动 24.41 | 累计 14.58"
+    },
+    {
+      "name": "★ 停帧 3.2s 后 滑动窗口归零（累计平均做不到）",
+      "ok": true,
+      "detail": "滑动 0.00 | 累计 8.54"
+    },
+    {
+      "name": "Playwright 可用",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "页面无 JS 报错",
+      "ok": true,
+      "detail": "0 条"
+    },
+    {
+      "name": "★ 端到端 fps ≥ 8（旧默认 300ms 只有 2.24）",
+      "ok": true,
+      "detail": "实测 8.98 fps"
+    },
+    {
+      "name": "★ 前端显示 fps 与真值偏差 < 30%（口径已修）",
+      "ok": true,
+      "detail": "页面 9.2 vs 真值 8.98（偏差 2.4%）"
+    },
+    {
+      "name": "stat2 不再是累计平均（应随窗口变化）",
+      "ok": true,
+      "detail": "观测到的显示序列: [9.7, 7.4, 10.1, 9.1, 9.7, 9.6, 9.6, 10.0, 9.3, 10.3, 9.9, 9.9, 9.8, 9.2]"
+    },
+    {
+      "name": "dropped 计数可读（自适应循环已生效）",
+      "ok": true,
+      "detail": "102 帧 · 9.2 帧/秒 · 丢 1"
+    }
+  ],
+  "pass": 11,
+  "total": 11,
+  "e2e_fps": 8.98,
+  "ui_fps": 9.2,
+  "sample_span": 6.79,
+  "last_stat2": "102 帧 · 9.2 帧/秒 · 丢 1"
+}

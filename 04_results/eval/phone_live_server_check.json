@@ -1,0 +1,46 @@
+{
+  "url": "https://127.0.0.1:7863",
+  "page_values": {
+    "INTERVAL": 50,
+    "MAXW": 720,
+    "QUALITY": 0.6
+  },
+  "e2e_fps": 19.652,
+  "frames": 121,
+  "seconds": 6.16,
+  "dropped": 1,
+  "js_errors": [],
+  "window_delta": {
+    "recv": 120,
+    "inferred": 109,
+    "seq": 109
+  },
+  "window_recv_over_infer": 1.101,
+  "status_before": {
+    "mode": "phone-push",
+    "seq": 0,
+    "fps": 0.0,
+    "has_frame": false,
+    "n_received": 0,
+    "n_inferred": 0,
+    "analyzer_error": null
+  },
+  "status_window_start": {
+    "mode": "phone-push",
+    "seq": 0,
+    "fps": 0.0,
+    "has_frame": false,
+    "n_received": 43,
+    "n_inferred": 0,
+    "analyzer_error": null
+  },
+  "status_after": {
+    "mode": "phone-push",
+    "seq": 110,
+    "fps": 17.68,
+    "has_frame": true,
+    "n_received": 164,
+    "n_inferred": 110,
+    "analyzer_error": null
+  }
+}

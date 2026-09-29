@@ -1,0 +1,98 @@
+{
+  "checks": [
+    {
+      "name": "G4 DEFAULT_PUSH_MAXW == 720（防三处一起改错）",
+      "ok": true,
+      "info": "实际 = 720"
+    },
+    {
+      "name": "G1 build_app(push_maxw=) 默认 == DEFAULT_PUSH_MAXW",
+      "ok": true,
+      "info": "实际 = 720"
+    },
+    {
+      "name": "G2 build_app(out_w=) 默认 == DEFAULT_PUSH_MAXW",
+      "ok": true,
+      "info": "实际 = 720"
+    },
+    {
+      "name": "G3 PhoneAnalyzer(out_w=) 默认 == DEFAULT_PUSH_MAXW",
+      "ok": true,
+      "info": "实际 = 720"
+    },
+    {
+      "name": "G5 _derive_out_w(720) == 720",
+      "ok": true,
+      "info": "实际 = 720"
+    },
+    {
+      "name": "H0 服务能起来",
+      "ok": true,
+      "info": "port 7881"
+    },
+    {
+      "name": "H1 页面 var MAXW == 720",
+      "ok": true,
+      "info": "实际 = 720"
+    },
+    {
+      "name": "H2 页面无残留占位符",
+      "ok": true,
+      "info": "残留 = []"
+    },
+    {
+      "name": "I0b 干净服务（新端口）能起来",
+      "ok": true,
+      "info": "port 7882"
+    },
+    {
+      "name": "I1 端到端 fps > 16.0（50ms 档实测 ≈19.6，源上限 20.09）",
+      "ok": true,
+      "info": "实测 18.33 fps"
+    },
+    {
+      "name": "I2 端到端 fps 贴近 min(1/INTERVAL, 源帧率)=20.00（偏差<=15%）",
+      "ok": true,
+      "info": "实测 18.33 / 上限 20.00 偏 8.4%"
+    },
+    {
+      "name": "I4 无 JS 报错",
+      "ok": true,
+      "info": ""
+    },
+    {
+      "name": "I5 stat2 文案在变（滑窗 fps 没锁死）",
+      "ok": true,
+      "info": "取到 24 个不同值 / 共 24 次采样"
+    },
+    {
+      "name": "I6 页面自报 fps 与实测 fps 一致（偏差<=30%）",
+      "ok": true,
+      "info": "实测 18.33 / 页自报 18.35 偏 0.1%"
+    },
+    {
+      "name": "I7 丢帧计数可读",
+      "ok": true,
+      "info": "dropped = 0（0 表示每一拍都来得及）"
+    }
+  ],
+  "detail": {
+    "maxw_in_page": 720,
+    "page_self_fps": 18.35,
+    "e2e_fps": 18.325,
+    "dropped_end": 0,
+    "stat2_samples": [
+      "144 帧 · 16.9 帧/秒",
+      "149 帧 · 20.4 帧/秒",
+      "154 帧 · 19.6 帧/秒",
+      "159 帧 · 16.9 帧/秒",
+      "164 帧 · 15.9 帧/秒",
+      "169 帧 · 20.4 帧/秒"
+    ]
+  },
+  "summary": {
+    "total": 15,
+    "pass": 15,
+    "fail": 0
+  }
+}

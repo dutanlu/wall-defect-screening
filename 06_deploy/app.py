@@ -64,6 +64,8 @@ from common import (                                  # noqa: E402
     log,
 )
 
+from gsd import DEFAULT_ENV, ENV_CLASSES  # noqa: E402
+
 # --------------------------------------------------------------------------
 # 全局模型缓存（Gradio 每次请求都重新加载模型会慢到无法演示）
 # --------------------------------------------------------------------------
@@ -590,6 +592,7 @@ def analyze_video(video_path: str,
 
     try:
         # 复用共享实现：抽帧/聚合/汇总全部来自 video_screen，不复制
+        import uuid                       # ★ 输出目录唯一名（见下）
         import video_screen as vs
         from pipeline import run_one
 
@@ -612,7 +615,23 @@ def analyze_video(video_path: str,
             "env": env_class,
             "env_class": env_class,
             # 视频入口的逐帧输出目录（不污染单图 vis 目录）
-            "out": str(VIS_DIR / f"video_{vp.stem}"),
+            # ★ 2026-09-27：加**唯一后缀**。
+            #   原来只用 `video_{vp.stem}` ⇒ 两个用户传**同名**视频
+            #   （手机导出的名字高度雷同，如 IMG_0001.mp4）会共用**同一个目录名**。
+            #
+            #   ⚠️ 实测澄清（必须写准，不能夸大）：当前网页入口**并不会**
+            #      往这个目录写文件 —— `pipeline.run_one` 只在
+            #      `args.get("save_annotated")` 为真时才落盘，而本函数
+            #      **没有**开启该开关 ⇒ 目录被建出来但是**空的**
+            #      （实测：连跑两次，两个新目录均为空）。
+            #   ⇒ 所以这是**防患**，不是「正在发生的覆盖」：
+            #      · 命令行 `video_screen.py` 的默认输出目录就是
+            #        `video_<stem>`，一旦开 `--save-annotated`，
+            #        两次同名视频**确实会互相覆盖**；
+            #      · 目录名也会进日志/结果，同名会让两批结果**无法区分**。
+            #   ⇒ 统一改成唯一名（与批量下载同一手法），把这条路提前堵死。
+            "out": str(VIS_DIR / ("video_%s_%s"
+                                 % (vp.stem, uuid.uuid4().hex[:8]))),
         }
         if jgj125_parts:
             args["jgj125"] = ",".join(jgj125_parts)
@@ -666,6 +685,308 @@ def _video_payload(rec: dict, name: str) -> dict:
                               "不代表已在实拍上验证。"),
         },
     }
+
+
+# ---------------------------------------------------------------------------
+# 批量识别入口：一次处理「一批照片」（★ 2026-09-27 新增）
+# ---------------------------------------------------------------------------
+def batch_analyze(src_mode: str,
+                  dir_path: str,
+                  files: list | None,
+                  facade: str,
+                  conf_thr: float,
+                  progress=None):
+    """**批量**入口：一次处理一批照片，返回 (逐图表, 汇总Markdown, JSON串, 下载文件)。
+
+    ★ 为什么单开一个函数而不改 analyze()：
+      `analyze` 的契约是「一张图进、一张图出」（被「照片 / 摄像头」两个入口复用）。
+      批量是**多张图进、一张表出**，输出形态完全不同；共用会让 analyze 长出分支，
+      两个入口都变得不敢改。这里**只复用底层函数**，不碰 analyze 的任何行为。
+
+    ★ 复用而不复制（这是本函数最重要的设计约束）：
+      · 逐图检测 → `pipeline.run_one`（与单图/视频**完全相同**的链路，含全部判读机制）
+      · 目录列图 → `batch_screen.list_images` + `IMG_EXTS`（与命令行入口**同一实现**）
+      · 建筑级聚合 → `batch_screen.summarize_batch`（**纯函数**）
+      ⇒ 「网页批量」与「命令行批量」结果同源，不会出现第三套口径。
+
+    ★ 两种输入源（浏览器沙箱决定必须两种都有）：
+      ① 「浏览器上传」：用户选**自己电脑**的文件 → Gradio 存到临时目录 → 我们收路径
+      ② 「服务端路径」：用户填**运行本服务这台电脑**的目录 → 服务端自己 list_images
+      ⚠️ 浏览器**无法**读取访问者本机的文件夹路径（安全沙箱硬规则，非框架限制），
+         所以「①」才是真多用户方案，「②」只对本机/局域网自建有效。
+
+    ★ 多用户隔离（为什么不会互相覆盖）：
+      本函数**不写任何固定路径的文件**，结果只经返回值传递 ⇒ 天然 per-request 隔离。
+      唯一落盘处是下载文件，用了 uuid 唯一名 ⇒ 并发不可能撞名。
+
+    ★ 边界（必须随结论声明）：
+      ① 本入口**不启用**分布级 OOD 门（`batch_screen._ood_gate`）——
+         开启它需要在更低的 conf floor 上**重跑一遍全批检测**，批量耗时翻倍。
+         需要 OOD 门请用命令行 `python 02_code/batch_screen.py --dir=<目录>`。
+      ② 本入口与单图/视频同源，因此**判读能力边界完全一致**
+         （毫米级判读由 GSD 决定，批量本身不提升精度）。
+      ③ 输出是**筛查排序**，不构成法定鉴定。
+    """
+    import time
+    import uuid
+
+    from batch_screen import IMG_EXTS, list_images, summarize_batch
+    from pipeline import run_one
+
+    def _fail(msg: str):
+        """统一的失败返回（保持与成功路径**相同的返回元数**，否则 Gradio 会报错）。"""
+        return [], msg, "{}", None
+
+    # ---- 1) 解析输入源 → 统一的「待处理路径列表」----
+    mode = str(src_mode or "")
+    paths: list[Path] = []
+    # ★ 输入阶段（扩展名/存在性）就被拒的文件。
+    #   只在「上传」分支产生；**必须可见**，绝不静默丢 ——
+    #   用户明确选过它们，界面也承诺「会逐个跳过并记进失败清单」。
+    rejected: list[dict] = []
+
+    if "服务端" in mode:
+        raw = str(dir_path or "").strip().strip('"').strip("'")
+        if not raw:
+            return _fail("### ⛔ 未填目录\n\n请填写**运行本服务这台电脑**上的图片目录绝对路径。")
+        p = Path(raw)
+        if not p.exists():
+            return _fail("### ⛔ 目录不存在\n\n`%s`\n\n"
+                         "⚠️ 这里填的是**运行本服务这台电脑**上的路径；"
+                         "若图片在你自己电脑上，请改用「浏览器上传」。" % raw)
+        if not p.is_dir():
+            return _fail("### ⛔ 这不是一个目录\n\n`%s`\n\n请填**文件夹**路径，不是单个文件。" % raw)
+        paths = list_images(p)                      # ★ 复用 CLI 的列图实现（不递归）
+        if not paths:
+            return _fail("### ⛔ 该目录下没有图片\n\n`%s`\n\n"
+                         "支持格式：%s\n\n"
+                         "⚠️ 本功能**不递归子目录** —— 若图片在子文件夹里，"
+                         "请直接填子文件夹的路径。" % (raw, "、".join(sorted(IMG_EXTS))))
+    else:
+        for f in (files or []):
+            q = Path(str(f))
+            # ★ 服务端**再校验一次**扩展名（前端过滤只是体验，不能当安全边界）
+            if q.is_file() and q.suffix.lower() in IMG_EXTS:
+                paths.append(q)
+            else:
+                # ★★ 不静默丢：这些是**用户明确选过**的文件，必须让他看见。
+                #    否则「选了 100 张、只出 97 张」而界面毫无提示 ——
+                #    正是本项目「不静默降级」纪律要禁的。
+                if not q.is_file():
+                    why = "文件不存在或不是文件"
+                else:
+                    why = "不支持的扩展名 `%s`" % (q.suffix or "（无）")
+                rejected.append({"image": str(q), "status": "error",
+                                 "error": "输入被跳过：%s" % why})
+        # ⚠️ 判据必须带上 rejected：否则「全被拒」时会只弹一句提示、
+        #    连一张进不了失败清单（那正是本函数要修掉的静默行为）。
+        if not paths and not rejected:
+            return _fail("### ⛔ 没有可用的图片\n\n请选择一批图片（支持 %s）。"
+                         % "、".join(sorted(IMG_EXTS)))
+
+    n_all = len(paths)
+    if progress is not None:
+        progress(0.0, desc="准备中…（共 %d 张）" % n_all)
+
+    # ---- 2) 逐图跑完整链路（与 batch_screen.main() 的循环同构）----
+    #   conf 用界面值；其余参数沿用与单图入口一致的默认（口径统一）。
+    args = {
+        "conf": float(conf_thr),
+        "imgsz": "640",
+        "distance": "20",
+        "focal": "24",
+        "calib_object_px": "",
+        "calib_object_mm": "210",
+        "calib_object_name": "A4短边210mm",
+        "calib_brick": False,
+        "brick_pitch_mm": "250",
+        "env": "二类环境（露天/潮湿）",
+        "env_class": "二类环境（露天/潮湿）",
+        "jgj125": "",
+        "rectify": False,
+    }
+    model = get_model(None)                         # ★ 复用进程级单例，不新起模型
+
+    # ★ 输入阶段被拒的先入账：这样它们会出现在 n_images / n_failed /
+    #   失败清单里，与界面「会逐个跳过并记进失败清单」的说明一致。
+    records: list[dict] = list(rejected)
+    for i, q in enumerate(paths, 1):
+        if progress is not None:
+            progress((i - 1) / max(1, n_all),
+                     desc="识别中 %d/%d · %s" % (i, n_all, q.name))
+        try:
+            rec = run_one(q, model, args)
+        except Exception as exc:                    # noqa: BLE001
+            # ★ 单张失败**不中断整批** —— 巡检场景里偶发坏图不应让整批作废。
+            #   如实记进 records，由 summarize_batch 计入 n_failed / failed_images。
+            rec = {"image": str(q), "status": "error",
+                   "error": "%s: %s" % (type(exc).__name__, exc)}
+        records.append(rec)
+    if progress is not None:
+        progress(1.0, desc="聚合中…")
+
+    # ---- 3) 建筑级聚合（★ 纯函数复用）----
+    summary = summarize_batch(records, facade=str(facade or ""))
+
+    # ---- 4) 逐图表 ----
+    rows = []
+    for it in (summary.get("images") or []):
+        rows.append([
+            it.get("image"),
+            it.get("status"),
+            it.get("n_measurements"),
+            it.get("gsd_mm_per_px"),
+            it.get("risk_level"),
+        ])
+
+    # ---- 5) 汇总 Markdown ----
+    risk = summary.get("risk") or {}
+    gsd = summary.get("gsd") or {}
+    per_cls = summary.get("per_class") or {}
+    M: list[str] = []
+    A = M.append
+    A("## 批量筛查结果")
+    A("")
+    if summary.get("facade"):
+        A("- **立面/建筑**：%s" % summary["facade"])
+    A("- **图片总数**：%d（成功 %d / 失败 %d）"
+      % (summary.get("n_images", 0), summary.get("n_ok", 0), summary.get("n_failed", 0)))
+    A("- **缺陷检出总数**：%d" % summary.get("n_defects_total", 0))
+
+    # ★ 弃权可见性：必须显式抬出来，否则读者只看到等级、
+    #   看不到结论建立在多少条作废数据上
+    n_un = int(summary.get("n_unjudgeable", 0) or 0)
+    if n_un > 0:
+        A("- **不可判读条目**：%d ⚠️（这些条目因成像/尺度不足而作废，"
+          "已从判级中排除）" % n_un)
+    if summary.get("abstained"):
+        A("- ⚠️ **本批存在弃权**：部分检出无法给出可靠判级，请结合下表逐图复核。")
+
+    if per_cls:
+        A("")
+        A("### 逐类检出数")
+        A("")
+        A("| 类别 | 数量 |")
+        A("|---|---|")
+        for k, v in sorted(per_cls.items(), key=lambda kv: -int(kv[1] or 0)):
+            A("| %s | %s |" % (k, v))
+
+    if gsd:
+        A("")
+        A("### 尺度一致性（GSD，mm/px）")
+        A("")
+        A("- 中位数：%s" % gsd.get("median_mm_per_px"))
+        A("- 极差：%s ~ %s（相对离散 %.1f%%）"
+          % (gsd.get("min_mm_per_px"), gsd.get("max_mm_per_px"),
+             float(gsd.get("rel_spread_pct") or 0.0)))
+        A("- 是否稳定：**%s**" % ("是" if gsd.get("stable") else "否 ⚠️"))
+        if gsd.get("warning"):
+            A("- ⚠️ %s" % gsd["warning"])
+
+    A("")
+    A("### 建筑级风险等级")
+    A("")
+    lvl = risk.get("level")
+    A("**%s** —— %s" % (lvl, risk.get("level_desc", "")))
+    A("")
+    A("- 危险：%s ｜ 需关注：%s ｜ 不可判读：%s"
+      % (risk.get("n_danger", 0), risk.get("n_attention", 0),
+         risk.get("n_unjudgeable", 0)))
+    if risk.get("need_professional_inspection"):
+        A("- ⚠️ 建议人工专业复检。")
+
+    failed = summary.get("failed_images") or []
+    if failed:
+        A("")
+        A("### 读取/处理失败的图片（%d）" % len(failed))
+        A("")
+        for f in failed[:20]:
+            A("- `%s`" % f)
+        if len(failed) > 20:
+            A("- …（其余 %d 张见下载的 JSON）" % (len(failed) - 20))
+
+    A("")
+    A("---")
+    A("> ⚠️ **本入口未启用分布级 OOD 门**（开启需在更低 conf 上重跑全批检测，"
+      "耗时翻倍）。需要 OOD 门请用命令行："
+      "`python 02_code/batch_screen.py --dir=<目录>`")
+    A(">")
+    A("> 本结果是**筛查排序**，用于快速定位可疑部位，**不构成法定鉴定结论**。")
+
+    md = "\n".join(M)
+
+    # ---- 6) 下载载荷（★ 唯一落盘处，必须唯一名）----
+    payload = {
+        "model": str(_MODEL_PATH or ""),
+        "args": args,
+        "summary": summary,
+        # n_files 报「用户选了多少」= 处理的 + 输入阶段被拒的。
+        # （「服务端路径」分支 rejected 恒为空 ⇒ 此处与改动前逐字节等价）
+        "source": {"mode": mode, "dir": str(dir_path or ""),
+                   "n_files": n_all + len(rejected)},
+        "created": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    json_str = _dumps(payload)
+    try:
+        import tempfile
+        tag = time.strftime("%Y%m%d_%H%M%S") + "_" + uuid.uuid4().hex[:8]
+        out = Path(tempfile.gettempdir()) / ("batch_result_" + tag + ".json")
+        # ★ 写 UTF-8 + 纯 LF（项目行尾纪律：数据产物用 LF，避免跨工具显示错乱）
+        out.write_text(json_str, encoding="utf-8", newline="\n")
+        dl = str(out)
+    except Exception:                               # noqa: BLE001
+        # 下载文件写不出**不应**让整批结果作废 —— 表格与结论仍然有价值。
+        dl = None
+        log("!! 批量结果落盘失败（结果仍已返回表格）：%s" % traceback.format_exc())
+
+    return rows, md, json_str, dl
+
+
+def batch_analyze_ui(src_mode: str,
+                     dir_path: str,
+                     files: list | None,
+                     facade: str,
+                     conf_thr: float,
+                     progress=None):
+    """`batch_analyze()` 的 **UI 包装**：多产出一个 CSV 下载文件。
+
+    ★ 为什么不把 CSV 直接做进 `batch_analyze`：
+      那个函数的 4 元组返回已被 `logs/_verify_app_batch.py` 的
+      「与命令行批量复算逐项一致」对照锁定（n_images/n_ok/n_defects_total/
+      risk.level/gsd.median 五项）。在这里**只调用、不修改**，
+      才能保住那次对照的可信度。
+
+    ★ 返回值是 **5 元组**（比 batch_analyze 多一个 CSV 路径）：
+      rows, md, json_str, dl_json, dl_csv
+
+    ★ 纪律：CSV 落盘**失败不应**让整批结果作废 —— 表格与结论仍然有价值。
+      与 `batch_analyze` 里 JSON 落盘的 try/except 同一原则。
+    """
+    import csv
+    import time
+    import uuid
+
+    rows, md, json_str, dl_json = batch_analyze(
+        src_mode, dir_path, files, facade, conf_thr, progress=progress)
+
+    dl_csv = None
+    try:
+        import tempfile
+        tag = time.strftime("%Y%m%d_%H%M%S") + "_" + uuid.uuid4().hex[:8]
+        out = Path(tempfile.gettempdir()) / ("batch_result_" + tag + ".csv")
+        with open(out, "w", encoding="utf-8-sig", newline="") as f:
+            wr = csv.writer(f)
+            wr.writerow(["image", "status", "n_measurements",
+                         "gsd_mm_per_px", "risk_level"])
+            for r in (rows or []):
+                wr.writerow(list(r))
+        dl_csv = str(out)
+    except Exception:                               # noqa: BLE001
+        dl_csv = None
+        log("!! 批量 CSV 落盘失败（结果仍已返回表格）：%s"
+            % traceback.format_exc())
+
+    return rows, md, json_str, dl_json, dl_csv
 
 
 def _render_video_markdown(rec: dict, name: str, has_vis: bool,
@@ -1330,6 +1651,43 @@ def _theme_and_style(gr):
 # --------------------------------------------------------------------------
 # Gradio 界面
 # --------------------------------------------------------------------------
+def compare_pair_ui(img_t1, img_t2, weight_path):
+    """两次巡检对比：变化检测（非演化预测）。返回 (Markdown, dict)。
+
+    与主线弃权同构：配对不成立 ⇒ 不给变化结论（不是硬算一个数）。
+    """
+    import cv2
+
+    from change_detect import pair_and_diff
+    from pipeline import run_one
+
+    if img_t1 is None or img_t2 is None:
+        return "请上传**两次**巡检照片（旧、新各一张）。", {}
+
+    model = get_model(weight_path)
+    img1 = cv2.cvtColor(img_t1, cv2.COLOR_RGB2BGR)
+    img2 = cv2.cvtColor(img_t2, cv2.COLOR_RGB2BGR)
+    args = {"conf": 0.25, "imgsz": 640, "distance": 20.0, "focal": 24.0,
+            "calib_brick": False, "env": "二类环境（露天/潮湿）", "jgj125": ""}
+    r1 = run_one(Path("cmp_t1.jpg"), model, args, image=img1)
+    r2 = run_one(Path("cmp_t2.jpg"), model, args, image=img2)
+
+    def _dets(r):
+        out = []
+        for m in r.get("measurements", []):
+            d = {"bbox_xyxy": list(m["bbox_xyxy"]), "cls": m.get("cls_name")}
+            for k in ("width_max_mm", "width_mean_mm"):
+                if m.get(k) is not None:
+                    d[k] = m[k]
+            out.append(d)
+        return out
+
+    res = pair_and_diff(img1, img2, _dets(r1), _dets(r2),
+                        gsd_mm_per_px=r1.get("calibration", {}).get("mm_per_px"))
+    md = "### 两次巡检对比（变化检测，非演化预测）\n\n" + str(res.get("summary") or "（无结论）")
+    return md, res
+
+
 def build_ui():
     import gradio as gr
 
@@ -1475,6 +1833,18 @@ def build_ui():
                                 "> 本机实测：已有 Python 的入站放行规则（TCP/UDP、全端口、"
                                 "Public 档），**通常无需手动添加**。"
                             )
+                    with gr.Tab("🔄 两次巡检对比"):
+                        gr.Markdown(
+                            "> **变化检测（非演化预测）**：判断两次是否在拍**同一区域**，"
+                            "配对成立才给「新增 / 消失 / 宽度变化」；配对不成立**不给结论**"
+                            "（与弃权同构）。只做「变化」，不做「扩展速率 / 剩余寿命」预测。"
+                        )
+                        with gr.Row():
+                            cmp_in1 = gr.Image(label="第一次巡检（旧照片）", type="numpy")
+                            cmp_in2 = gr.Image(label="第二次巡检（新照片）", type="numpy")
+                        cmp_btn = gr.Button("开始对比", variant="primary", size="lg")
+                        cmp_md = gr.Markdown()
+                        cmp_json = gr.JSON(label="原始变化检测结果")
                 with gr.Accordion("尺度标定（决定能不能测毫米）", open=True):
                     gr.Markdown(
                         "**下面三种标定方式只用一种。** 只有你选中的那种，才用得上它对应的"
@@ -1537,8 +1907,8 @@ def build_ui():
                     )
                 with gr.Accordion("其它参数", open=False):
                     env_class = gr.Dropdown(
-                        ["一类环境（室内干燥）", "二类环境（露天/潮湿）", "三类环境（干湿交替/海风）"],
-                        value="二类环境（露天/潮湿）", label="环境类别（GB 50010）")
+                        list(ENV_CLASSES),
+                        value=DEFAULT_ENV, label="环境类别（GB 50010）")
                     jgj125_parts = gr.CheckboxGroup(
                         ["梁板受力主筋处（0.50mm 危险点）", "板受拉区（1.00mm 危险点）"],
                         value=[],
@@ -1557,6 +1927,138 @@ def build_ui():
                 md_out = gr.Markdown(label="结论")
                 with gr.Accordion("原始 JSON（可对接台账系统）", open=False):
                     json_out = gr.Code(label="", language="json")
+
+        # ==================== ★ 新增：批量识别（多张照片 → 一张表）====================
+        # 需求来源：让**每个访问者用自己电脑里的照片**批量识别，且互不干扰。
+        # ★ 为什么必须有两个输入源（浏览器沙箱的硬规则，非框架限制）：
+        #   访问者的浏览器**无法**把自己电脑的文件夹路径交给服务器 —— 这是浏览器
+        #   安全沙箱的基本约束（防网站扫描用户磁盘）。所以：
+        #     ① 「浏览器上传」＝用户在对话框里选**自己的**文件 → 浏览器把文件**内容**
+        #        上传到服务器临时目录 → 我们只拿到临时路径。**这是真·多用户方案。**
+        #     ② 「服务端路径」＝用户填**运行本服务这台电脑**的目录 → 服务端自己列图。
+        #        只对本机 / 局域网自建有效（手机填不了电脑路径，这是设计上的诚实边界）。
+        #   ⚠️ gr.FileExplorer 虽有 root_dir，但只能浏览**服务端预置**的根、
+        #      且跨不了盘符 ⇒ 不能满足「访问者自己的文件夹」，故不使用。
+        # ★ gr.Tab **必须有** gr.Tabs 作父容器；此处与上面的图片/视频 Tabs **并列**
+        #   （不是嵌套）⇒ 批量页签独占一整块，不与单图共用参数区。
+        with gr.Tabs():
+            with gr.Tab("🗂️ 批量识别"):
+                gr.Markdown(
+                    "> **一次处理一批照片，产出一张表 + 一份汇总。**\n"
+                    ">\n"
+                    "> 逐图走的是**与单张照片完全相同**的链路（含全部判读与弃权机制），"
+                    "所以**批量不提升精度**，它的价值是**省掉一张张点的操作**。\n"
+                    ">\n"
+                    "> **多用户安全**：本页签**不写任何固定位置的文件**，"
+                    "结果只经界面返回给您 ⇒ 多人同时用**不会互相看到、也不会互相覆盖**。"
+                    "唯一的落盘是「下载 JSON / CSV」，每次用**唯一文件名**。\n"
+                    ">\n"
+                    "> ⚠️ **服务器会串行处理批量请求**（内存保护）："
+                    "多人同时点「开始」时，第二个请求会**排队等待**并显示进度，"
+                    "这是有意的设计，不是卡死。"
+                )
+                batch_src_mode = gr.Radio(
+                    ["浏览器上传（选自己电脑的文件）", "服务端路径（运行本服务的电脑）"],
+                    value="浏览器上传（选自己电脑的文件）",
+                    label="照片来源",
+                    info="默认「浏览器上传」—— 多人互不干扰，且手机也能用。"
+                         "「服务端路径」只在那台跑服务的电脑上有意义。",
+                )
+                # ① 浏览器上传：多选。file_types 显式列出，与 batch_screen.IMG_EXTS 同口径。
+                with gr.Group(visible=True) as batch_grp_files:
+                    batch_files = gr.Files(
+                        label="选择照片（可多选，也可一次拖入整个文件夹的照片）",
+                        file_count="multiple",
+                        type="filepath",
+                        file_types=[".jpg", ".jpeg", ".png", ".bmp",
+                                    ".webp", ".tif", ".tiff"],
+                    )
+                    gr.Markdown(
+                        "- 支持格式：**jpg / jpeg / png / bmp / webp / tif / tiff**"
+                        "（与命令行 `batch_screen.py` 同一口径）。\n"
+                        "- 数量上限由浏览器与 Gradio 临时目录共同决定，"
+                        "**建议单批 ≤ 300 张**；再多请分批，或改用命令行入口。\n"
+                        "- 不支持 / 读取失败的图会被**逐个跳过并记进失败清单**，"
+                        "**不会**让整批失败。"
+                    )
+                # ② 服务端路径：填目录，服务端自己 list_images（非递归）。
+                with gr.Group(visible=False) as batch_grp_dir:
+                    batch_dir = gr.Textbox(
+                        label="服务端目录（绝对路径）",
+                        placeholder=r"例如 D:\pythonstudy 备份\创新题\外墙缺陷筛查"
+                                    r"\01_data\dataset\images\test",
+                        info="只读取该目录**当面一层**的图片（不递归子目录），"
+                             "与 batch_screen.list_images 行为一致。",
+                    )
+                    gr.Markdown(
+                        "> ⚠️ 这里是**运行本服务这台电脑**的路径，不是访问者电脑的路径。\n"
+                        "> 访问者电脑的路径服务端读不到（浏览器沙箱），"
+                        "要处理自己电脑的照片请改用上面的「浏览器上传」。"
+                    )
+                with gr.Accordion("批量参数", open=True):
+                    with gr.Row():
+                        batch_facade = gr.Textbox(
+                            label="建筑 / 立面编号（可留空）",
+                            placeholder="例如 A栋-南立面",
+                            info="只作为汇总标题出现，不参与任何计算。留空则用默认标题。",
+                        )
+                        batch_conf = gr.Slider(
+                            0.05, 0.9, value=0.25, step=0.05,
+                            label="检测置信度阈值",
+                            info="与单张照片的默认值一致（0.25）。",
+                        )
+                batch_btn = gr.Button("开始批量识别", variant="primary", size="lg")
+                gr.Markdown(
+                    "> ⚠️ **本页签未启用分布级 OOD 门**"
+                    "（开启需在更低置信度上把整批重跑一遍，耗时翻倍）。"
+                    "需要 OOD 门请用命令行 `python 02_code/batch_screen.py --dir=<目录>`。\n"
+                    ">\n"
+                    "> 结果是**筛查排序**，用于快速定位可疑部位，**不构成法定鉴定结论**。"
+                )
+
+                batch_table = gr.Dataframe(
+                    label="逐图结果",
+                    headers=["图片", "状态", "检出数", "GSD(mm/px)", "风险等级"],
+                    datatype=["str", "str", "number", "number", "str"],
+                    interactive=False,
+                    max_height=460,
+                    wrap=True,
+                )
+                batch_summary = gr.Markdown(label="汇总结论")
+                with gr.Row():
+                    batch_dl = gr.DownloadButton(
+                        "⬇ 下载完整结果（JSON）", variant="secondary")
+                    batch_dl_csv = gr.DownloadButton(
+                        "⬇ 下载逐图表格（CSV）", variant="secondary")
+                with gr.Accordion("原始 JSON（可对接台账系统）", open=False):
+                    batch_json = gr.Code(label="", language="json")
+
+                # 来源切换：只切可见性，不动任何计算逻辑。
+                # ★ 这是本次新增的第 5 个回调（形状与既有 .click/.change 同构，
+                #   会被 logs/_verify_app_inputs.py 一并断言）。
+                def _batch_toggle(mode):
+                    is_upload = "浏览器" in mode
+                    return (gr.update(visible=is_upload),
+                            gr.update(visible=not is_upload))
+
+                batch_src_mode.change(
+                    fn=_batch_toggle,
+                    inputs=[batch_src_mode],
+                    outputs=[batch_grp_files, batch_grp_dir],
+                )
+
+                # ⚠️ inputs 顺序必须与 batch_analyze_ui() 的形参顺序逐项对应：
+                #     src_mode, dir_path, files, facade, conf_thr
+                #     （progress 是尾部注入参数，**不在** inputs 里，由 Gradio 按名注入）
+                # ★ 用 batch_analyze_ui（= batch_analyze 的包装）而不是 batch_analyze 本身：
+                #   它的返回值是 **5 元组**，比 batch_analyze 多一个 CSV 路径。
+                batch_btn.click(
+                    fn=batch_analyze_ui,
+                    inputs=[batch_src_mode, batch_dir, batch_files,
+                            batch_facade, batch_conf],
+                    outputs=[batch_table, batch_summary,
+                             batch_json, batch_dl, batch_dl_csv],
+                )
 
         # ⚠️ inputs 的顺序**必须**与 analyze() 的形参顺序逐项对应（位置绑定，不按名字匹配）：
         #      ... env_class, conf_thr, weight_path, rectify_mode, jgj125_parts
@@ -1580,6 +2082,13 @@ def build_ui():
             fn=analyze_video,
             inputs=[vid_in] + SHARED + [vid_every, vid_max],
             outputs=[img_out, md_out, json_out],
+        )
+
+        # ---- ④ 两次巡检对比（★ 2026-09-29 新增：change_detect 接入 UI）----
+        cmp_btn.click(
+            fn=compare_pair_ui,
+            inputs=[cmp_in1, cmp_in2, weight_path],
+            outputs=[cmp_md, cmp_json],
         )
 
         # ---- ③ 手机/摄像头「拍照即识别」入口（★ 新增）----
@@ -1609,11 +2118,8 @@ def build_ui():
 
 def main() -> None:
     def _arg(name, default):
-        prefix = f"--{name}="
-        for a in sys.argv[1:]:
-            if a.startswith(prefix):
-                return a[len(prefix):]
-        return default
+        from common import argv_flag   # 2026-09-28：裸 flag 统一走 common.argv_flag（单一真源）
+        return argv_flag(name, default)
 
     port = int(_arg("port", "7860"))
     share = "--share" in sys.argv[1:]
@@ -1639,6 +2145,15 @@ def main() -> None:
         return
 
     demo = build_ui()
+    # ★ 2026-09-27：显式开启队列。
+    #   · Gradio 6 的 launch() **不接受** queue 参数（实读签名），只能在 launch 前调。
+    #   · max_size=8：最多排 8 个请求（含正在跑的），再多直接拒绝，
+    #     避免无限堆积把内存吃光。
+    #   · default_concurrency_limit=1：**串行**执行。
+    #     本机可用内存实测仅 0.10~1.41 GB ⇒ 多份批量推理峰值叠加会 OOM。
+    #     第二个请求**排队等待**（界面有进度提示），而不是把机器压崩。
+    #     ★ 这是**有意的内存保护**，不是缺陷。
+    demo.queue(max_size=8, default_concurrency_limit=1)
     _blocks_kwargs, launch_style = _theme_and_style(gr)
     log(f"启动 Web 界面: http://{host}:{port}")
     if host not in ("127.0.0.1", "localhost"):

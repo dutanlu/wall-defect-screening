@@ -1,0 +1,207 @@
+{
+  "base": "https://192.168.3.215:7863",
+  "checks": [
+    {
+      "name": "手机页 HTTP 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "viewport 含 viewport-fit=cover",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "使用安全区变量 env(safe-area-inset-*)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "取景框铺满视口（#stage inset:0）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "body 禁止滚动（overflow:hidden）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 用 object-fit:contain（不裁边，判读靠像素）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "控件叠在画面之上（HUD + 底部条）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 点画面进沉浸模式（body.immersive 隐藏控件）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ HUD 默认隐藏、运行时才 .on（避免与启动页打架）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 沉浸模式用 !important + visibility 兜底（防特异性打架）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "底部四个圆钮：切换摄像头/停止/存帧/全屏",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "全屏用 requestFullscreen",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "切换前/后摄像头（facingMode 可切）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "iOS 内联播放（playsinline）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "MJPEG 断流自动重连",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 手机页有镜像页入口链接",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "占位符已替换：__MIRROR__",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "占位符已替换：__INTERVAL__",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "占位符已替换：__QUALITY__",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "INTERVAL 注入为数字",
+      "ok": true,
+      "detail": "300"
+    },
+    {
+      "name": "MIRROR 注入为 /mirror（相对路径，换 IP 不用改码）",
+      "ok": true,
+      "detail": "/mirror"
+    },
+    {
+      "name": "镜像页 HTTP 200",
+      "ok": true,
+      "detail": "200"
+    },
+    {
+      "name": "含等待手机推帧的提示",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 镜像页 <img> 初始 display:none（否则破图图标压在等待提示上）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 地址自动跟随（用 location.origin，不写死 IP）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "挂载同一路 MJPEG（/stream）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "轮询 /status 判断在线",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "画面用 object-fit:contain（与手机端一致，不裁边）",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "★ 明确标注「边界」不提高毫米级判读能力",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "有 live 指示灯元素",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "测试图目录非空",
+      "ok": true,
+      "detail": "283 张 @ D:\\pythonstudy 备份\\创新题\\外墙缺陷筛查\\01_data\\dataset\\images\\test"
+    },
+    {
+      "name": "5 帧全部推送成功",
+      "ok": true,
+      "detail": "5"
+    },
+    {
+      "name": "★ n_inferred ≥ 1（推理真跑了，不只是收帧）",
+      "ok": true,
+      "detail": "2"
+    },
+    {
+      "name": "seq 前进（新结果已入 STATE）",
+      "ok": true,
+      "detail": "0 -> 2"
+    },
+    {
+      "name": "analyzer_error 为空",
+      "ok": true,
+      "detail": "None"
+    },
+    {
+      "name": "/snapshot 返回合法 JPEG",
+      "ok": true,
+      "detail": "112465 B"
+    },
+    {
+      "name": "★ 叠加层真的画上去了（红色像素 > 200）",
+      "ok": true,
+      "detail": "2395"
+    },
+    {
+      "name": "/stream 能拉到 MJPEG 分片（手机与镜像共用）",
+      "ok": true,
+      "detail": "第一片 112465 B"
+    }
+  ],
+  "pass": 38,
+  "total": 38,
+  "verdict": "PASS",
+  "status": {
+    "mode": "phone-push",
+    "seq": 2,
+    "fps": 0.06,
+    "has_frame": true,
+    "n_received": 5,
+    "n_inferred": 2,
+    "analyzer_error": null
+  }
+}

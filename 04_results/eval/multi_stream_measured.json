@@ -1,0 +1,98 @@
+{
+  "measured_at": "2026-09-27 22:14:31",
+  "device": "NVIDIA RTX 5070 Ti Laptop GPU",
+  "frame": {
+    "width": 960,
+    "height": 720,
+    "jpeg_quality": 0.6,
+    "n_distinct_frames": 8,
+    "note": "960x720（4:3，贴近手机实拍）。⚠️ 本工程测试图原为 448x448 正方形，若只按宽缩放会得到 960x960（多约 33% 像素）⇒ 实测 fps 会偏低，故显式压到 4:3。口径与 phone_live.py 默认 push_maxw=960 / QUALITY 一致。"
+  },
+  "client_location": "localhost（**不含 WiFi 带宽**，测的是服务端算力上限）",
+  "push_target_fps_per_client": 20.0,
+  "min_gap_s": 0.04,
+  "results": [
+    {
+      "n_clients": 1,
+      "window_s": 10.0,
+      "push_target_fps_per_client": 20.0,
+      "push_actual_fps_total": 19.8,
+      "per_client_infer_fps": [
+        18.3
+      ],
+      "per_client_recv_fps": [
+        18.3
+      ],
+      "recv_infer_ratio": [
+        1.0
+      ],
+      "total_infer_fps": 18.3,
+      "n_throttled_total": 17
+    },
+    {
+      "n_clients": 2,
+      "window_s": 10.0,
+      "push_target_fps_per_client": 20.0,
+      "push_actual_fps_total": 39.7,
+      "per_client_infer_fps": [
+        11.6,
+        10.9
+      ],
+      "per_client_recv_fps": [
+        17.2,
+        17.0
+      ],
+      "recv_infer_ratio": [
+        0.674,
+        0.641
+      ],
+      "total_infer_fps": 22.5,
+      "n_throttled_total": 87
+    },
+    {
+      "n_clients": 4,
+      "window_s": 10.0,
+      "push_target_fps_per_client": 20.0,
+      "push_actual_fps_total": 79.2,
+      "per_client_infer_fps": [
+        7.0,
+        4.7,
+        5.9,
+        6.3
+      ],
+      "per_client_recv_fps": [
+        17.5,
+        16.1,
+        16.5,
+        16.4
+      ],
+      "recv_infer_ratio": [
+        0.4,
+        0.292,
+        0.358,
+        0.384
+      ],
+      "total_infer_fps": 23.9,
+      "n_throttled_total": 243
+    }
+  ],
+  "conclusion": {
+    "single_stream_total_fps": 18.3,
+    "note": "总吞吐几乎不随路数增长 ⇒ 瓶颈是**一个模型串行用 GPU**，多路是在**分摊**同一份算力，不是各自独占。",
+    "per_client_at": {
+      "1": [
+        18.3
+      ],
+      "2": [
+        11.6,
+        10.9
+      ],
+      "4": [
+        7.0,
+        4.7,
+        5.9,
+        6.3
+      ]
+    }
+  }
+}

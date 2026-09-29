@@ -242,9 +242,42 @@ def hamming(a: str, b: str) -> int:
 # --------------------------------------------------------------------------
 # 记录与日志（每步都要留痕，报告要能追溯）
 # --------------------------------------------------------------------------
+_LOG_BROKEN = False      # stdout 断掉后置 True，避免反复刷屏（见 log() 注释）
+
+
 def log(msg: str) -> None:
-    """带时间戳打印，方便 PowerShell 重定向到文件后回看。"""
-    print(f"[{datetime.now():%H:%M:%S}] {msg}", flush=True)
+    """带时间戳打印，方便重定向到文件后回看。
+
+    ★★ 必须**吞掉写入异常**（2026-09-27 真机事故修复）：
+    stdout 不一定可写 —— 典型场景：
+      - 服务用 `... | head -N` 起：读端 `head` 拿到 N 行就退出，
+        之后所有 write 都打向**已断开的管道** ⇒ `OSError: [Errno 22]`;
+      - 控制台窗口被关掉、句柄失效、重定向目标磁盘满。
+    后果**极其严重且隐蔽**：`log()` 被 `pipeline.get_calibration` 等**热路径**调用，
+    异常会一路冒泡到识别线程的 `try/except`，被记成"本帧识别失败"，
+    而线程**继续跑、不崩、日志看起来正常** ⇒ 现象是「帧率莫名很低」。
+    真机实测：`n_received=115` 而 `n_inferred=16`（99 帧全被这个异常吞掉），
+    HUD 上 fps 只有 1.4~3.6。
+
+    ⇒ 日志是**观测手段**，绝不能因为观测失败而影响**被观测的主流程**。
+      写入失败时**静默降级**（最多在启动期提示一次），绝不再抛。
+    """
+    try:
+        print(f"[{datetime.now():%H:%M:%S}] {msg}", flush=True)
+    except (OSError, ValueError):
+        # 管道断开 / 句柄失效 / 已关闭 —— 只在**第一次**提示，之后静默
+        global _LOG_BROKEN
+        if not _LOG_BROKEN:
+            _LOG_BROKEN = True
+            try:
+                import sys as _sys
+                _sys.stderr.write(
+                    "[common.log] stdout 不可写，已自动关闭日志输出"
+                    "（不影响识别）。常见原因：服务被 `| head` 之类的"
+                    "管道截断，读端退出后写入会报 Errno 22。\n")
+                _sys.stderr.flush()
+            except Exception:                          # noqa: BLE001
+                pass
 
 
 def dump_json(obj, path, indent: int = 2) -> None:
